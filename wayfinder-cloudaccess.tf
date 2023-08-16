@@ -245,13 +245,8 @@ resource "kubectl_manifest" "wayfinder_azure_identity_binding_main" {
 }
 
 resource "kubectl_manifest" "wayfinder_azure_admin_cloudaccessconfig" {
-  count = var.enable_k8s_resources ? 1 : 0
-
-  depends_on = [
-    kubectl_manifest.wayfinder_cloudidentity_cloudinfo,
-    kubectl_manifest.wayfinder_cloudidentity_dnszonemanager,
-    kubectl_manifest.wayfinder_cloudidentity_none,
-  ]
+  count      = var.enable_k8s_resources ? 1 : 0
+  depends_on = [time_sleep.after_kubectl_manifest_cloud_identity]
 
   yaml_body = templatefile("${path.module}/manifests/wayfinder-azure-admin-cloudaccessconfig.yml.tpl", {
     region                    = var.location

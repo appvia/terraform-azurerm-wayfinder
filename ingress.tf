@@ -1,4 +1,6 @@
 resource "azurerm_public_ip" "ingress" {
+  count = !var.disable_internet_access ? 1 : 0
+
   name                = "${local.name}-ingress-pip01"
   resource_group_name = module.aks.node_resource_group
   location            = var.location
@@ -27,7 +29,7 @@ resource "helm_release" "ingress" {
     templatefile("${path.module}/manifests/ingress-values.yml.tpl", {
       node_resource_group     = module.aks.node_resource_group
       disable_internet_access = tostring(var.disable_internet_access)
-      ingress_ip_address      = azurerm_public_ip.ingress.ip_address
+      ingress_ip_address      = !var.disable_internet_access ? azurerm_public_ip.ingress[0].ip_address : ""
     })
   ]
 }

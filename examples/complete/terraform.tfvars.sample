@@ -3,6 +3,7 @@ aks_rbac_aad_admin_groups = {
 }
 clusterissuer_email     = "my.email@example.com"
 location                = "uksouth"
+disable_internet_access = false
 dns_resource_group_name = "wayfinder-rg"
 dns_zone_name           = "wf.example.com"
 environment             = "prod"

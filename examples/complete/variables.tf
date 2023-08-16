@@ -15,6 +15,12 @@ variable "clusterissuer_email" {
   type        = string
 }
 
+variable "disable_internet_access" {
+  description = "Whether to disable internet access for AKS and the Wayfinder ingress controller"
+  type        = bool
+  default     = false
+}
+
 variable "dns_resource_group_name" {
   description = "The name of the resource group where the DNS Zone exists."
   type        = string

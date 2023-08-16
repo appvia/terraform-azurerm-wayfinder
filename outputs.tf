@@ -16,8 +16,14 @@ output "aks_cluster_ca_certificate" {
   value       = module.aks.admin_cluster_ca_certificate
 }
 
+output "aks_fqdn" {
+  description = "The FQDN of the Azure Kubernetes Managed Cluster."
+  sensitive   = true
+  value       = module.aks.cluster_fqdn
+}
+
 output "aks_host" {
-  description = "The `host` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block. The Kubernetes cluster server host."
+  description = "The Kubernetes cluster server host. This is a Private Link address if 'disable_internet_access' is configured."
   sensitive   = true
   value       = module.aks.admin_host
 }
@@ -26,7 +32,6 @@ output "cluster_name" {
   description = "The name of the Wayfinder AKS cluster"
   value       = module.aks.aks_name
 }
-
 
 output "wayfinder_api_url" {
   description = "The URL for the Wayfinder API"

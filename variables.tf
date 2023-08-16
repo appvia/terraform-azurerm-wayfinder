@@ -16,22 +16,27 @@ variable "aks_enable_host_encryption" {
   default     = false
 }
 
-variable "aks_private_cluster_enabled" {
-  description = "If true, the cluster API server will be exposed only on internal IP addresses."
-  type        = bool
-  default     = false
-}
-
-variable "aks_private_cluster_public_fqdn_enabled" {
-  description = "Specifies whether a Public FQDN for this Private Cluster should be added."
-  type        = bool
-  default     = false
-}
-
-variable "aks_public_network_access_enabled" {
-  description = "Whether public network access is allowed for this Kubernetes Cluster."
-  type        = bool
-  default     = true
+variable "aks_maintenance_window" {
+  type = object({
+    allowed = list(object({
+      day   = string
+      hours = set(number)
+    })),
+    not_allowed = list(object({
+      end   = string
+      start = string
+    })),
+  })
+  description = "Maintenance configuration of the managed cluster."
+  default = {
+    allowed = [
+      {
+        day   = "Sunday",
+        hours = [22, 23]
+      },
+    ],
+    not_allowed = []
+  }
 }
 
 variable "aks_rbac_aad_admin_group_object_ids" {
@@ -58,7 +63,8 @@ variable "clusterissuer_email" {
 
 variable "create_duration_delay" {
   type = object({
-    azurerm_role_definition = optional(string, "120s")
+    azurerm_role_definition         = optional(string, "120s")
+    kubectl_manifest_cloud_identity = optional(string, "30s")
   })
   description = "Used to tune terraform apply when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after creation of the specified resource type."
   default     = {}
@@ -71,7 +77,8 @@ variable "create_duration_delay" {
 
 variable "destroy_duration_delay" {
   type = object({
-    azurerm_role_definition = optional(string, "0s")
+    azurerm_role_definition         = optional(string, "0s")
+    kubectl_manifest_cloud_identity = optional(string, "60s")
   })
   description = "Used to tune terraform deploy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type."
   default     = {}
