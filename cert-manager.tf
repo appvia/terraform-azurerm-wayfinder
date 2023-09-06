@@ -6,6 +6,7 @@ resource "azurerm_user_assigned_identity" "cert_manager" {
 }
 
 resource "azurerm_role_assignment" "cert_manager_dns_contributor" {
+  count                = var.clusterissuer == "letsencrypt-prod" ? 1 : 0
   scope                = var.dns_zone_id
   role_definition_name = "DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.cert_manager.principal_id
@@ -36,11 +37,13 @@ resource "helm_release" "cert_manager" {
   version     = "v1.11.0"
   max_history = 5
 
-  values = [templatefile("${path.module}/manifests/cert-manager-values.yml.tpl", {})]
+  values = [templatefile("${path.module}/manifests/cert-manager-values.yml.tpl", {
+    clusterissuer = var.clusterissuer
+  })]
 }
 
 resource "kubectl_manifest" "cert_manager_clusterissuer" {
-  count = var.enable_k8s_resources ? 1 : 0
+  count = var.enable_k8s_resources && var.clusterissuer == "letsencrypt-prod" ? 1 : 0
 
   depends_on = [
     module.aks,
@@ -53,5 +56,32 @@ resource "kubectl_manifest" "cert_manager_clusterissuer" {
     resource_group     = var.resource_group_name
     subscription_id    = data.azurerm_subscription.current.subscription_id
     identity_client_id = azurerm_user_assigned_identity.cert_manager.client_id
+  })
+}
+
+resource "kubectl_manifest" "cert_manager_clusterissuer_vaas" {
+  count = var.enable_k8s_resources && var.clusterissuer == "vaas-issuer" ? 1 : 0
+
+  depends_on = [
+    module.aks,
+    helm_release.cert_manager,
+    kubectl_manifest.cert_manager_clusterissuer_vaas_secret
+  ]
+
+  yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-vaas.yml.tpl", {
+    venafi_zone              = var.venafi_zone
+  })
+}
+
+resource "kubectl_manifest" "cert_manager_clusterissuer_vaas_secret" {
+  count = var.enable_k8s_resources && var.clusterissuer == "vaas-issuer" ? 1 : 0
+
+  depends_on = [
+    module.aks,
+    helm_release.cert_manager,
+  ]
+
+  yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-vaas-secret.yml.tpl", {
+    venafi_apikey              = var.venafi_apikey
   })
 }
