@@ -9,6 +9,18 @@ variable "aks_rbac_aad_admin_groups" {
   type        = map(string)
 }
 
+variable "aks_vnet_subnet_id" {
+  description = "The ID of the subnet in which to deploy the Kubernetes Cluster."
+  type        = string
+  default     = null
+}
+
+variable "clusterissuer" {
+  description = "Cluster Issuer name to use for certs"
+  type        = string
+  default     = "letsencrypt-prod"
+}
+
 variable "clusterissuer_email" {
   description = "The email address to use for the cert-manager cluster issuer."
   type        = string
@@ -30,6 +42,12 @@ variable "disable_local_login" {
   description = "Whether to disable local login for Wayfinder. Note: An IDP must be configured within Wayfinder, otherwise you will not be able to log in."
   type        = bool
   default     = false
+}
+
+variable "dns_provider" {
+  description = "DNS provider to for External DNS"
+  type        = string
+  default     = "azure"
 }
 
 variable "dns_resource_group_name" {
@@ -60,6 +78,12 @@ variable "location" {
   default     = "uksouth"
 }
 
+variable "private_dns_zone_id" {
+  description = "Private DNS zone to use for private clusters"
+  type        = string
+  default     = null
+}
+
 variable "resource_group_name" {
   description = "The name of the resource group in which to create the AKS cluster."
   type        = string
@@ -69,6 +93,23 @@ variable "tags" {
   description = "A mapping of tags to assign to the resource."
   type        = map(string)
   default     = {}
+}
+
+variable "user_assigned_identity" {
+  description = "MSI id for AKS to run as"
+  type        = string
+}
+
+variable "venafi_apikey" {
+  description = "Venafi API key - required if using Venafi cluster issuer"
+  type        = string
+  default     = ""
+}
+
+variable "venafi_zone" {
+  description = "Venafi zone - required if using Venafi cluster issuer"
+  type        = string
+  default     = ""
 }
 
 variable "wayfinder_idp_details" {

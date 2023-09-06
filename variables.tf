@@ -56,6 +56,12 @@ variable "aks_vnet_subnet_id" {
   type        = string
 }
 
+variable "clusterissuer" {
+  description = "Cluster Issuer name to use for certs"
+  type        = string
+  default     = "letsencrypt-prod"
+}
+
 variable "clusterissuer_email" {
   description = "The email address to use for the cert-manager cluster issuer."
   type        = string
@@ -119,6 +125,12 @@ variable "disable_local_login" {
   default     = false
 }
 
+variable "dns_provider" {
+  description = "DNS provider to for External DNS"
+  type        = string
+  default     = "azure"
+}
+
 variable "dns_zone_id" {
   description = "The ID of the Azure DNS Zone to use."
   type        = string
@@ -159,6 +171,12 @@ variable "location" {
   default     = "uksouth"
 }
 
+variable "private_dns_zone_id" {
+  description = "Private DNS zone to use for private clusters"
+  type        = string
+  default     = null
+}
+
 variable "resource_group_name" {
   description = "The name of the resource group in which to create the AKS cluster."
   type        = string
@@ -168,6 +186,23 @@ variable "tags" {
   description = "A mapping of tags to assign to resources."
   type        = map(string)
   default     = {}
+}
+
+variable "user_assigned_identity" {
+  description = "MSI id for AKS to run as"
+  type        = string
+}
+
+variable "venafi_apikey" {
+  description = "Venafi API key - required if using Venafi cluster issuer"
+  type        = string
+  default     = ""
+}
+
+variable "venafi_zone" {
+  description = "Venafi zone - required if using Venafi cluster issuer"
+  type        = string
+  default     = ""
 }
 
 variable "wayfinder_domain_name_api" {
