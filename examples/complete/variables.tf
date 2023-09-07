@@ -98,6 +98,7 @@ variable "tags" {
 variable "user_assigned_identity" {
   description = "MSI id for AKS to run as"
   type        = string
+  default     = null
 }
 
 variable "venafi_apikey" {
