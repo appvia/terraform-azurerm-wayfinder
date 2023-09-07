@@ -1,0 +1,19 @@
+aks_rbac_aad_admin_groups = {
+  "my-aad-aks-admin-group" = "c0e0b0f0-0000-0000-0000-000000000000"
+}
+clusterissuer_email     = "example@appvia.io"
+location                = "uksouth"
+disable_internet_access = false
+dns_resource_group_name = "wayfinder-rg"
+dns_zone_name           = "wf.example.com"
+environment             = "prod"
+resource_group_name     = "wayfinder-rg"
+tags = {
+  BusinessCriticality = "High"
+  Environment         = "Production"
+  Owner               = "SupportTeam"
+  Project             = "Operations"
+  Repository          = "Your Repository URL"
+  Provisioner         = "Terraform"
+}
+wayfinder_license_key = "wayfinder-license-key"

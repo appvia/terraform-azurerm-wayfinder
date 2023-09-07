@@ -1,0 +1,21 @@
+content: |-
+  # Example: No IDP (initialised with a localadmin user)
+
+  ## Deployment
+
+  1. Create a Resource Group for Wayfinder to be installed within.
+  2. Create a DNS Zone in Azure and ensure the domain is delegated to the Azure DNS nameservers.
+  3. Copy the `terraform.tfvars.example` file to `terraform.tfvars` and update with your values.
+  4. Run `terraform init -upgrade`
+  5. Run `terraform apply`
+
+  ## Updating Docs
+
+  The `terraform-docs` utility is used to generate this README. Follow the below steps to update:
+  1. Make changes to the `.terraform-docs.yml` file
+  2. Fetch the `terraform-docs` binary (https://terraform-docs.io/user-guide/installation/)
+  3. Run `terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .`
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
