@@ -126,7 +126,7 @@ variable "disable_local_login" {
 }
 
 variable "dns_provider" {
-  description = "DNS provider to for External DNS"
+  description = "DNS provider for External DNS"
   type        = string
   default     = "azure"
 }
@@ -198,6 +198,7 @@ variable "venafi_apikey" {
   description = "Venafi API key - required if using Venafi cluster issuer"
   type        = string
   default     = ""
+  sensitive   = true
 }
 
 variable "venafi_zone" {
