@@ -20,6 +20,7 @@ module "wayfinder" {
   aks_rbac_aad_admin_group_object_ids = values(var.aks_rbac_aad_admin_groups)
   aks_vnet_subnet_id                  = azurerm_subnet.aks_nodes.id
   clusterissuer_email                 = var.clusterissuer_email
+  create_localadmin_user              = var.create_localadmin_user
   disable_internet_access             = var.disable_internet_access
   dns_zone_id                         = data.azurerm_dns_zone.wayfinder.id
   dns_zone_name                       = var.dns_zone_name

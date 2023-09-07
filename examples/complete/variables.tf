@@ -15,6 +15,12 @@ variable "clusterissuer_email" {
   type        = string
 }
 
+variable "create_localadmin_user" {
+  description = "Whether to create a localadmin user for access to the Wayfinder Portal and API"
+  type        = bool
+  default     = false
+}
+
 variable "disable_internet_access" {
   description = "Whether to disable internet access for AKS and the Wayfinder ingress controller"
   type        = bool

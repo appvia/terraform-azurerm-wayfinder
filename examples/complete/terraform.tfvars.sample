@@ -1,7 +1,8 @@
 aks_rbac_aad_admin_groups = {
   "my-aad-aks-admin-group" = "c0e0b0f0-0000-0000-0000-000000000000"
 }
-clusterissuer_email     = "my.email@example.com"
+clusterissuer_email     = "example@appvia.io"
+create_localadmin_user  = false
 location                = "uksouth"
 disable_internet_access = false
 dns_resource_group_name = "wayfinder-rg"
