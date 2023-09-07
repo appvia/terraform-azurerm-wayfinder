@@ -35,7 +35,6 @@ module "aks" {
   os_sku                                = "Ubuntu"
   private_cluster_enabled               = var.disable_internet_access
   private_cluster_public_fqdn_enabled   = var.disable_internet_access
-  public_network_access_enabled         = !var.disable_internet_access
   rbac_aad                              = true
   rbac_aad_admin_group_object_ids       = var.aks_rbac_aad_admin_group_object_ids
   rbac_aad_managed                      = true

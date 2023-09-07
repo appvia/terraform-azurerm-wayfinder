@@ -16,13 +16,13 @@ output "aks_cluster_ca_certificate" {
   value       = module.aks.admin_cluster_ca_certificate
 }
 
-output "aks_fqdn" {
-  description = "The FQDN of the Azure Kubernetes Managed Cluster."
+output "aks_admin_host" {
+  description = "The public API URL of the Azure Kubernetes Managed Cluster."
   sensitive   = true
-  value       = module.aks.cluster_fqdn
+  value       = "https://${module.aks.cluster_fqdn}"
 }
 
-output "aks_host" {
+output "aks_kubeconfig_host" {
   description = "The Kubernetes cluster server host. This is a Private Link address if 'disable_internet_access' is configured."
   sensitive   = true
   value       = module.aks.admin_host
@@ -46,4 +46,15 @@ output "wayfinder_ui_url" {
 output "wayfinder_instance_id" {
   description = "The unique identifier for the Wayfinder instance"
   value       = local.wayfinder_instance_id
+}
+
+output "wayfinder_admin_username" {
+  description = "The username for the Wayfinder local admin user"
+  value       = var.enable_k8s_resources && var.create_localadmin_user ? "localadmin" : null
+}
+
+output "wayfinder_admin_password" {
+  description = "The password for the Wayfinder local admin user"
+  value       = var.enable_k8s_resources && var.create_localadmin_user ? data.kubernetes_secret.localadmin_password[0].data["WF_LOCALADMIN_PASSWORD"] : null
+  sensitive   = true
 }

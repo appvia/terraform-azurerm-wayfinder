@@ -75,6 +75,12 @@ variable "create_duration_delay" {
   }
 }
 
+variable "create_localadmin_user" {
+  description = "Whether to create a localadmin user for access to the Wayfinder Portal and API"
+  type        = bool
+  default     = true
+}
+
 variable "destroy_duration_delay" {
   type = object({
     azurerm_role_definition         = optional(string, "0s")
@@ -153,8 +159,8 @@ variable "wayfinder_idp_details" {
   description = "The IDP details to use for Wayfinder to enable SSO"
   type = object({
     type          = string
-    clientId      = string
-    clientSecret  = string
+    clientId      = optional(string)
+    clientSecret  = optional(string)
     serverUrl     = optional(string)
     azureTenantId = optional(string)
   })
@@ -162,13 +168,21 @@ variable "wayfinder_idp_details" {
   sensitive = true
 
   validation {
-    condition     = contains(["generic", "aad"], var.wayfinder_idp_details["type"])
-    error_message = "wayfinder_idp_details[\"type\"] must be one of: generic, aad"
+    condition     = contains(["generic", "aad", "none"], var.wayfinder_idp_details["type"])
+    error_message = "wayfinder_idp_details[\"type\"] must be one of: generic, aad, none"
   }
 
   validation {
-    condition     = (var.wayfinder_idp_details["type"] == "generic" && length(var.wayfinder_idp_details["serverUrl"]) > 0) || (var.wayfinder_idp_details["type"] == "aad" && length(var.wayfinder_idp_details["azureTenantId"]) > 0)
+    condition     = var.wayfinder_idp_details["type"] == "none" || (var.wayfinder_idp_details["type"] == "generic" && length(var.wayfinder_idp_details["serverUrl"]) > 0) || (var.wayfinder_idp_details["type"] == "aad" && length(var.wayfinder_idp_details["azureTenantId"]) > 0)
     error_message = "serverUrl must be set if IDP type is generic, azureTenantId must be set if IDP type is aad"
+  }
+
+  default = {
+    type          = "none"
+    clientId      = null
+    clientSecret  = null
+    serverUrl     = ""
+    azureTenantId = ""
   }
 }
 
@@ -193,5 +207,5 @@ variable "wayfinder_release_channel" {
 variable "wayfinder_version" {
   description = "The version to use for Wayfinder"
   type        = string
-  default     = "v2.2.1"
+  default     = "v2.3.3"
 }

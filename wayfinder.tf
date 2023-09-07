@@ -62,14 +62,17 @@ resource "helm_release" "wayfinder" {
   max_history      = 5
   namespace        = "wayfinder"
   timeout          = 600
+  wait             = true
+  wait_for_jobs    = true
 
   values = [
     templatefile("${path.module}/manifests/wayfinder-values.yml.tpl", {
       api_hostname                  = var.wayfinder_domain_name_api
+      enable_localadmin_user        = var.create_localadmin_user
       storage_class                 = "managed"
       ui_hostname                   = var.wayfinder_domain_name_ui
       wayfinder_client_id           = azurerm_user_assigned_identity.wayfinder_main.client_id
-      wayfinder_cluster_id          = module.aks.aks_id
+      wayfinder_cluster_id          = "/subscriptions/c9757c60-ea81-44e7-a7a3-022874e014ba/resourcegroups/wayfinder-kash-test/providers/Microsoft.ContainerService/managedClusters/wayfinder-prod-aks"
       wayfinder_instance_identifier = local.wayfinder_instance_id
     })
   ]
@@ -77,5 +80,16 @@ resource "helm_release" "wayfinder" {
   set_sensitive {
     name  = "licenseKey"
     value = var.wayfinder_license_key
+  }
+}
+
+data "kubernetes_secret" "localadmin_password" {
+  count = var.enable_k8s_resources && var.create_localadmin_user ? 1 : 0
+
+  depends_on = [helm_release.wayfinder]
+
+  metadata {
+    name      = "wayfinder-localadmin-initpw"
+    namespace = "wayfinder"
   }
 }
