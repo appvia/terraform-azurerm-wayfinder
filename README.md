@@ -7,13 +7,19 @@ The "terraform-azure-wayfinder" Terraform Module can be used to provision and ma
 
 To run this module, you will need the following:
 1. Product license key: Contact sales@appvia.io for more information.
-2. IDP App configuration details: Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID) for initial configuration.
+2. (Optional) IDP App configuration details: Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID) for setup. This does not need to be defined initially within Terraform, and can also be setup within the product. Wayfinder can provision a `localadmin` user for initial access if no IDP details are provided.
 3. A public Azure DNS Zone: This module will create DNS records for the Wayfinder API and UI endpoints, and performs a DNS01 challenge via the LetsEncrypt Issuer for valid domain certificates.
 4. Existing Virtual Network and Subnet: This module will deploy an AKS Cluster and so requires an existing vnet with outbound internet connectivity.
 
-### Connecting to an Identity Provider
+## Deployment
 
-Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID) for initial configuration.
+Please see the [examples](./examples) directory to see how to deploy this module. To get up and running quickly with minimal pre-requisites, use the [no-idp](./examples/no-idp) example.
+
+### (Optional) Connecting to an Identity Provider
+
+Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID).
+
+This configuration is optional within Terraform, and can also be setup within the product. Please view the documentation for more information: https://docs.appvia.io/wayfinder/admin/auth
 
 The Authorized Redirect URI for the IDP Application should be set to: `https://${wayfinder_domain_name_api}/oauth/callback`
 
@@ -43,10 +49,6 @@ wayfinder_idp_details = {
 }
 ```
 
-## Deployment
-
-Please see the [examples](./examples) directory to see how to deploy this module.
-
 ## Updating Docs
 
 The `terraform-docs` utility is used to generate this README. Follow the below steps to update:
@@ -67,6 +69,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_aks_vnet_subnet_id"></a> [aks\_vnet\_subnet\_id](#input\_aks\_vnet\_subnet\_id) | The ID of the subnet in which to deploy the Kubernetes Cluster. | `string` | n/a | yes |
 | <a name="input_clusterissuer_email"></a> [clusterissuer\_email](#input\_clusterissuer\_email) | The email address to use for the cert-manager cluster issuer. | `string` | n/a | yes |
 | <a name="input_create_duration_delay"></a> [create\_duration\_delay](#input\_create\_duration\_delay) | Used to tune terraform apply when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after creation of the specified resource type. | <pre>object({<br>    azurerm_role_definition         = optional(string, "120s")<br>    kubectl_manifest_cloud_identity = optional(string, "30s")<br>  })</pre> | `{}` | no |
+| <a name="input_create_localadmin_user"></a> [create\_localadmin\_user](#input\_create\_localadmin\_user) | Whether to create a localadmin user for access to the Wayfinder Portal and API | `bool` | `true` | no |
 | <a name="input_destroy_duration_delay"></a> [destroy\_duration\_delay](#input\_destroy\_duration\_delay) | Used to tune terraform deploy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type. | <pre>object({<br>    azurerm_role_definition         = optional(string, "0s")<br>    kubectl_manifest_cloud_identity = optional(string, "60s")<br>  })</pre> | `{}` | no |
 | <a name="input_disable_internet_access"></a> [disable\_internet\_access](#input\_disable\_internet\_access) | Whether to disable internet access for AKS and the Wayfinder ingress controller | `bool` | `false` | no |
 | <a name="input_dns_zone_id"></a> [dns\_zone\_id](#input\_dns\_zone\_id) | The ID of the Azure DNS Zone to use. | `string` | n/a | yes |
@@ -79,22 +82,24 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to resources. | `map(string)` | `{}` | no |
 | <a name="input_wayfinder_domain_name_api"></a> [wayfinder\_domain\_name\_api](#input\_wayfinder\_domain\_name\_api) | The domain name to use for the Wayfinder API (e.g. api.wayfinder.example.com) | `string` | n/a | yes |
 | <a name="input_wayfinder_domain_name_ui"></a> [wayfinder\_domain\_name\_ui](#input\_wayfinder\_domain\_name\_ui) | The domain name to use for the Wayfinder UI (e.g. portal.wayfinder.example.com) | `string` | n/a | yes |
-| <a name="input_wayfinder_idp_details"></a> [wayfinder\_idp\_details](#input\_wayfinder\_idp\_details) | The IDP details to use for Wayfinder to enable SSO | <pre>object({<br>    type          = string<br>    clientId      = string<br>    clientSecret  = string<br>    serverUrl     = optional(string)<br>    azureTenantId = optional(string)<br>  })</pre> | n/a | yes |
+| <a name="input_wayfinder_idp_details"></a> [wayfinder\_idp\_details](#input\_wayfinder\_idp\_details) | The IDP details to use for Wayfinder to enable SSO | <pre>object({<br>    type          = string<br>    clientId      = optional(string)<br>    clientSecret  = optional(string)<br>    serverUrl     = optional(string)<br>    azureTenantId = optional(string)<br>  })</pre> | <pre>{<br>  "azureTenantId": "",<br>  "clientId": null,<br>  "clientSecret": null,<br>  "serverUrl": "",<br>  "type": "none"<br>}</pre> | no |
 | <a name="input_wayfinder_instance_id"></a> [wayfinder\_instance\_id](#input\_wayfinder\_instance\_id) | The instance ID to use for Wayfinder. This can be left blank and will be autogenerated. | `string` | `""` | no |
 | <a name="input_wayfinder_license_key"></a> [wayfinder\_license\_key](#input\_wayfinder\_license\_key) | The license key to use for Wayfinder | `string` | n/a | yes |
 | <a name="input_wayfinder_release_channel"></a> [wayfinder\_release\_channel](#input\_wayfinder\_release\_channel) | The release channel to use for Wayfinder | `string` | `"wayfinder-releases"` | no |
-| <a name="input_wayfinder_version"></a> [wayfinder\_version](#input\_wayfinder\_version) | The version to use for Wayfinder | `string` | `"v2.2.1"` | no |
+| <a name="input_wayfinder_version"></a> [wayfinder\_version](#input\_wayfinder\_version) | The version to use for Wayfinder | `string` | `"v2.3.3"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| <a name="output_aks_admin_host"></a> [aks\_admin\_host](#output\_aks\_admin\_host) | The public API URL of the Azure Kubernetes Managed Cluster. |
 | <a name="output_aks_client_certificate"></a> [aks\_client\_certificate](#output\_aks\_client\_certificate) | The `client_certificate` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block.  Base64 encoded public certificate used by clients to authenticate to the Kubernetes cluster. |
 | <a name="output_aks_client_key"></a> [aks\_client\_key](#output\_aks\_client\_key) | The `client_key` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block. Base64 encoded private key used by clients to authenticate to the Kubernetes cluster. |
 | <a name="output_aks_cluster_ca_certificate"></a> [aks\_cluster\_ca\_certificate](#output\_aks\_cluster\_ca\_certificate) | The `cluster_ca_certificate` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block. Base64 encoded public CA certificate used as the root of trust for the Kubernetes cluster. |
-| <a name="output_aks_fqdn"></a> [aks\_fqdn](#output\_aks\_fqdn) | The FQDN of the Azure Kubernetes Managed Cluster. |
-| <a name="output_aks_host"></a> [aks\_host](#output\_aks\_host) | The Kubernetes cluster server host. This is a Private Link address if 'disable\_internet\_access' is configured. |
+| <a name="output_aks_kubeconfig_host"></a> [aks\_kubeconfig\_host](#output\_aks\_kubeconfig\_host) | The Kubernetes cluster server host. This is a Private Link address if 'disable\_internet\_access' is configured. |
 | <a name="output_cluster_name"></a> [cluster\_name](#output\_cluster\_name) | The name of the Wayfinder AKS cluster |
+| <a name="output_wayfinder_admin_password"></a> [wayfinder\_admin\_password](#output\_wayfinder\_admin\_password) | The password for the Wayfinder local admin user |
+| <a name="output_wayfinder_admin_username"></a> [wayfinder\_admin\_username](#output\_wayfinder\_admin\_username) | The username for the Wayfinder local admin user |
 | <a name="output_wayfinder_api_url"></a> [wayfinder\_api\_url](#output\_wayfinder\_api\_url) | The URL for the Wayfinder API |
 | <a name="output_wayfinder_instance_id"></a> [wayfinder\_instance\_id](#output\_wayfinder\_instance\_id) | The unique identifier for the Wayfinder instance |
 | <a name="output_wayfinder_ui_url"></a> [wayfinder\_ui\_url](#output\_wayfinder\_ui\_url) | The URL for the Wayfinder UI |

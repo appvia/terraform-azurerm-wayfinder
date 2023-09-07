@@ -15,12 +15,6 @@ variable "clusterissuer_email" {
   type        = string
 }
 
-variable "create_localadmin_user" {
-  description = "Whether to create a localadmin user for access to the Wayfinder Portal and API"
-  type        = bool
-  default     = false
-}
-
 variable "disable_internet_access" {
   description = "Whether to disable internet access for AKS and the Wayfinder ingress controller"
   type        = bool
@@ -62,29 +56,6 @@ variable "tags" {
   description = "A mapping of tags to assign to the resource."
   type        = map(string)
   default     = {}
-}
-
-variable "wayfinder_idp_details" {
-  description = "The IDP details to use for Wayfinder to enable SSO"
-  type = object({
-    type          = string
-    clientId      = string
-    clientSecret  = string
-    serverUrl     = optional(string)
-    azureTenantId = optional(string)
-  })
-
-  sensitive = true
-
-  validation {
-    condition     = contains(["generic", "aad"], var.wayfinder_idp_details["type"])
-    error_message = "wayfinder_idp_details[\"type\"] must be one of: generic, aad"
-  }
-
-  validation {
-    condition     = (var.wayfinder_idp_details["type"] == "generic" && length(var.wayfinder_idp_details["serverUrl"]) > 0) || (var.wayfinder_idp_details["type"] == "aad" && length(var.wayfinder_idp_details["azureTenantId"]) > 0)
-    error_message = "serverUrl must be set if IDP type is generic, azureTenantId must be set if IDP type is aad"
-  }
 }
 
 variable "wayfinder_license_key" {
