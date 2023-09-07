@@ -85,6 +85,7 @@ variable "tags" {
 variable "user_assigned_identity" {
   description = "MSI id for AKS to run as"
   type        = string
+  default     = null
 }
 
 variable "venafi_apikey" {
@@ -125,7 +126,7 @@ variable "wayfinder_idp_details" {
 variable "wayfinder_instance_id" {
   description = "Wayfinder instance ID"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "wayfinder_license_key" {

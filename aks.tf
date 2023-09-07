@@ -47,8 +47,8 @@ module "aks" {
   storage_profile_disk_driver_version   = "v1"
   tags                                  = local.tags
   vnet_subnet_id                        = var.aks_vnet_subnet_id
-  identity_ids                          = [var.user_assigned_identity]
-  identity_type                         = "UserAssigned"
+  identity_ids                          = var.user_assigned_identity == null ? null : [var.user_assigned_identity]
+  identity_type                         = var.user_assigned_identity == null ? "SystemAssigned" : "UserAssigned"
   workload_identity_enabled             = true
 
   agents_pool_linux_os_configs = [
