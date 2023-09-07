@@ -18,6 +18,7 @@ api:
     className: "nginx"
   wayfinderInstanceIdentifier: "${wayfinder_instance_identifier}"
   wfManagedWfCluster: true
+enableLocalAdminUser: ${enable_localadmin_user}
 mysql:
   pvc:
     storageClass: "${storage_class}"
