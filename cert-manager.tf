@@ -69,7 +69,7 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_vaas" {
   ]
 
   yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-vaas.yml.tpl", {
-    venafi_zone              = var.venafi_zone
+    venafi_zone = var.venafi_zone
   })
 }
 
@@ -82,6 +82,6 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_vaas_secret" {
   ]
 
   yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-vaas-secret.yml.tpl", {
-    venafi_apikey              = var.venafi_apikey
+    venafi_apikey = var.venafi_apikey
   })
 }
