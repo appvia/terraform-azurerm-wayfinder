@@ -63,7 +63,7 @@ variable "clusterissuer_email" {
 
 variable "create_duration_delay" {
   type = object({
-    azurerm_role_definition         = optional(string, "120s")
+    azurerm_role_definition         = optional(string, "180s")
     kubectl_manifest_cloud_identity = optional(string, "30s")
   })
   description = "Used to tune terraform apply when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after creation of the specified resource type."
