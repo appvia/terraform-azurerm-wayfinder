@@ -7,8 +7,6 @@ locals {
     Provisioner = "Terraform"
     Environment = var.environment
   }, var.tags)
-
-  wayfinder_instance_id = var.wayfinder_instance_id != "" ? var.wayfinder_instance_id : substr(md5(format("azure-%s-%s", var.resource_group_id, var.environment)), 0, 12)
 }
 
 resource "time_sleep" "after_azurerm_role_definition" {

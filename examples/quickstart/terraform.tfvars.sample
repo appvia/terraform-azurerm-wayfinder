@@ -9,12 +9,5 @@ tags = {
   Repository  = "Your Repository URL"
   Provisioner = "Terraform"
 }
-wayfinder_idp_details = {
-  type          = "aad"
-  clientId      = "AZURE-AD-APPLICATION-ID"
-  clientSecret  = "AZURE-AD-APPLICATION-CLIENT-SECRET-VALUE"
-  azureTenantId = "AZURE-TENANT-ID"
-  serverUrl     = ""
-}
 wayfinder_instance_id = "your-wayfinder-instance-id"
 wayfinder_licence_key = "wayfinder-licence-key"

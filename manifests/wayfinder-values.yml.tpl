@@ -13,6 +13,7 @@ api:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: '16k'
     namespace: "ingress-nginx"
     className: "nginx"
   wayfinderInstanceIdentifier: "${wayfinder_instance_identifier}"
