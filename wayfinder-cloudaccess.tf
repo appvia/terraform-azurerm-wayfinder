@@ -1,12 +1,12 @@
 resource "azurerm_user_assigned_identity" "wayfinder_dns_zone_manager" {
   location            = var.location
   resource_group_name = module.aks.node_resource_group
-  name                = "wf-admin-dnszonemanager-${local.wayfinder_instance_id}"
+  name                = "wf-admin-dnszonemanager-${var.wayfinder_instance_id}"
   tags                = var.tags
 }
 
 resource "azurerm_role_definition" "wayfinder_dns_zone_manager" {
-  name        = "WayfinderDNSZoneManager-${local.wayfinder_instance_id}"
+  name        = "WayfinderDNSZoneManager-${var.wayfinder_instance_id}"
   scope       = data.azurerm_subscription.current.id
   description = "Wayfinder managed access to create DNS Zones in Azure"
 
@@ -41,12 +41,12 @@ resource "azurerm_role_assignment" "wayfinder_dns_zone_manager" {
 resource "azurerm_user_assigned_identity" "wayfinder_cloud_info" {
   location            = var.location
   resource_group_name = module.aks.node_resource_group
-  name                = "wf-admin-cloudinfo-${local.wayfinder_instance_id}"
+  name                = "wf-admin-cloudinfo-${var.wayfinder_instance_id}"
   tags                = var.tags
 }
 
 resource "azurerm_role_definition" "wayfinder_cloud_info" {
-  name        = "WayfinderCloudInfo-${local.wayfinder_instance_id}"
+  name        = "WayfinderCloudInfo-${var.wayfinder_instance_id}"
   scope       = data.azurerm_subscription.current.id
   description = "Wayfinder managed access to obtain cloud metadata like prices"
 
@@ -73,12 +73,12 @@ resource "azurerm_role_assignment" "wayfinder_cloud_info" {
 resource "azurerm_user_assigned_identity" "wayfinder_none" {
   location            = var.location
   resource_group_name = module.aks.node_resource_group
-  name                = "wf-admin-none-${local.wayfinder_instance_id}"
+  name                = "wf-admin-none-${var.wayfinder_instance_id}"
   tags                = var.tags
 }
 
 resource "azurerm_role_definition" "wayfinder_none" {
-  name        = "WayfinderNone-${local.wayfinder_instance_id}"
+  name        = "WayfinderNone-${var.wayfinder_instance_id}"
   scope       = data.azurerm_subscription.current.id
   description = "Wayfinder managed access to access subscription and tenant info"
 
@@ -100,12 +100,12 @@ resource "azurerm_role_assignment" "wayfinder_none" {
 resource "azurerm_user_assigned_identity" "wayfinder_main" {
   location            = var.location
   resource_group_name = module.aks.node_resource_group
-  name                = "wf-admin-main-${local.wayfinder_instance_id}"
+  name                = "wf-admin-main-${var.wayfinder_instance_id}"
   tags                = var.tags
 }
 
 resource "azurerm_role_definition" "wayfinder_main" {
-  name        = "WayfinderMain-${local.wayfinder_instance_id}"
+  name        = "WayfinderMain-${var.wayfinder_instance_id}"
   scope       = data.azurerm_subscription.current.id
   description = "Minimal Wayfinder permissions"
 

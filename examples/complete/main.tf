@@ -11,10 +11,10 @@ module "wayfinder" {
   dns_zone_name                       = var.dns_zone_name
   enable_k8s_resources                = var.enable_k8s_resources
   environment                         = var.environment
-  resource_group_id                   = data.azurerm_resource_group.wayfinder.id
-  resource_group_name                 = data.azurerm_resource_group.wayfinder.name
+  resource_group_name                 = var.resource_group_name
   wayfinder_domain_name_api           = "api.${var.dns_zone_name}"
   wayfinder_domain_name_ui            = "portal.${var.dns_zone_name}"
   wayfinder_idp_details               = var.wayfinder_idp_details
-  wayfinder_license_key               = var.wayfinder_license_key
+  wayfinder_instance_id               = var.wayfinder_instance_id
+  wayfinder_licence_key               = var.wayfinder_licence_key
 }

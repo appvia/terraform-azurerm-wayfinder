@@ -1,6 +1,12 @@
 content: |-
   # Example: No IDP (initialised with a localadmin user)
 
+  **Notes:**
+  * Wayfinder will start up with an initial local administrator user (not configured to use an IDP).
+  * Any sensitive values (e.g. licence key) are passed directly as a variable to the module.
+
+  This example should be used for product testing and evaluation only. For a more production-ready deployment, please see the [complete example](../complete).
+
   ## Deployment
 
   1. Create a Resource Group for Wayfinder to be installed within.
