@@ -1,5 +1,5 @@
 content: |-
-  # Example: No IDP (initialised with a localadmin user)
+  # Example: Quickstart
 
   **Notes:**
   * Wayfinder will start up with an initial local administrator user (not configured to use an IDP).
