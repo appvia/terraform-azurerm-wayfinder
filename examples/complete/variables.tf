@@ -26,6 +26,12 @@ variable "disable_internet_access" {
   default     = false
 }
 
+variable "disable_local_login" {
+  description = "Whether to disable local login for Wayfinder. Note: An IDP must be configured within Wayfinder, otherwise you will not be able to log in."
+  type        = bool
+  default     = false
+}
+
 variable "dns_resource_group_name" {
   description = "The name of the resource group where the DNS Zone exists."
   type        = string
