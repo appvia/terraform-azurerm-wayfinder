@@ -75,7 +75,7 @@ resource "helm_release" "wayfinder" {
   values = [
     templatefile("${path.module}/manifests/wayfinder-values.yml.tpl", {
       api_hostname                  = var.wayfinder_domain_name_api
-      disable_local_login           = var.disable_local_login
+      disable_local_login           = var.wayfinder_idp_details["type"] == "none" ? false : var.disable_local_login
       enable_localadmin_user        = var.create_localadmin_user
       storage_class                 = "managed"
       ui_hostname                   = var.wayfinder_domain_name_ui
