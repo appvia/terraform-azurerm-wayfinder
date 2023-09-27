@@ -55,6 +55,6 @@ output "wayfinder_admin_username" {
 
 output "wayfinder_admin_password" {
   description = "The password for the Wayfinder local admin user."
-  value       = var.enable_k8s_resources && var.create_localadmin_user ? data.kubernetes_secret.localadmin_password[0].data["WF_LOCALADMIN_PASSWORD"] : null
+  value       = var.create_localadmin_user ? random_password.wayfinder_localadmin[0].result : null
   sensitive   = true
 }

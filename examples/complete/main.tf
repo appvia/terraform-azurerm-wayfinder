@@ -7,6 +7,7 @@ module "wayfinder" {
   clusterissuer_email                 = var.clusterissuer_email
   create_localadmin_user              = var.create_localadmin_user
   disable_internet_access             = var.disable_internet_access
+  disable_local_login                 = var.disable_local_login
   dns_zone_id                         = data.azurerm_dns_zone.wayfinder.id
   dns_zone_name                       = var.dns_zone_name
   enable_k8s_resources                = var.enable_k8s_resources

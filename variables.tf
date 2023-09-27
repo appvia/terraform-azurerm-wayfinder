@@ -101,6 +101,12 @@ variable "disable_internet_access" {
   default     = false
 }
 
+variable "disable_local_login" {
+  description = "Whether to disable local login for Wayfinder. Note: An IDP must be configured within Wayfinder, otherwise you will not be able to log in."
+  type        = bool
+  default     = false
+}
+
 variable "dns_zone_id" {
   description = "The ID of the Azure DNS Zone to use."
   type        = string
