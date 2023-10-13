@@ -30,15 +30,7 @@ resource "azurerm_role_assignment" "wayfinder_dns_zone_manager" {
   depends_on           = [time_sleep.after_azurerm_role_definition]
   scope                = data.azurerm_subscription.current.id
   role_definition_name = azurerm_role_definition.wayfinder_dns_zone_manager.name
-  principal_id         = azurerm_user_assigned_identity.wayfinder_dns_zone_manager.principal_id
-}
-
-resource "azurerm_user_assigned_identity" "wayfinder_cloud_info" {
-  count               = var.enable_wf_cloudaccess ? 1 : 0
-  location            = var.location
-  resource_group_name = module.aks.node_resource_group
-  name                = "wf-admin-cloudinfo-${var.wayfinder_instance_id}"
-  tags                = var.tags
+  principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
 }
 
 resource "azurerm_role_definition" "wayfinder_cloud_info" {
@@ -65,7 +57,7 @@ resource "azurerm_role_assignment" "wayfinder_cloud_info" {
   depends_on           = [time_sleep.after_azurerm_role_definition]
   scope                = data.azurerm_subscription.current.id
   role_definition_name = azurerm_role_definition.wayfinder_cloud_info.name
-  principal_id         = azurerm_user_assigned_identity.wayfinder_cloud_info.principal_id
+  principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
 }
 
 resource "kubectl_manifest" "wayfinder_namespace" {
@@ -97,10 +89,10 @@ resource "kubectl_manifest" "wayfinder_azure_cloudinfo_cloudaccessconfig" {
   depends_on = [time_sleep.after_kubectl_manifest_cloud_identity]
 
   yaml_body = templatefile("${path.module}/manifests/wayfinder-azure-cloudinfo-cloudaccessconfig.yml.tpl", {
-    region                    = var.location
-    subscription_id           = data.azurerm_subscription.current.subscription_id
-    tenant_id   = data.azurerm_subscription.current.tenant_id
-    identity = "cloudidentity-azure"
+    region          = var.location
+    subscription_id = data.azurerm_subscription.current.subscription_id
+    tenant_id       = data.azurerm_subscription.current.tenant_id
+    identity        = "cloudidentity-azure"
   })
 }
 
@@ -109,9 +101,9 @@ resource "kubectl_manifest" "wayfinder_azure_dnszonemanagement_cloudaccessconfig
   depends_on = [time_sleep.after_kubectl_manifest_cloud_identity]
 
   yaml_body = templatefile("${path.module}/manifests/wayfinder-azure-dnszonemanagement-cloudaccessconfig.yml.tpl", {
-    region                    = var.location
-    subscription_id           = data.azurerm_subscription.current.subscription_id
-    tenant_id   = data.azurerm_subscription.current.tenant_id
-    identity = "cloudidentity-azure"
+    region          = var.location
+    subscription_id = data.azurerm_subscription.current.subscription_id
+    tenant_id       = data.azurerm_subscription.current.tenant_id
+    identity        = "cloudidentity-azure"
   })
 }

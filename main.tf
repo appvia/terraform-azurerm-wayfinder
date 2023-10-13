@@ -15,7 +15,7 @@ resource "time_sleep" "after_azurerm_role_definition_main" {
   ]
 
   triggers = {
-    "azurerm_role_definition_wayfinder_main"       = jsonencode(keys(azurerm_role_definition.wayfinder_main))
+    "azurerm_role_definition_wayfinder_main" = jsonencode(keys(azurerm_role_definition.wayfinder_main))
   }
 
   create_duration  = var.create_duration_delay["azurerm_role_definition"]
