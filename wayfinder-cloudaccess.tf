@@ -29,7 +29,7 @@ resource "azurerm_role_assignment" "wayfinder_dns_zone_manager" {
   count                = var.enable_wf_cloudaccess ? 1 : 0
   depends_on           = [time_sleep.after_azurerm_role_definition]
   scope                = data.azurerm_subscription.current.id
-  role_definition_name = azurerm_role_definition.wayfinder_dns_zone_manager.name
+  role_definition_name = azurerm_role_definition.wayfinder_dns_zone_manager[0].name
   principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
 }
 
@@ -56,20 +56,8 @@ resource "azurerm_role_assignment" "wayfinder_cloud_info" {
   count                = var.enable_wf_cloudaccess ? 1 : 0
   depends_on           = [time_sleep.after_azurerm_role_definition]
   scope                = data.azurerm_subscription.current.id
-  role_definition_name = azurerm_role_definition.wayfinder_cloud_info.name
+  role_definition_name = azurerm_role_definition.wayfinder_cloud_info[0].name
   principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
-}
-
-resource "kubectl_manifest" "wayfinder_namespace" {
-  count = var.enable_k8s_resources ? 1 : 0
-
-  depends_on = [
-    module.aks,
-  ]
-
-  yaml_body = templatefile("${path.module}/manifests/namespace.yml.tpl", {
-    namespace = "wayfinder"
-  })
 }
 
 resource "kubectl_manifest" "wayfinder_cloud_identity_main" {
