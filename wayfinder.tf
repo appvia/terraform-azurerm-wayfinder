@@ -83,6 +83,18 @@ resource "random_password" "wayfinder_localadmin" {
   special = false
 }
 
+resource "kubectl_manifest" "wayfinder_namespace" {
+  count = var.enable_k8s_resources ? 1 : 0
+
+  depends_on = [
+    module.aks,
+  ]
+
+  yaml_body = templatefile("${path.module}/manifests/namespace.yml.tpl", {
+    namespace = "wayfinder"
+  })
+}
+
 resource "helm_release" "wayfinder" {
   count = var.enable_k8s_resources ? 1 : 0
 
@@ -91,7 +103,6 @@ resource "helm_release" "wayfinder" {
     helm_release.external_dns,
     helm_release.ingress,
     kubectl_manifest.cert_manager_clusterissuer,
-    kubectl_manifest.wayfinder_azure_identity_binding_main,
     kubectl_manifest.wayfinder_idp_aad,
     kubectl_manifest.wayfinder_idp,
     kubectl_manifest.wayfinder_namespace,
