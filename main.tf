@@ -7,6 +7,8 @@ locals {
     Provisioner = "Terraform"
     Environment = var.environment
   }, var.tags)
+  # If no DNS resource group provided, default to the same resource group as Wayfinder
+  dns_resource_group_name = var.dns_resource_group_name == "" ? var.resource_group_name : var.dns_resource_group_name
 }
 
 resource "time_sleep" "after_azurerm_role_definition_main" {

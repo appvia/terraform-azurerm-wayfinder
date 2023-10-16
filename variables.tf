@@ -112,6 +112,12 @@ variable "dns_zone_id" {
   type        = string
 }
 
+variable "dns_resource_group_name" {
+  description = "The name of the resource group where the DNS Zone exists, if different to Wayfinder's resource group."
+  type        = string
+  default     = ""
+}
+
 variable "dns_zone_name" {
   description = "The name of the Azure DNS zone to use."
   type        = string
