@@ -39,13 +39,13 @@ resource "time_sleep" "after_azurerm_role_definition" {
 }
 
 resource "time_sleep" "after_kubectl_manifest_cloud_identity" {
-  count = var.enable_k8s_resources ? 1 : 0
+  count = var.enable_k8s_resources && var.enable_wf_cloudaccess ? 1 : 0
   depends_on = [
     kubectl_manifest.wayfinder_cloud_identity_main,
   ]
 
   triggers = {
-    "kubectl_manifest_wayfinder_cloud_identity_main" = jsonencode(keys(kubectl_manifest.wayfinder_cloud_identity_main))
+    "kubectl_manifest_wayfinder_cloud_identity_main" = jsonencode(keys(kubectl_manifest.wayfinder_cloud_identity_main[0]))
   }
 
   create_duration  = var.create_duration_delay["kubectl_manifest_cloud_identity"]
