@@ -45,7 +45,7 @@ resource "time_sleep" "after_kubectl_manifest_cloud_identity" {
   ]
 
   triggers = {
-    "kubectl_manifest_wayfinder_cloud_identity_main" = jsonencode(keys(kubectl_manifest.wayfinder_cloud_identity_main[0]))
+    "kubectl_manifest_wayfinder_cloud_identity_main" = jsonencode(keys(kubectl_manifest.wayfinder_cloud_identity_main))
   }
 
   create_duration  = var.create_duration_delay["kubectl_manifest_cloud_identity"]
