@@ -27,7 +27,7 @@ resource "azurerm_role_definition" "wayfinder_dns_zone_manager" {
 
 resource "azurerm_role_assignment" "wayfinder_dns_zone_manager" {
   count                = var.enable_wf_cloudaccess ? 1 : 0
-  depends_on           = [time_sleep.after_azurerm_role_definition]
+  depends_on           = [time_sleep.after_azurerm_role_definition[0]]
   scope                = data.azurerm_subscription.current.id
   role_definition_name = azurerm_role_definition.wayfinder_dns_zone_manager[0].name
   principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
@@ -54,7 +54,7 @@ resource "azurerm_role_definition" "wayfinder_cloud_info" {
 
 resource "azurerm_role_assignment" "wayfinder_cloud_info" {
   count                = var.enable_wf_cloudaccess ? 1 : 0
-  depends_on           = [time_sleep.after_azurerm_role_definition]
+  depends_on           = [time_sleep.after_azurerm_role_definition[0]]
   scope                = data.azurerm_subscription.current.id
   role_definition_name = azurerm_role_definition.wayfinder_cloud_info[0].name
   principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id

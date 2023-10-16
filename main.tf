@@ -23,6 +23,7 @@ resource "time_sleep" "after_azurerm_role_definition_main" {
 }
 
 resource "time_sleep" "after_azurerm_role_definition" {
+  count = var.enable_wf_cloudaccess ? 1 : 0
   depends_on = [
     azurerm_role_definition.wayfinder_cloud_info[0],
     azurerm_role_definition.wayfinder_dns_zone_manager[0],
