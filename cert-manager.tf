@@ -50,7 +50,7 @@ resource "kubectl_manifest" "cert_manager_clusterissuer" {
   yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer.yml.tpl", {
     email              = var.clusterissuer_email
     dns_zone_name      = var.dns_zone_name
-    resource_group     = var.resource_group_name
+    resource_group     = local.dns_resource_group_name
     subscription_id    = data.azurerm_subscription.current.subscription_id
     identity_client_id = azurerm_user_assigned_identity.cert_manager.client_id
   })
