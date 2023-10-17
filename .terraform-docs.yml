@@ -1,7 +1,7 @@
 content: |-
   # Terraform Module: Wayfinder on Azure
 
-  The "terraform-azure-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/product/) on Azure.
+  The "terraform-azurerm-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/product/) on Azure.
 
   ## Requirements
 
