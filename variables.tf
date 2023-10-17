@@ -204,8 +204,8 @@ variable "wayfinder_instance_id" {
   type        = string
 
   validation {
-    condition     = can(regex("^[a-z0-9]{20}$", var.wayfinder_instance_id))
-    error_message = "The Wayfinder Instance ID must be alphanumeric and 20 characters long."
+    condition     = can(regex("^[a-z0-9]{10,20}$", var.wayfinder_instance_id))
+    error_message = "The Wayfinder Instance ID must be alphanumeric and 10-20 characters long."
   }
 }
 
