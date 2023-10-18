@@ -112,6 +112,12 @@ variable "dns_zone_id" {
   type        = string
 }
 
+variable "dns_resource_group_name" {
+  description = "The name of the resource group where the DNS Zone exists, if different to Wayfinder's resource group."
+  type        = string
+  default     = ""
+}
+
 variable "dns_zone_name" {
   description = "The name of the Azure DNS zone to use."
   type        = string
@@ -119,6 +125,12 @@ variable "dns_zone_name" {
 
 variable "enable_k8s_resources" {
   description = "Whether to enable the creation of Kubernetes resources for Wayfinder (helm and kubectl manifest deployments)"
+  type        = bool
+  default     = true
+}
+
+variable "enable_wf_cloudaccess" {
+  description = "Whether to configure CloudIdentity and admin CloudAccessConfig resources in Wayfinder once installed (requires enable_k8s_resources)"
   type        = bool
   default     = true
 }
@@ -192,8 +204,8 @@ variable "wayfinder_instance_id" {
   type        = string
 
   validation {
-    condition     = can(regex("^[a-z0-9]{20}$", var.wayfinder_instance_id))
-    error_message = "The Wayfinder Instance ID must be alphanumeric and 20 characters long."
+    condition     = can(regex("^[a-z0-9]{10,20}$", var.wayfinder_instance_id))
+    error_message = "The Wayfinder Instance ID must be alphanumeric and 10-20 characters long."
   }
 }
 

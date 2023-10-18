@@ -43,7 +43,7 @@ resource "kubectl_manifest" "external_dns_secret" {
   yaml_body = templatefile("${path.module}/manifests/external-dns-secret.yml.tpl", {
     tenant_id                 = data.azurerm_subscription.current.tenant_id
     subscription_id           = data.azurerm_subscription.current.subscription_id
-    resource_group            = var.resource_group_name
+    resource_group            = local.dns_resource_group_name
     user_assigned_identity_id = azurerm_user_assigned_identity.external_dns.client_id
   })
 }

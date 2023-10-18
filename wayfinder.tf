@@ -1,3 +1,39 @@
+resource "azurerm_user_assigned_identity" "wayfinder_main" {
+  location            = var.location
+  resource_group_name = module.aks.node_resource_group
+  name                = "wf-admin-main-${var.wayfinder_instance_id}"
+  tags                = var.tags
+}
+
+resource "azurerm_role_definition" "wayfinder_main" {
+  name        = "WayfinderMain-${var.wayfinder_instance_id}"
+  scope       = data.azurerm_subscription.current.id
+  description = "Minimal Wayfinder permissions"
+
+  permissions {
+    actions = [
+      "Microsoft.Resources/subscriptions/resources/read"
+    ]
+    not_actions = []
+  }
+}
+
+resource "azurerm_role_assignment" "wayfinder_main" {
+  depends_on           = [time_sleep.after_azurerm_role_definition_main]
+  scope                = data.azurerm_subscription.current.id
+  role_definition_name = azurerm_role_definition.wayfinder_main.name
+  principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
+}
+
+resource "azurerm_federated_identity_credential" "wayfinder_main" {
+  name                = azurerm_user_assigned_identity.wayfinder_main.name
+  resource_group_name = azurerm_user_assigned_identity.wayfinder_main.resource_group_name
+  parent_id           = azurerm_user_assigned_identity.wayfinder_main.id
+  audience            = ["api://AzureADTokenExchange"]
+  issuer              = module.aks.oidc_issuer_url
+  subject             = "system:serviceaccount:wayfinder:wayfinder-admin"
+}
+
 resource "kubectl_manifest" "wayfinder_idp" {
   count = (var.enable_k8s_resources && var.wayfinder_idp_details["type"] == "generic") ? 1 : 0
 
@@ -47,6 +83,18 @@ resource "random_password" "wayfinder_localadmin" {
   special = false
 }
 
+resource "kubectl_manifest" "wayfinder_namespace" {
+  count = var.enable_k8s_resources ? 1 : 0
+
+  depends_on = [
+    module.aks,
+  ]
+
+  yaml_body = templatefile("${path.module}/manifests/namespace.yml.tpl", {
+    namespace = "wayfinder"
+  })
+}
+
 resource "helm_release" "wayfinder" {
   count = var.enable_k8s_resources ? 1 : 0
 
@@ -55,7 +103,6 @@ resource "helm_release" "wayfinder" {
     helm_release.external_dns,
     helm_release.ingress,
     kubectl_manifest.cert_manager_clusterissuer,
-    kubectl_manifest.wayfinder_azure_identity_binding_main,
     kubectl_manifest.wayfinder_idp_aad,
     kubectl_manifest.wayfinder_idp,
     kubectl_manifest.wayfinder_namespace,
@@ -80,7 +127,6 @@ resource "helm_release" "wayfinder" {
       storage_class                 = "managed"
       ui_hostname                   = var.wayfinder_domain_name_ui
       wayfinder_client_id           = azurerm_user_assigned_identity.wayfinder_main.client_id
-      wayfinder_cluster_id          = "/subscriptions/c9757c60-ea81-44e7-a7a3-022874e014ba/resourcegroups/wayfinder-kash-test/providers/Microsoft.ContainerService/managedClusters/wayfinder-prod-aks"
       wayfinder_instance_identifier = var.wayfinder_instance_id
     })
   ]
