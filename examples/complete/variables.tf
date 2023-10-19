@@ -144,7 +144,7 @@ variable "wayfinder_instance_id" {
 }
 
 variable "wayfinder_licence_key" {
-  description = "The license key to use for Wayfinder"
+  description = "The licence key to use for Wayfinder."
   type        = string
   sensitive   = true
 }
