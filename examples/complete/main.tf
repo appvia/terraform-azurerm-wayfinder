@@ -23,6 +23,6 @@ module "wayfinder" {
   wayfinder_domain_name_api           = "api.${var.dns_zone_name}"
   wayfinder_domain_name_ui            = "portal.${var.dns_zone_name}"
   wayfinder_idp_details               = var.wayfinder_idp_details
-  wayfinder_license_key               = var.wayfinder_license_key
   wayfinder_instance_id               = var.wayfinder_instance_id
+  wayfinder_licence_key               = var.wayfinder_licence_key
 }
