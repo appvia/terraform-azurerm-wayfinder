@@ -127,6 +127,7 @@ resource "helm_release" "wayfinder" {
       storage_class                 = "managed"
       ui_hostname                   = var.wayfinder_domain_name_ui
       wayfinder_client_id           = azurerm_user_assigned_identity.wayfinder_main.client_id
+      wayfinder_principal_id        = azurerm_user_assigned_identity.wayfinder_main.principal_id
       wayfinder_instance_identifier = var.wayfinder_instance_id
     })
   ]
