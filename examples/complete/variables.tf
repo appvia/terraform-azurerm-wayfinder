@@ -138,9 +138,8 @@ variable "wayfinder_idp_details" {
 }
 
 variable "wayfinder_instance_id" {
-  description = "Wayfinder instance ID"
+  description = "The instance ID to use for Wayfinder."
   type        = string
-  default     = ""
 }
 
 variable "wayfinder_licence_key" {
