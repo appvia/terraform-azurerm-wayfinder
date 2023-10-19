@@ -37,3 +37,4 @@ ui:
 workloadIdentity:
   azure:
     clientID: ${wayfinder_client_id}
+    principalID: ${wayfinder_principal_id}

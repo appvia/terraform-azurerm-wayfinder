@@ -4,9 +4,9 @@ variable "resource_suffix" {
   type        = string
 }
 
-variable "wayfinder_identity_azure_client_id" {
+variable "wayfinder_identity_azure_principal_id" {
   default     = ""
-  description = "Client ID of Wayfinder's Azure AD managed identity to give access to. Populate when Wayfinder is running on Azure with AzureAD Workload Identity or when using a credential-based Azure identity."
+  description = "Principal ID of Wayfinder's Azure AD managed identity to give access to. Populate when Wayfinder is running on Azure with AzureAD Workload Identity or when using a credential-based Azure identity."
   type        = string
 }
 

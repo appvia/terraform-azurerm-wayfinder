@@ -1,3 +1,7 @@
+locals {
+  cloudinfo_definition = jsondecode(file("${path.module}/wf_cloud_info_definition.json"))
+}
+
 resource "azurerm_role_definition" "cloudinfo" {
   count = var.enable_cloud_info ? 1 : 0
 
@@ -5,23 +9,16 @@ resource "azurerm_role_definition" "cloudinfo" {
   scope = data.azurerm_subscription.primary.id
 
   permissions {
-    actions = [
-      "Microsoft.Commerce/RateCard/read",
-      "Microsoft.Compute/virtualMachines/vmSizes/read",
-      "Microsoft.ContainerService/containerServices/read",
-      "Microsoft.Resources/providers/read",
-      "Microsoft.Resources/subscriptions/locations/read",
-      "Microsoft.Resources/subscriptions/providers/read"
-    ]
+    actions = local.cloudinfo_definition.actions
   }
 }
 
 resource "azurerm_role_assignment" "cloudinfo" {
-  count = var.enable_cloud_info && var.wayfinder_identity_azure_client_id != "" ? 1 : 0
+  count = var.enable_cloud_info && var.wayfinder_identity_azure_principal_id != "" ? 1 : 0
 
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = azurerm_role_definition.cloudinfo[0].name
-  principal_id         = var.wayfinder_identity_azure_client_id
+  principal_id         = var.wayfinder_identity_azure_principal_id
 
   depends_on = [
     azurerm_role_definition.cloudinfo[0]

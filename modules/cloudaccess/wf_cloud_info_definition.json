@@ -1,0 +1,10 @@
+{
+    "actions": [
+        "Microsoft.Commerce/RateCard/read",
+        "Microsoft.Compute/virtualMachines/vmSizes/read",
+        "Microsoft.ContainerService/containerServices/read",
+        "Microsoft.Resources/providers/read",
+        "Microsoft.Resources/subscriptions/locations/read",
+        "Microsoft.Resources/subscriptions/providers/read"
+    ]
+}

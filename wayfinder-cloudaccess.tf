@@ -65,10 +65,11 @@ resource "kubectl_manifest" "wayfinder_cloud_identity_main" {
   depends_on = [helm_release.wayfinder]
 
   yaml_body = templatefile("${path.module}/manifests/wayfinder-cloud-identity.yml.tpl", {
-    name        = "cloudidentity-azure"
-    description = "Cloud managed identity"
-    client_id   = azurerm_user_assigned_identity.wayfinder_main.client_id
-    tenant_id   = data.azurerm_subscription.current.tenant_id
+    name         = "cloudidentity-azure"
+    description  = "Cloud managed identity"
+    client_id    = azurerm_user_assigned_identity.wayfinder_main.client_id
+    tenant_id    = data.azurerm_subscription.current.tenant_id
+    principal_id = azurerm_user_assigned_identity.wayfinder_main.principal_id
   })
 }
 
