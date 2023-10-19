@@ -2,21 +2,12 @@ aks_rbac_aad_admin_groups = {
   "my-aad-aks-admin-group" = "c0e0b0f0-0000-0000-0000-000000000000"
 }
 clusterissuer_email     = "example@appvia.io"
-disable_local_login     = true
 dns_resource_group_name = "wayfinder-rg"
 dns_zone_name           = "wf.example.com"
-environment             = "prod"
-resource_group_name     = "rg-wayfinder"
+resource_group_name     = "wayfinder-rg"
 tags = {
   Repository  = "Your Repository URL"
   Provisioner = "Terraform"
-}
-wayfinder_idp_details = {
-  type          = "aad"
-  clientId      = "AZURE-AD-APPLICATION-ID"
-  clientSecret  = "AZURE-AD-APPLICATION-CLIENT-SECRET-VALUE"
-  azureTenantId = "AZURE-TENANT-ID"
-  serverUrl     = ""
 }
 wayfinder_instance_id = "your-wayfinder-instance-id"
 wayfinder_licence_key = "wayfinder-licence-key"

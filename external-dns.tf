@@ -1,7 +1,7 @@
 resource "azurerm_user_assigned_identity" "external_dns" {
   location            = var.location
   resource_group_name = module.aks.node_resource_group
-  name                = "wf-admin-external-dns-${local.wayfinder_instance_id}"
+  name                = "wf-admin-external-dns-${var.wayfinder_instance_id}"
   tags                = var.tags
 }
 

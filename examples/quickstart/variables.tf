@@ -7,16 +7,15 @@ variable "aks_api_server_authorized_ip_ranges" {
 variable "aks_rbac_aad_admin_groups" {
   description = "Map of Azure AD Groups and their Object IDs that will be set as cluster admin."
   type        = map(string)
-  default     = {}
 }
 
 variable "clusterissuer_email" {
-  description = "The email address to use for the cert-manager cluster issuer"
+  description = "The email address to use for the cert-manager cluster issuer."
   type        = string
 }
 
 variable "disable_internet_access" {
-  description = "Whether to disable internet access for AKS and the Wayfinder ingress controller"
+  description = "Whether to disable internet access for AKS and the Wayfinder ingress controller."
   type        = bool
   default     = false
 }
@@ -32,7 +31,7 @@ variable "dns_zone_name" {
 }
 
 variable "enable_k8s_resources" {
-  description = "Whether to enable the creation of Kubernetes resources for Wayfinder (helm and kubectl manifest deployments)"
+  description = "Whether to enable the creation of Kubernetes resources for Wayfinder (helm and kubectl manifest deployments)."
   type        = bool
   default     = true
 }
@@ -40,11 +39,13 @@ variable "enable_k8s_resources" {
 variable "environment" {
   description = "The environment in which the resources are deployed."
   type        = string
+  default     = "production"
 }
 
 variable "location" {
   description = "The Azure region in which to create the resources."
   type        = string
+  default     = "uksouth"
 }
 
 variable "resource_group_name" {
@@ -58,8 +59,13 @@ variable "tags" {
   default     = {}
 }
 
-variable "wayfinder_license_key" {
-  description = "The license key to use for Wayfinder"
+variable "wayfinder_instance_id" {
+  description = "The instance ID to use for Wayfinder."
+  type        = string
+}
+
+variable "wayfinder_licence_key" {
+  description = "The licence key to use for Wayfinder."
   type        = string
   sensitive   = true
 }

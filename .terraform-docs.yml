@@ -1,19 +1,19 @@
 content: |-
   # Terraform Module: Wayfinder on Azure
 
-  The "terraform-azure-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/product/) on Azure.
+  The "terraform-azurerm-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/product/) on Azure.
 
   ## Requirements
 
   To run this module, you will need the following:
-  1. Product license key: Contact sales@appvia.io for more information.
+  1. Product Licence Key & Instance ID: Contact sales@appvia.io for more information.
   2. (Optional) IDP App configuration details: Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID) for setup. This does not need to be defined initially within Terraform, and can also be setup within the product. Wayfinder can provision a `localadmin` user for initial access if no IDP details are provided.
   3. A public Azure DNS Zone: This module will create DNS records for the Wayfinder API and UI endpoints, and performs a DNS01 challenge via the LetsEncrypt Issuer for valid domain certificates.
   4. Existing Virtual Network and Subnet: This module will deploy an AKS Cluster and so requires an existing vnet with outbound internet connectivity.
 
   ## Deployment
 
-  Please see the [examples](./examples) directory to see how to deploy this module. To get up and running quickly with minimal pre-requisites, use the [no-idp](./examples/no-idp) example.
+  Please see the [examples](./examples) directory to see how to deploy this module. To get up and running quickly with minimal pre-requisites, use the [quickstart](./examples/quickstart) example.
 
   ### (Optional) Connecting to an Identity Provider
 

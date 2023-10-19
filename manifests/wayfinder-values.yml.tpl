@@ -14,10 +14,12 @@ api:
       cert-manager.io/cluster-issuer: ${clusterissuer}
       cert-manager.io/common-name: ${api_hostname}
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: '16k'
     namespace: "ingress-nginx"
     className: "nginx"
   wayfinderInstanceIdentifier: "${wayfinder_instance_identifier}"
   wfManagedWfCluster: true
+disableLocalLogin: ${disable_local_login}
 enableLocalAdminUser: ${enable_localadmin_user}
 mysql:
   pvc:
