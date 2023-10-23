@@ -76,6 +76,8 @@ resource "azurerm_key_vault_certificate" "root" {
   certificate {
     contents = "${tls_self_signed_cert.root[0].cert_pem}\n${tls_private_key.root[0].private_key_pem}"
   }
+
+  depends_on = [ azurerm_private_endpoint.kv ]
 }
 
 resource "tls_private_key" "signing" {
@@ -117,4 +119,6 @@ resource "azurerm_key_vault_certificate" "signing" {
   certificate {
     contents = "${tls_locally_signed_cert.signing[0].cert_pem}\n${tls_private_key.signing[0].private_key_pem}"
   }
+
+  depends_on = [ azurerm_private_endpoint.kv ]
 }
