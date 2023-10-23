@@ -1,63 +1,15 @@
-resource "azurerm_role_definition" "wayfinder_dns_zone_manager" {
+module "wayfinder_azure_cloudaccess" {
+  source = "./modules/cloudaccess"
   count       = var.enable_wf_cloudaccess ? 1 : 0
-  name        = "WayfinderDNSZoneManager-${var.wayfinder_instance_id}"
-  scope       = data.azurerm_subscription.current.id
-  description = "Wayfinder managed access to create DNS Zones in Azure"
 
-  permissions {
-    actions = [
-      "Microsoft.Network/dnszones/delete",
-      "Microsoft.Network/dnszones/NS/delete",
-      "Microsoft.Network/dnszones/NS/read",
-      "Microsoft.Network/dnszones/NS/write",
-      "Microsoft.Network/dnszones/read",
-      "Microsoft.Network/dnszones/recordsets/read",
-      "Microsoft.Network/dnszones/TXT/delete",
-      "Microsoft.Network/dnszones/TXT/read",
-      "Microsoft.Network/dnszones/TXT/write",
-      "Microsoft.Network/dnszones/write",
-      "Microsoft.Resources/subscriptions/providers/read",
-      "Microsoft.Resources/subscriptions/resourceGroups/delete",
-      "Microsoft.Resources/subscriptions/resourceGroups/read",
-      "Microsoft.Resources/subscriptions/resourceGroups/write"
-    ]
-    not_actions = []
-  }
-}
+  resource_suffix = var.wayfinder_instance_id
+  wayfinder_identity_azure_principal_id = azurerm_user_assigned_identity.wayfinder_main.principal_id
+  wayfinder_identity_azure_tenant_id    = data.azurerm_subscription.current.tenant_id
 
-resource "azurerm_role_assignment" "wayfinder_dns_zone_manager" {
-  count                = var.enable_wf_cloudaccess ? 1 : 0
-  depends_on           = [time_sleep.after_azurerm_role_definition[0]]
-  scope                = data.azurerm_subscription.current.id
-  role_definition_name = azurerm_role_definition.wayfinder_dns_zone_manager[0].name
-  principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
-}
-
-resource "azurerm_role_definition" "wayfinder_cloud_info" {
-  count       = var.enable_wf_cloudaccess ? 1 : 0
-  name        = "WayfinderCloudInfo-${var.wayfinder_instance_id}"
-  scope       = data.azurerm_subscription.current.id
-  description = "Wayfinder managed access to obtain cloud metadata like prices"
-
-  permissions {
-    actions = [
-      "Microsoft.Commerce/RateCard/read",
-      "Microsoft.Compute/virtualMachines/vmSizes/read",
-      "Microsoft.ContainerService/containerServices/read",
-      "Microsoft.Resources/providers/read",
-      "Microsoft.Resources/subscriptions/locations/read",
-      "Microsoft.Resources/subscriptions/providers/read"
-    ]
-    not_actions = []
-  }
-}
-
-resource "azurerm_role_assignment" "wayfinder_cloud_info" {
-  count                = var.enable_wf_cloudaccess ? 1 : 0
-  depends_on           = [time_sleep.after_azurerm_role_definition[0]]
-  scope                = data.azurerm_subscription.current.id
-  role_definition_name = azurerm_role_definition.wayfinder_cloud_info[0].name
-  principal_id         = azurerm_user_assigned_identity.wayfinder_main.principal_id
+  enable_dns_zone_manager               = true
+  enable_cloud_info                     = true
+  enable_cluster_manager                = false
+  enable_network_manager                = false
 }
 
 resource "kubectl_manifest" "wayfinder_cloud_identity_main" {
