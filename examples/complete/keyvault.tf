@@ -3,14 +3,15 @@ resource "random_id" "kv" {
 }
 
 resource "azurerm_key_vault" "kv" {
-  count                       = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
-  location                    = var.location
-  name                        = format("kv-wayfinder-ca-%s", random_id.kv.hex)
-  resource_group_name         = var.resource_group_name
-  sku_name                    = "premium"
-  tenant_id                   = data.azurerm_subscription.current.tenant_id
-  purge_protection_enabled    = true
-  enable_rbac_authorization   = true
+  count                         = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
+  location                      = var.location
+  name                          = format("kv-wayfinder-ca-%s", random_id.kv.hex)
+  resource_group_name           = var.resource_group_name
+  sku_name                      = "premium"
+  tenant_id                     = data.azurerm_subscription.current.tenant_id
+  purge_protection_enabled      = true
+  enable_rbac_authorization     = true
+  public_network_access_enabled = false
   
   network_acls {
     default_action = "Deny"
