@@ -21,6 +21,13 @@ resource "azurerm_key_vault" "kv" {
   tags = var.tags
 }
 
+resource "azurerm_role_assignment" "kv" {
+  count               = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
+  scope               = azurerm_key_vault.kv[0].id
+  role_definition_name = "Key Vault Administrator"
+  principal_id        = data.azurerm_client_config.current.object_id
+}
+
 resource "azurerm_private_endpoint" "kv" {
   count               = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
   name                = "pend-${azurerm_key_vault.kv[0].name}"
@@ -77,7 +84,7 @@ resource "azurerm_key_vault_certificate" "root" {
     contents = "${tls_self_signed_cert.root[0].cert_pem}\n${tls_private_key.root[0].private_key_pem}"
   }
 
-  depends_on = [ azurerm_private_endpoint.kv ]
+  depends_on = [ azurerm_private_endpoint.kv, azurerm_role_assignment.kv ]
 }
 
 resource "tls_private_key" "signing" {
@@ -120,5 +127,5 @@ resource "azurerm_key_vault_certificate" "signing" {
     contents = "${tls_locally_signed_cert.signing[0].cert_pem}\n${tls_private_key.signing[0].private_key_pem}"
   }
 
-  depends_on = [ azurerm_private_endpoint.kv ]
+  depends_on = [ azurerm_private_endpoint.kv, azurerm_role_assignment.kv ]
 }
