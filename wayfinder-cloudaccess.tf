@@ -41,6 +41,8 @@ resource "azurerm_role_definition" "wayfinder_cloud_info" {
 
   permissions {
     actions = [
+      "Microsoft.Authorization/roleAssignments/read",
+      "Microsoft.Authorization/roleDefinitions/read",
       "Microsoft.Commerce/RateCard/read",
       "Microsoft.Compute/virtualMachines/vmSizes/read",
       "Microsoft.ContainerService/containerServices/read",
