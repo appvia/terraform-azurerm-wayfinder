@@ -45,7 +45,7 @@ resource "helm_release" "cert_manager" {
 
   values = [templatefile("${path.module}/manifests/cert-manager-values.yml.tpl", {
     clusterissuer = var.clusterissuer
-  }), var.clusterissuer == "keyvault" ? templatefile("${path.module}/manifests/cert-manager-csi-values.yml.tpl") : ""]
+  }), var.clusterissuer == "keyvault" ? templatefile("${path.module}/manifests/cert-manager-csi-values.yml.tpl", {}) : ""]
 }
 
 resource "kubectl_manifest" "cert_manager_clusterissuer" {
