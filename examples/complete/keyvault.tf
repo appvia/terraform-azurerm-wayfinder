@@ -81,7 +81,7 @@ resource "azurerm_key_vault_certificate" "root" {
   key_vault_id = azurerm_key_vault.kv[0].id
 
   certificate {
-    contents = "${tls_self_signed_cert.root[0].cert_pem}\n${tls_private_key.root[0].private_key_pem}"
+    contents = "${tls_self_signed_cert.root[0].cert_pem}${tls_private_key.root[0].private_key_pem_pkcs8}"
   }
 
   depends_on = [ azurerm_private_endpoint.kv, azurerm_role_assignment.kv ]
@@ -124,7 +124,7 @@ resource "azurerm_key_vault_certificate" "signing" {
   key_vault_id = azurerm_key_vault.kv[0].id
 
   certificate {
-    contents = "${tls_locally_signed_cert.signing[0].cert_pem}\n${tls_private_key.signing[0].private_key_pem}"
+    contents = "${tls_locally_signed_cert.signing[0].cert_pem}${tls_private_key.signing[0].private_key_pem_pkcs8}"
   }
 
   depends_on = [ azurerm_private_endpoint.kv, azurerm_role_assignment.kv ]
