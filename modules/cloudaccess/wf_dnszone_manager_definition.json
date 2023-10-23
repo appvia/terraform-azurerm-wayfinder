@@ -12,6 +12,9 @@
         "Microsoft.Network/dnszones/recordsets/read",
         "Microsoft.Network/dnszones/NS/read",
         "Microsoft.Network/dnszones/NS/write",
-        "Microsoft.Network/dnszones/NS/delete"
+        "Microsoft.Network/dnszones/NS/delete",
+        "Microsoft.Network/dnszones/TXT/read",
+        "Microsoft.Network/dnszones/TXT/write",
+        "Microsoft.Network/dnszones/TXT/delete"
     ]
 }
