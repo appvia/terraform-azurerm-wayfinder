@@ -9,4 +9,4 @@ spec:
   azure:
     clientID: ${client_id}
     tenantID: ${tenant_id}
-    principalID: ${wayfinder_principal_id}
+    principalID: ${principal_id}
