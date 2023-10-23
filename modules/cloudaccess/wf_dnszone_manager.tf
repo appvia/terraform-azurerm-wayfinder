@@ -13,6 +13,20 @@ resource "azurerm_role_definition" "dnszonemanager" {
   }
 }
 
+resource "time_sleep" "after_azurerm_role_definition_dnszonemanager" {
+  count = var.enable_dns_zone_manager ? 1 : 0
+  depends_on = [
+    azurerm_role_definition.dnszonemanager[0],
+  ]
+
+  triggers = {
+    "azurerm_role_definition_dnszonemanager" = jsonencode(keys(azurerm_role_definition.dnszonemanager[0]))
+  }
+
+  create_duration  = var.create_duration_delay["azurerm_role_definition"]
+  destroy_duration = var.destroy_duration_delay["azurerm_role_definition"]
+}
+
 resource "azurerm_role_assignment" "dnszonemanager" {
   count = var.enable_dns_zone_manager && var.wayfinder_identity_azure_principal_id != "" ? 1 : 0
 
@@ -21,6 +35,7 @@ resource "azurerm_role_assignment" "dnszonemanager" {
   principal_id         = var.wayfinder_identity_azure_principal_id
 
   depends_on = [
+    time_sleep.after_azurerm_role_definition_dnszonemanager[0],
     azurerm_role_definition.dnszonemanager[0]
   ]
 }
@@ -33,6 +48,7 @@ resource "azurerm_role_assignment" "dnszonemanager_federated" {
   principal_id         = azurerm_user_assigned_identity.federated_identity[0].principal_id
 
   depends_on = [
+    time_sleep.after_azurerm_role_definition_dnszonemanager[0],
     azurerm_role_definition.dnszonemanager[0],
     azurerm_user_assigned_identity.federated_identity[0],
   ]
