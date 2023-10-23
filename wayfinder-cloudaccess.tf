@@ -1,15 +1,16 @@
 module "wayfinder_azure_cloudaccess" {
   source = "./modules/cloudaccess"
-  count       = var.enable_wf_cloudaccess ? 1 : 0
+  count  = var.enable_wf_cloudaccess ? 1 : 0
 
-  resource_suffix = var.wayfinder_instance_id
+  resource_suffix                       = var.wayfinder_instance_id
   wayfinder_identity_azure_principal_id = azurerm_user_assigned_identity.wayfinder_main.principal_id
   wayfinder_identity_azure_tenant_id    = data.azurerm_subscription.current.tenant_id
+  region                                = var.location
 
-  enable_dns_zone_manager               = true
-  enable_cloud_info                     = true
-  enable_cluster_manager                = false
-  enable_network_manager                = false
+  enable_dns_zone_manager = true
+  enable_cloud_info       = true
+  enable_cluster_manager  = false
+  enable_network_manager  = false
 }
 
 resource "kubectl_manifest" "wayfinder_cloud_identity_main" {
