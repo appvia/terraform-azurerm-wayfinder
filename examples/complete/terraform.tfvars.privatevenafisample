@@ -21,7 +21,6 @@ tags = {
   Repository          = "Your Repository URL"
   Provisioner         = "Terraform"
 }
-user_assigned_identity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/wayfinder/providers/Microsoft.ManagedIdentity/userAssignedIdentities/wayfinder-aks"
 venafi_apikey          = "00000000-0000-0000-0000-000000000000"
 venafi_zone            = "XXXX\\XXXX"
 wayfinder_license_key  = "wayfinder-license-key"

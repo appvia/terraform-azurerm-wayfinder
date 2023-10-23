@@ -39,7 +39,7 @@ resource "helm_release" "cert_manager" {
 
   values = [templatefile("${path.module}/manifests/cert-manager-values.yml.tpl", {
     clusterissuer = var.clusterissuer
-  })]
+  }), var.clusterissuer == "keyvault" ? templatefile("${path.module}/manifests/cert-manager-csi-values.yml.tpl") : ""]
 }
 
 resource "kubectl_manifest" "cert_manager_clusterissuer" {
@@ -83,5 +83,32 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_vaas_secret" {
 
   yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-vaas-secret.yml.tpl", {
     venafi_apikey = var.venafi_apikey
+  })
+}
+
+resource "kubectl_manifest" "cert_manager_clusterissuer_keyvault" {
+  count = var.enable_k8s_resources && var.clusterissuer == "keyvault" ? 1 : 0
+
+  depends_on = [
+    module.aks,
+    helm_release.cert_manager,
+    kubectl_manifest.cert_manager_clusterissuer_keyvault_secret
+  ]
+
+  yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-keyvault.yml.tpl", {})
+}
+
+resource "kubectl_manifest" "cert_manager_clusterissuer_keyvault_secret" {
+  count = var.enable_k8s_resources && var.clusterissuer == "keyvault" ? 1 : 0
+
+  depends_on = [
+    module.aks,
+    helm_release.cert_manager
+  ]
+
+  yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-keyvault-secret.yml.tpl", {
+    keyvault_name      = var.cert_manager_keyvault_name
+    keyvault_cert_name = var.cert_manager_keyvault_cert_name
+    tenant_id          = data.azurerm_subscription.current.tenant_id
   })
 }
