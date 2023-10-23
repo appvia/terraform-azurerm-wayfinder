@@ -6,6 +6,8 @@ module "wayfinder_azure_cloudaccess" {
   wayfinder_identity_azure_principal_id = azurerm_user_assigned_identity.wayfinder_main.principal_id
   wayfinder_identity_azure_tenant_id    = data.azurerm_subscription.current.tenant_id
   region                                = var.location
+  create_duration_delay                 = { azurerm_role_definition = var.create_duration_delay.azurerm_role_definition }
+  destroy_duration_delay                = { azurerm_role_definition = var.destroy_duration_delay.azurerm_role_definition }
 
   enable_dns_zone_manager = true
   enable_cloud_info       = true

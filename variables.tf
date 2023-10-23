@@ -86,7 +86,7 @@ variable "destroy_duration_delay" {
     azurerm_role_definition         = optional(string, "0s")
     kubectl_manifest_cloud_identity = optional(string, "60s")
   })
-  description = "Used to tune terraform deploy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type."
+  description = "Used to tune terraform destroy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type."
   default     = {}
 
   validation {
