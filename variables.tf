@@ -56,10 +56,26 @@ variable "aks_vnet_subnet_id" {
   type        = string
 }
 
+variable "cert_manager_keyvault_name" {
+  description = "Keyvault name to use for cert-manager. Required if cluster issuer is keyvault"
+  type        = string
+  default     = null
+}
+
+variable "cert_manager_keyvault_cert_name" {
+  description = "Keyvault certificate name to use for cert-manager. Required if cluster issuer is keyvault"
+  type        = string
+  default     = null
+}
+
 variable "clusterissuer" {
   description = "Cluster Issuer name to use for certs"
   type        = string
   default     = "letsencrypt-prod"
+  validation {
+    condition     = contains(["letsencrypt-prod", "vaas-issuer", "keyvault"], var.clusterissuer)
+    error_message = "clusterissuer must be one of: letsencrypt-prod, vaas-issuer, keyvault"
+  }
 }
 
 variable "clusterissuer_email" {

@@ -1,3 +1,5 @@
+data "azurerm_subscription" "current" {}
+
 data "azurerm_dns_zone" "wayfinder" {
   count               = var.dns_provider == "azure-private-dns" ? 0 : 1
   name                = var.dns_zone_name
