@@ -13,6 +13,20 @@ resource "azurerm_role_definition" "cloudinfo" {
   }
 }
 
+resource "time_sleep" "after_azurerm_role_definition_cloudinfo" {
+  count = var.enable_cloud_info ? 1 : 0
+  depends_on = [
+    azurerm_role_definition.cloudinfo[0],
+  ]
+
+  triggers = {
+    "azurerm_role_definition_cloudinfo" = jsonencode(keys(azurerm_role_definition.cloudinfo[0]))
+  }
+
+  create_duration  = var.create_duration_delay["azurerm_role_definition"]
+  destroy_duration = var.destroy_duration_delay["azurerm_role_definition"]
+}
+
 resource "azurerm_role_assignment" "cloudinfo" {
   count = var.enable_cloud_info && var.wayfinder_identity_azure_principal_id != "" ? 1 : 0
 
@@ -21,7 +35,8 @@ resource "azurerm_role_assignment" "cloudinfo" {
   principal_id         = var.wayfinder_identity_azure_principal_id
 
   depends_on = [
-    azurerm_role_definition.cloudinfo[0]
+    time_sleep.after_azurerm_role_definition_cloudinfo[0],
+    azurerm_role_definition.cloudinfo[0],
   ]
 }
 
@@ -33,6 +48,7 @@ resource "azurerm_role_assignment" "cloudinfo_federated" {
   principal_id         = azurerm_user_assigned_identity.federated_identity[0].principal_id
 
   depends_on = [
+    time_sleep.after_azurerm_role_definition_cloudinfo[0],
     azurerm_role_definition.cloudinfo[0],
     azurerm_user_assigned_identity.federated_identity[0],
   ]
