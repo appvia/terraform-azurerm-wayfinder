@@ -112,8 +112,8 @@ variable "dns_zone_id" {
   type        = string
 }
 
-variable "dns_resource_group_name" {
-  description = "The name of the resource group where the DNS Zone exists, if different to Wayfinder's resource group."
+variable "dns_resource_group_id" {
+  description = "The ID of the resource group where the DNS Zone exists, if different to Wayfinder's resource group."
   type        = string
   default     = ""
 }

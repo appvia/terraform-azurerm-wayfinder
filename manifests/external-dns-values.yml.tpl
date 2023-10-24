@@ -1,14 +1,17 @@
-podAnnotations:
-  azure.workload.identity/inject-proxy-sidecar: "true"
-podLabels:
-  azure.workload.identity/use: "true"
-provider: azure
-azure:
-  resourceGroup: ${resource_group}
-  secretName: azure-config-file
-  useManagedIdentityExtension: true
+fullnameOverride: external-dns
 serviceAccount:
   annotations:
     azure.workload.identity/client-id: ${client_id}
-  create: true
-  name: external-dns
+podLabels:
+  azure.workload.identity/use: "true"
+provider: azure
+secretConfiguration:
+  enabled: true
+  mountPath: "/etc/kubernetes/"
+  data:
+    azure.json: |
+      {
+        "subscriptionId": "${subscription_id}",
+        "resourceGroup": "${resource_group}",
+        "useWorkloadIdentityExtension": true
+      }

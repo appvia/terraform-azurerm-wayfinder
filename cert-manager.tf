@@ -11,6 +11,12 @@ resource "azurerm_role_assignment" "cert_manager_dns_contributor" {
   principal_id         = azurerm_user_assigned_identity.cert_manager.principal_id
 }
 
+resource "azurerm_role_assignment" "cert_manager_reader" {
+  scope                = local.dns_resource_group_id
+  role_definition_name = "Reader"
+  principal_id         = azurerm_user_assigned_identity.cert_manager.principal_id
+}
+
 resource "azurerm_federated_identity_credential" "cert_manager" {
   name                = azurerm_user_assigned_identity.cert_manager.name
   resource_group_name = azurerm_user_assigned_identity.cert_manager.resource_group_name
