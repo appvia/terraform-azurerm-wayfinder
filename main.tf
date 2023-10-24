@@ -24,22 +24,6 @@ resource "time_sleep" "after_azurerm_role_definition_main" {
   destroy_duration = var.destroy_duration_delay["azurerm_role_definition"]
 }
 
-resource "time_sleep" "after_azurerm_role_definition" {
-  count = var.enable_wf_cloudaccess ? 1 : 0
-  depends_on = [
-    azurerm_role_definition.wayfinder_cloud_info[0],
-    azurerm_role_definition.wayfinder_dns_zone_manager[0],
-  ]
-
-  triggers = {
-    "azurerm_role_definition_wayfinder_cloud_info"       = jsonencode(keys(azurerm_role_definition.wayfinder_cloud_info[0]))
-    "azurerm_role_definition_wayfinder_dns_zone_manager" = jsonencode(keys(azurerm_role_definition.wayfinder_dns_zone_manager[0]))
-  }
-
-  create_duration  = var.create_duration_delay["azurerm_role_definition"]
-  destroy_duration = var.destroy_duration_delay["azurerm_role_definition"]
-}
-
 resource "time_sleep" "after_kubectl_manifest_cloud_identity" {
   count = var.enable_k8s_resources && var.enable_wf_cloudaccess ? 1 : 0
   depends_on = [
