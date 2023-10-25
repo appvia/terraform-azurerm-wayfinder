@@ -1,12 +1,12 @@
 resource "azurerm_resource_group" "federated_identity" {
-  count = local.create_aws_trust || local.create_gcp_trust ? 1 : 0
+  count = var.from_aws || var.from_gcp ? 1 : 0
 
   name     = "${local.resource_prefix}federated-id${local.resource_suffix}"
   location = var.region
 }
 
 resource "azurerm_user_assigned_identity" "federated_identity" {
-  count = local.create_aws_trust || local.create_gcp_trust ? 1 : 0
+  count = var.from_aws || var.from_gcp ? 1 : 0
 
   location            = azurerm_resource_group.federated_identity[0].location
   name                = "${local.resource_prefix}federated-id${local.resource_suffix}"
@@ -14,7 +14,7 @@ resource "azurerm_user_assigned_identity" "federated_identity" {
 }
 
 resource "azurerm_federated_identity_credential" "federated_identity_aws" {
-  count = local.create_aws_trust ? 1 : 0
+  count = var.from_aws ? 1 : 0
 
   name                = "${local.resource_prefix}federated-id-aws${local.resource_suffix}"
   resource_group_name = azurerm_resource_group.federated_identity[0].name
@@ -32,7 +32,7 @@ resource "azurerm_federated_identity_credential" "federated_identity_aws" {
 }
 
 resource "azurerm_federated_identity_credential" "federated_identity_gcp" {
-  count = local.create_gcp_trust ? 1 : 0
+  count = var.from_gcp ? 1 : 0
 
   name                = "${local.resource_prefix}federated-id-gcp${local.resource_suffix}"
   resource_group_name = azurerm_resource_group.federated_identity[0].name

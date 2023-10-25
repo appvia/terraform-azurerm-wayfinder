@@ -16,4 +16,8 @@ module "wayfinder_cloudaccess" {
   enable_dns_zone_manager = var.enable_dns_zone_manager
   enable_network_manager  = var.enable_network_manager
   enable_cloud_info       = var.enable_cloud_info
+
+  from_aws   = var.from_aws
+  from_azure = var.from_azure
+  from_gcp   = var.from_gcp
 }

@@ -61,6 +61,18 @@ variable "clusterissuer_email" {
   type        = string
 }
 
+variable "cluster_version" {
+  description = "The Kubernetes version to use for the AKS cluster."
+  type        = string
+  default     = "1.26"
+}
+
+variable "cluster_nodepool_version" {
+  description = "The Kubernetes version to use for the AKS cluster Nodepools."
+  type        = string
+  default     = "1.26"
+}
+
 variable "create_duration_delay" {
   type = object({
     azurerm_role_definition         = optional(string, "180s")
