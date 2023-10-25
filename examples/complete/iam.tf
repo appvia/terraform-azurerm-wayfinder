@@ -7,8 +7,8 @@ resource "azurerm_user_assigned_identity" "aks_identity" {
 }
 
 resource "azurerm_role_assignment" "private_dns" {
-  count                = var.user_assigned_identity == null ? 1 : 0
-  scope                = data.azurerm_private_dns_zone.wayfinder[0].id
+  count                = var.private_dns_zone_id == null ? 0 : 1
+  scope                = var.private_dns_zone_id
   role_definition_name = "Private DNS Zone Contributor"
-  principal_id         = azurerm_user_assigned_identity.aks_identity[0].principal_id
+  principal_id         = var.user_assigned_identity == null ? azurerm_user_assigned_identity.aks_identity[0].principal_id : var.user_assigned_identity
 }

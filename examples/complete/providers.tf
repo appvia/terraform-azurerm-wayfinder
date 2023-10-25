@@ -2,6 +2,9 @@ provider "azurerm" {
   features {}
 }
 
+provider "azapi" {
+}
+
 provider "helm" {
   kubernetes {
     client_certificate     = base64decode(module.wayfinder.aks_client_certificate)

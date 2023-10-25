@@ -58,8 +58,9 @@ resource "tls_private_key" "root" {
 }
 
 resource "tls_self_signed_cert" "root" {
-  count           = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
-  private_key_pem = tls_private_key.root[0].private_key_pem
+  count             = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
+  private_key_pem   = tls_private_key.root[0].private_key_pem
+  is_ca_certificate = true
 
   subject {
     common_name  = "${var.ca_org_name} Root CA"
@@ -108,6 +109,7 @@ resource "tls_locally_signed_cert" "signing" {
   cert_request_pem   = tls_cert_request.signing[0].cert_request_pem
   ca_private_key_pem = tls_private_key.root[0].private_key_pem
   ca_cert_pem        = tls_self_signed_cert.root[0].cert_pem
+  is_ca_certificate  = true
 
   validity_period_hours = (2 * 365 * 24) # 2 years
 
