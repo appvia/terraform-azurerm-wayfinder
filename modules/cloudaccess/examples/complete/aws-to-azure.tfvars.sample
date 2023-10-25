@@ -1,13 +1,12 @@
 # Resource suffix is optional, specify this if you need to keep role definitions unique amongst
 # multiple workspaces using the same subscription.
-# e.g. resource_suffix = "-app1-nonprod"
-resource_suffix                 = ""
-wayfinder_identity_aws_role_arn = "arn:aws:iam::123456789012:role/wf-cloudidentity-aws"
-wayfinder_identity_aws_issuer   = "https://oidc.eks.eu-west-2.amazonaws.com/id/ABCDF8D2EF45CE1A6FD96E2781310123"
-wayfinder_identity_aws_subject  = "system:serviceaccount:wayfinder:wayfinder-admin"
+resource_suffix                 = "-app1-nonprod"
 enable_cluster_manager          = true
 enable_dns_zone_manager         = true
 enable_network_manager          = true
 enable_cloud_info               = false
 from_aws                        = true
 from_azure                      = false
+wayfinder_identity_aws_role_arn = "arn:aws:iam::123456789012:role/wf-cloudidentity-aws"
+wayfinder_identity_aws_issuer   = "https://oidc.eks.eu-west-2.amazonaws.com/id/ABCDF8D2EF45CE1A6FD96E2781310123"
+wayfinder_identity_aws_subject  = "system:serviceaccount:wayfinder:wayfinder-admin"
