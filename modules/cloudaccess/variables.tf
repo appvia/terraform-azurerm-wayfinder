@@ -1,3 +1,21 @@
+variable "from_aws" {
+  default     = false
+  description = "Whether Wayfinder is running on AWS."
+  type        = bool
+}
+
+variable "from_azure" {
+  default     = true
+  description = "Whether Wayfinder is running on Azure."
+  type        = bool
+}
+
+variable "from_gcp" {
+  default     = false
+  description = "Whether Wayfinder is running on GCP."
+  type        = bool
+}
+
 variable "resource_suffix" {
   default     = ""
   description = "Suffix to apply to all generated resources. We recommend using workspace key + stage."

@@ -11,6 +11,12 @@ resource "azurerm_role_assignment" "external_dns_dns_contributor" {
   principal_id         = azurerm_user_assigned_identity.external_dns.principal_id
 }
 
+resource "azurerm_role_assignment" "external_dns_reader" {
+  scope                = local.dns_resource_group_id
+  role_definition_name = "Reader"
+  principal_id         = azurerm_user_assigned_identity.external_dns.principal_id
+}
+
 resource "azurerm_federated_identity_credential" "external_dns" {
   name                = azurerm_user_assigned_identity.external_dns.name
   resource_group_name = azurerm_user_assigned_identity.external_dns.resource_group_name
@@ -20,56 +26,27 @@ resource "azurerm_federated_identity_credential" "external_dns" {
   subject             = "system:serviceaccount:external-dns:external-dns"
 }
 
-resource "kubectl_manifest" "external_dns_namespace" {
-  count = var.enable_k8s_resources ? 1 : 0
-
-  depends_on = [
-    module.aks,
-  ]
-
-  yaml_body = templatefile("${path.module}/manifests/namespace.yml.tpl", {
-    namespace = "external-dns"
-  })
-}
-
-resource "kubectl_manifest" "external_dns_secret" {
-  count = var.enable_k8s_resources ? 1 : 0
-
-  depends_on = [
-    kubectl_manifest.external_dns_namespace,
-    module.aks,
-  ]
-
-  yaml_body = templatefile("${path.module}/manifests/external-dns-secret.yml.tpl", {
-    tenant_id                 = data.azurerm_subscription.current.tenant_id
-    subscription_id           = data.azurerm_subscription.current.subscription_id
-    resource_group            = local.dns_resource_group_name
-    user_assigned_identity_id = azurerm_user_assigned_identity.external_dns.client_id
-  })
-}
-
 resource "helm_release" "external_dns" {
   count = var.enable_k8s_resources ? 1 : 0
 
   depends_on = [
-    kubectl_manifest.external_dns_namespace,
-    kubectl_manifest.external_dns_secret,
     module.aks,
   ]
 
   namespace        = "external-dns"
-  create_namespace = false
+  create_namespace = true
 
   name        = "external-dns"
-  repository  = "https://charts.bitnami.com/bitnami"
+  repository  = "https://kubernetes-sigs.github.io/external-dns"
   chart       = "external-dns"
-  version     = "6.18.0"
+  version     = "1.13.1"
   max_history = 5
 
   values = [
     templatefile("${path.module}/manifests/external-dns-values.yml.tpl", {
-      resource_group = var.resource_group_name
-      client_id      = azurerm_user_assigned_identity.external_dns.client_id
+      client_id       = azurerm_user_assigned_identity.external_dns.client_id
+      resource_group  = var.resource_group_name
+      subscription_id = data.azurerm_subscription.current.subscription_id
     })
   ]
 }

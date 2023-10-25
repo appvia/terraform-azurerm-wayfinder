@@ -28,7 +28,7 @@ resource "time_sleep" "after_azurerm_role_definition_cloudinfo" {
 }
 
 resource "azurerm_role_assignment" "cloudinfo" {
-  count = var.enable_cloud_info && var.wayfinder_identity_azure_principal_id != "" ? 1 : 0
+  count = var.enable_cloud_info && var.from_azure ? 1 : 0
 
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = azurerm_role_definition.cloudinfo[0].name
@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "cloudinfo" {
 }
 
 resource "azurerm_role_assignment" "cloudinfo_federated" {
-  count = var.enable_cloud_info && (local.create_aws_trust || local.create_gcp_trust) ? 1 : 0
+  count = var.enable_cloud_info && (var.from_aws || var.from_gcp) ? 1 : 0
 
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = azurerm_role_definition.cloudinfo[0].name

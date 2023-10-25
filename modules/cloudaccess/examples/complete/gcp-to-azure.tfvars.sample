@@ -1,12 +1,11 @@
 # Resource suffix is optional, specify this if you need to keep role definitions unique amongst
 # multiple workspaces using the same subscription.
-# e.g. resource_suffix = "-app1-nonprod"
-resource_suffix                       = ""
-
+resource_suffix                           = "app1-nonprod"
+enable_cluster_manager                    = true
+enable_dns_zone_manager                   = true
+enable_network_manager                    = true
+enable_cloud_info                         = false
+from_azure                                = false
+from_gcp                                  = true
 wayfinder_identity_gcp_service_account    = "wf-management@wayfinder-host-project.iam.gserviceaccount.com"
 wayfinder_identity_gcp_service_account_id = "123456789"
-
-enable_cluster_manager                = true
-enable_dns_zone_manager               = true
-enable_network_manager                = true
-enable_cloud_info                     = false

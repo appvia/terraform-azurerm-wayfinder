@@ -21,7 +21,7 @@ module "aks" {
   azure_policy_enabled                  = true
   enable_auto_scaling                   = true
   enable_host_encryption                = var.aks_enable_host_encryption
-  kubernetes_version                    = "1.25"
+  kubernetes_version                    = var.cluster_version
   maintenance_window                    = var.aks_maintenance_window
   net_profile_dns_service_ip            = "192.168.100.10"
   net_profile_service_cidr              = "192.168.100.0/24"
@@ -29,7 +29,7 @@ module "aks" {
   network_plugin_mode                   = "overlay"
   network_policy                        = "calico"
   oidc_issuer_enabled                   = true
-  orchestrator_version                  = "1.25"
+  orchestrator_version                  = var.cluster_nodepool_version
   os_disk_size_gb                       = 50
   os_disk_type                          = "Ephemeral"
   os_sku                                = "Ubuntu"
