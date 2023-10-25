@@ -18,6 +18,19 @@ resource "azurerm_role_assignment" "cert_manager_reader" {
   principal_id         = azurerm_user_assigned_identity.cert_manager.principal_id
 }
 
+data "azurerm_key_vault" "cert_kv" {
+  count               = var.clusterissuer == "keyvault" ? 1 : 0
+  name                = var.cert_manager_keyvault_name
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_role_assignment" "cert_manager_keyvault" {
+  count                = var.clusterissuer == "keyvault" ? 1 : 0
+  scope                = data.azurerm_key_vault.cert_kv[0].id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = azurerm_user_assigned_identity.cert_manager.principal_id
+}
+
 resource "azurerm_federated_identity_credential" "cert_manager" {
   name                = azurerm_user_assigned_identity.cert_manager.name
   resource_group_name = azurerm_user_assigned_identity.cert_manager.resource_group_name
@@ -32,6 +45,8 @@ resource "helm_release" "cert_manager" {
 
   depends_on = [
     module.aks,
+    kubectl_manifest.cert_manager_clusterissuer_keyvault_secret,
+    azurerm_role_assignment.cert_manager_keyvault
   ]
 
   namespace        = "cert-manager"
@@ -108,13 +123,13 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_keyvault_secret" {
   count = var.enable_k8s_resources && var.clusterissuer == "keyvault" ? 1 : 0
 
   depends_on = [
-    module.aks,
-    helm_release.cert_manager
+    module.aks
   ]
 
   yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-keyvault-secret.yml.tpl", {
-    keyvault_name      = var.cert_manager_keyvault_name
-    keyvault_cert_name = var.cert_manager_keyvault_cert_name
-    tenant_id          = data.azurerm_subscription.current.tenant_id
+    keyvault_name          = var.cert_manager_keyvault_name
+    keyvault_cert_name     = var.cert_manager_keyvault_cert_name
+    cert_manager_client_id = azurerm_user_assigned_identity.cert_manager.client_id
+    tenant_id              = data.azurerm_subscription.current.tenant_id
   })
 }

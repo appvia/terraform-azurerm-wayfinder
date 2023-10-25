@@ -2,6 +2,7 @@ apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
   name: keyvault-issuer
+  namespace: cert-manager
 spec:
   provider: azure
   secretObjects:
@@ -14,8 +15,7 @@ spec:
           key: tls.crt
   parameters:
     usePodIdentity: "false"
-    useVMManagedIdentity: "true"
-    userAssignedIdentityID: <client id>
+    clientID: ${cert_manager_client_id}
     keyvaultName: ${keyvault_name}
     objects: |
       array:

@@ -17,9 +17,9 @@ output "aks_cluster_ca_certificate" {
 }
 
 output "aks_admin_host" {
-  description = "The public API URL of the Azure Kubernetes Managed Cluster."
+  description = "The API URL of the Azure Kubernetes Managed Cluster."
   sensitive   = true
-  value       = "https://${module.aks.cluster_fqdn}"
+  value       = var.disable_internet_access ? "https://${module.aks.cluster_private_fqdn}" : "https://${module.aks.cluster_fqdn}"
 }
 
 output "aks_kubeconfig_host" {

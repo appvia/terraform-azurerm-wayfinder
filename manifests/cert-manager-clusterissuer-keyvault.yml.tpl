@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: keyvault-issuer
+  name: keyvault
 spec:
   ca:
-    secretName: private-ca-keyvault
+    secretName: keyvault-issuer
