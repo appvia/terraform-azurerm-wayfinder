@@ -236,5 +236,5 @@ variable "wayfinder_release_channel" {
 variable "wayfinder_version" {
   description = "The version to use for Wayfinder"
   type        = string
-  default     = "v2.3.3"
+  default     = "v2.4.0"
 }
