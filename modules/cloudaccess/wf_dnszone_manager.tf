@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "dnszonemanager" {
 }
 
 resource "azurerm_role_assignment" "dnszonemanager_federated" {
-  count = var.enable_cloud_info && (var.from_aws || var.from_gcp) ? 1 : 0
+  count = var.enable_dns_zone_manager && (var.from_aws || var.from_gcp) ? 1 : 0
 
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = azurerm_role_definition.dnszonemanager[0].name
