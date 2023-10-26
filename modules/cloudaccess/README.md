@@ -69,5 +69,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_managed_identity_client_id"></a> [managed\_identity\_client\_id](#output\_managed\_identity\_client\_id) | The client ID of the created managed identity to use as spec.azure.clientID in your cloud access configuration |
-| <a name="output_managed_identity_principal_id"></a> [managed\_identity\_principal\_id](#output\_managed\_identity\_principal\_id) | The service principal ID of the created managed identity to use as spec.azure.principalID in your cloud access configuration |
+| <a name="output_managed_identity_tenant_id"></a> [managed\_identity\_tenant\_id](#output\_managed\_identity\_tenant\_id) | The tenant ID in which the managed identity exists, to use as spec.azure.tenantID in your cloud access configuration |
 <!-- END_TF_DOCS -->
