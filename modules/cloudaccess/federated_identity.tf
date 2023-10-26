@@ -25,7 +25,7 @@ resource "azurerm_federated_identity_credential" "federated_identity_aws" {
 
   lifecycle {
     precondition {
-      condition     = var.wayfinder_identity_aws_issuer == "" || var.wayfinder_identity_aws_subject == ""
+      condition     = var.wayfinder_identity_aws_issuer != "" || var.wayfinder_identity_aws_subject != ""
       error_message = "Must specify wayfinder_identity_aws_issuer and wayfinder_identity_aws_subject to enable cross-cloud trust from AWS to Azure"
     }
   }
@@ -43,7 +43,7 @@ resource "azurerm_federated_identity_credential" "federated_identity_gcp" {
 
   lifecycle {
     precondition {
-      condition     = var.wayfinder_identity_gcp_service_account_id == ""
+      condition     = var.wayfinder_identity_gcp_service_account_id != ""
       error_message = "Must specify numerical ID of the GCP service account to trust in wayfinder_identity_gcp_service_account_id"
     }
   }
