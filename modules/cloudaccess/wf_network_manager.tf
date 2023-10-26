@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "networkmanager" {
 }
 
 resource "azurerm_role_assignment" "networkmanager_federated" {
-  count = var.enable_cloud_info && (var.from_aws || var.from_gcp) ? 1 : 0
+  count = var.enable_network_manager && (var.from_aws || var.from_gcp) ? 1 : 0
 
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = azurerm_role_definition.networkmanager[0].name

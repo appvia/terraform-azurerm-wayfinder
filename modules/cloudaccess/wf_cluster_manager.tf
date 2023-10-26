@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "clustermanager" {
 }
 
 resource "azurerm_role_assignment" "clustermanager_federated" {
-  count = var.enable_cloud_info && (var.from_aws || var.from_gcp) ? 1 : 0
+  count = var.enable_cluster_manager && (var.from_aws || var.from_gcp) ? 1 : 0
 
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = azurerm_role_definition.clustermanager[0].name
