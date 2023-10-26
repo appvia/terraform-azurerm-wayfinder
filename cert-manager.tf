@@ -40,6 +40,18 @@ resource "azurerm_federated_identity_credential" "cert_manager" {
   subject             = "system:serviceaccount:cert-manager:cert-manager"
 }
 
+resource "kubectl_manifest" "certmanager_namespace" {
+  count = var.enable_k8s_resources ? 1 : 0
+
+  depends_on = [
+    module.aks,
+  ]
+
+  yaml_body = templatefile("${path.module}/manifests/namespace.yml.tpl", {
+    namespace = "cert-manager"
+  })
+}
+
 resource "helm_release" "cert_manager" {
   count = var.enable_k8s_resources ? 1 : 0
 
@@ -50,7 +62,7 @@ resource "helm_release" "cert_manager" {
   ]
 
   namespace        = "cert-manager"
-  create_namespace = true
+  create_namespace = false
 
   name        = "cert-manager"
   repository  = "https://charts.jetstack.io"
@@ -123,7 +135,8 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_keyvault_secret" {
   count = var.enable_k8s_resources && var.clusterissuer == "keyvault" ? 1 : 0
 
   depends_on = [
-    module.aks
+    module.aks,
+    kubectl_manifest.certmanager_namespace
   ]
 
   yaml_body = templatefile("${path.module}/manifests/cert-manager-clusterissuer-keyvault-secret.yml.tpl", {
