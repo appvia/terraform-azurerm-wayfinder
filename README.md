@@ -67,6 +67,8 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_aks_rbac_aad_admin_group_object_ids"></a> [aks\_rbac\_aad\_admin\_group\_object\_ids](#input\_aks\_rbac\_aad\_admin\_group\_object\_ids) | List of object IDs of the Azure AD groups that will be set as cluster admin. | `list(string)` | `[]` | no |
 | <a name="input_aks_sku_tier"></a> [aks\_sku\_tier](#input\_aks\_sku\_tier) | The SKU tier for this Kubernetes Cluster. | `string` | `"Standard"` | no |
 | <a name="input_aks_vnet_subnet_id"></a> [aks\_vnet\_subnet\_id](#input\_aks\_vnet\_subnet\_id) | The ID of the subnet in which to deploy the Kubernetes Cluster. | `string` | n/a | yes |
+| <a name="input_cert_manager_keyvault_cert_name"></a> [cert\_manager\_keyvault\_cert\_name](#input\_cert\_manager\_keyvault\_cert\_name) | Keyvault certificate name to use for cert-manager. Required if cluster issuer is keyvault | `string` | `null` | no |
+| <a name="input_cert_manager_keyvault_name"></a> [cert\_manager\_keyvault\_name](#input\_cert\_manager\_keyvault\_name) | Keyvault name to use for cert-manager. Required if cluster issuer is keyvault | `string` | `null` | no |
 | <a name="input_cluster_nodepool_version"></a> [cluster\_nodepool\_version](#input\_cluster\_nodepool\_version) | The Kubernetes version to use for the AKS cluster Nodepools. | `string` | `"1.26"` | no |
 | <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | The Kubernetes version to use for the AKS cluster. | `string` | `"1.26"` | no |
 | <a name="input_clusterissuer"></a> [clusterissuer](#input\_clusterissuer) | Cluster Issuer name to use for certs | `string` | `"letsencrypt-prod"` | no |
@@ -76,8 +78,8 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_destroy_duration_delay"></a> [destroy\_duration\_delay](#input\_destroy\_duration\_delay) | Used to tune terraform destroy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type. | <pre>object({<br>    azurerm_role_definition         = optional(string, "0s")<br>    kubectl_manifest_cloud_identity = optional(string, "60s")<br>  })</pre> | `{}` | no |
 | <a name="input_disable_internet_access"></a> [disable\_internet\_access](#input\_disable\_internet\_access) | Whether to disable internet access for AKS and the Wayfinder ingress controller | `bool` | `false` | no |
 | <a name="input_disable_local_login"></a> [disable\_local\_login](#input\_disable\_local\_login) | Whether to disable local login for Wayfinder. Note: An IDP must be configured within Wayfinder, otherwise you will not be able to log in. | `bool` | `false` | no |
-| <a name="input_dns_resource_group_id"></a> [dns\_resource\_group\_id](#input\_dns\_resource\_group\_id) | The ID of the resource group where the DNS Zone exists, if different to Wayfinder's resource group. | `string` | `""` | no |
 | <a name="input_dns_provider"></a> [dns\_provider](#input\_dns\_provider) | DNS provider for External DNS | `string` | `"azure"` | no |
+| <a name="input_dns_resource_group_id"></a> [dns\_resource\_group\_id](#input\_dns\_resource\_group\_id) | The ID of the resource group where the DNS Zone exists, if different to Wayfinder's resource group. | `string` | `""` | no |
 | <a name="input_dns_zone_id"></a> [dns\_zone\_id](#input\_dns\_zone\_id) | The ID of the Azure DNS Zone to use. | `string` | n/a | yes |
 | <a name="input_dns_zone_name"></a> [dns\_zone\_name](#input\_dns\_zone\_name) | The name of the Azure DNS zone to use. | `string` | n/a | yes |
 | <a name="input_enable_k8s_resources"></a> [enable\_k8s\_resources](#input\_enable\_k8s\_resources) | Whether to enable the creation of Kubernetes resources for Wayfinder (helm and kubectl manifest deployments) | `bool` | `true` | no |
@@ -87,7 +89,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_private_dns_zone_id"></a> [private\_dns\_zone\_id](#input\_private\_dns\_zone\_id) | Private DNS zone to use for private clusters | `string` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which to create the AKS cluster. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to resources. | `map(string)` | `{}` | no |
-| <a name="input_user_assigned_identity"></a> [user\_assigned\_identity](#input\_user\_assigned\_identity) | MSI id for AKS to run as | `string` | `null` | no |
+| <a name="input_user_assigned_identity"></a> [user\_assigned\_identity](#input\_user\_assigned\_identity) | MSI id for AKS to run as | `string` | n/a | yes |
 | <a name="input_venafi_apikey"></a> [venafi\_apikey](#input\_venafi\_apikey) | Venafi API key - required if using Venafi cluster issuer | `string` | `""` | no |
 | <a name="input_venafi_zone"></a> [venafi\_zone](#input\_venafi\_zone) | Venafi zone - required if using Venafi cluster issuer | `string` | `""` | no |
 | <a name="input_wayfinder_domain_name_api"></a> [wayfinder\_domain\_name\_api](#input\_wayfinder\_domain\_name\_api) | The domain name to use for the Wayfinder API (e.g. api.wayfinder.example.com) | `string` | n/a | yes |
@@ -102,7 +104,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 
 | Name | Description |
 |------|-------------|
-| <a name="output_aks_admin_host"></a> [aks\_admin\_host](#output\_aks\_admin\_host) | The public API URL of the Azure Kubernetes Managed Cluster. |
+| <a name="output_aks_admin_host"></a> [aks\_admin\_host](#output\_aks\_admin\_host) | The API URL of the Azure Kubernetes Managed Cluster. |
 | <a name="output_aks_client_certificate"></a> [aks\_client\_certificate](#output\_aks\_client\_certificate) | The `client_certificate` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block.  Base64 encoded public certificate used by clients to authenticate to the Kubernetes cluster. |
 | <a name="output_aks_client_key"></a> [aks\_client\_key](#output\_aks\_client\_key) | The `client_key` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block. Base64 encoded private key used by clients to authenticate to the Kubernetes cluster. |
 | <a name="output_aks_cluster_ca_certificate"></a> [aks\_cluster\_ca\_certificate](#output\_aks\_cluster\_ca\_certificate) | The `cluster_ca_certificate` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block. Base64 encoded public CA certificate used as the root of trust for the Kubernetes cluster. |
