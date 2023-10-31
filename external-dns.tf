@@ -44,7 +44,7 @@ resource "helm_release" "external_dns" {
 
   values = [
     templatefile("${path.module}/manifests/external-dns-values.yml.tpl", {
-      resource_group  = var.resource_group_name
+      resource_group  = local.dns_resource_group_name
       client_id       = azurerm_user_assigned_identity.external_dns.client_id
       tenant_id       = data.azurerm_subscription.current.tenant_id
       subscription_id = data.azurerm_subscription.current.subscription_id
