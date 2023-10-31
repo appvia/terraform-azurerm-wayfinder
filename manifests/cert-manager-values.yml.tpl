@@ -5,6 +5,6 @@ serviceAccount:
   labels:
     azure.workload.identity/use: "true"
 ingressShim:
-  defaultIssuerName: letsencrypt-prod
+  defaultIssuerName: ${clusterissuer}
   defaultIssuerKind: ClusterIssuer
   defaultIssuerGroup: cert-manager.io

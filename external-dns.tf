@@ -7,7 +7,7 @@ resource "azurerm_user_assigned_identity" "external_dns" {
 
 resource "azurerm_role_assignment" "external_dns_dns_contributor" {
   scope                = var.dns_zone_id
-  role_definition_name = "DNS Zone Contributor"
+  role_definition_name = var.dns_provider == "azure-private-dns" ? "Private DNS Zone Contributor" : "DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.external_dns.principal_id
 }
 
@@ -44,9 +44,11 @@ resource "helm_release" "external_dns" {
 
   values = [
     templatefile("${path.module}/manifests/external-dns-values.yml.tpl", {
-      client_id       = azurerm_user_assigned_identity.external_dns.client_id
       resource_group  = local.dns_resource_group_name
+      client_id       = azurerm_user_assigned_identity.external_dns.client_id
+      tenant_id       = data.azurerm_subscription.current.tenant_id
       subscription_id = data.azurerm_subscription.current.subscription_id
+      dns_provider    = var.dns_provider
     })
   ]
 }
