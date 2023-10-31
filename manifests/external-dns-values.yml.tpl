@@ -4,7 +4,7 @@ serviceAccount:
     azure.workload.identity/client-id: ${client_id}
 podLabels:
   azure.workload.identity/use: "true"
-provider: azure
+provider: ${dns_provider}
 secretConfiguration:
   enabled: true
   mountPath: "/etc/kubernetes/"
