@@ -1,5 +1,6 @@
-podAnnotations:
-  azure.workload.identity/inject-proxy-sidecar: "true"
+serviceAccount:
+  annotations:
+    azure.workload.identity/client-id: ${client_id}
 podLabels:
   azure.workload.identity/use: "true"
 provider: ${dns_provider}
@@ -9,12 +10,6 @@ azure:
   useManagedIdentityExtension: true
   tenantId: ${tenant_id}
   subscriptionId: ${subscription_id}
-serviceAccount:
-  annotations:
-    azure.workload.identity/client-id: ${client_id}
-podLabels:
-  azure.workload.identity/use: "true"
-provider: azure
 secretConfiguration:
   enabled: true
   mountPath: "/etc/kubernetes/"
