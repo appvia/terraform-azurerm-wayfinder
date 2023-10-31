@@ -1,3 +1,4 @@
+fullnameOverride: external-dns
 serviceAccount:
   annotations:
     azure.workload.identity/client-id: ${client_id}
