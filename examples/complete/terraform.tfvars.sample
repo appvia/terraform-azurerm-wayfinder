@@ -3,9 +3,10 @@ aks_rbac_aad_admin_groups = {
 }
 clusterissuer_email     = "example@appvia.io"
 disable_local_login     = true
-dns_resource_group_name = "wayfinder-rg"
+dns_resource_group_name = "rg-wayfinder"
 dns_zone_name           = "wf.example.com"
-resource_group_name     = "wayfinder-rg"
+environment             = "prod"
+resource_group_name     = "rg-wayfinder"
 tags = {
   Repository  = "Your Repository URL"
   Provisioner = "Terraform"

@@ -2,9 +2,9 @@ aks_rbac_aad_admin_groups = {
   "my-aad-aks-admin-group" = "c0e0b0f0-0000-0000-0000-000000000000"
 }
 clusterissuer_email     = "example@appvia.io"
-dns_resource_group_name = "wayfinder-rg"
+dns_resource_group_name = "rg-wayfinder"
 dns_zone_name           = "wf.example.com"
-resource_group_name     = "wayfinder-rg"
+resource_group_name     = "rg-wayfinder"
 tags = {
   Repository  = "Your Repository URL"
   Provisioner = "Terraform"
