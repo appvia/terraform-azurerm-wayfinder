@@ -8,10 +8,8 @@ module "wayfinder_azure_cloudaccess" {
   create_duration_delay                 = { azurerm_role_definition = var.create_duration_delay.azurerm_role_definition }
   destroy_duration_delay                = { azurerm_role_definition = var.destroy_duration_delay.azurerm_role_definition }
 
-  enable_dns_zone_manager = true
-  enable_cloud_info       = true
-  enable_cluster_manager  = false
-  enable_network_manager  = false
+  enable_dns_zone_manager = var.enable_wf_dnszonemanager
+  enable_cloud_info       = var.enable_wf_costestimates
 }
 
 resource "kubectl_manifest" "wayfinder_cloud_identity_main" {
@@ -28,7 +26,7 @@ resource "kubectl_manifest" "wayfinder_cloud_identity_main" {
 }
 
 resource "kubectl_manifest" "wayfinder_azure_cloudinfo_cloudaccessconfig" {
-  count      = var.enable_k8s_resources && var.enable_wf_cloudaccess ? 1 : 0
+  count      = var.enable_k8s_resources && var.enable_wf_cloudaccess && var.enable_wf_costestimates ? 1 : 0
   depends_on = [time_sleep.after_kubectl_manifest_cloud_identity]
 
   yaml_body = templatefile("${path.module}/manifests/wayfinder-azure-cloudinfo-cloudaccessconfig.yml.tpl", {
@@ -40,7 +38,7 @@ resource "kubectl_manifest" "wayfinder_azure_cloudinfo_cloudaccessconfig" {
 }
 
 resource "kubectl_manifest" "wayfinder_azure_dnszonemanagement_cloudaccessconfig" {
-  count      = var.enable_k8s_resources && var.enable_wf_cloudaccess ? 1 : 0
+  count      = var.enable_k8s_resources && var.enable_wf_cloudaccess && var.enable_wf_dnszonemanager ? 1 : 0
   depends_on = [time_sleep.after_kubectl_manifest_cloud_identity]
 
   yaml_body = templatefile("${path.module}/manifests/wayfinder-azure-dnszonemanagement-cloudaccessconfig.yml.tpl", {

@@ -175,6 +175,18 @@ variable "enable_wf_cloudaccess" {
   default     = true
 }
 
+variable "enable_wf_costestimates" {
+  description = "Whether to configure admin CloudAccessConfig for cost estimates in the account Wayfinder is installed in once installed (requires enable_k8s_resources and enable_wf_cloudaccess)"
+  type        = bool
+  default     = true
+}
+
+variable "enable_wf_dnszonemanager" {
+  description = "Whether to configure admin CloudAccessConfig for DNS zone management in the account Wayfinder is installed in once installed (requires enable_k8s_resources and enable_wf_cloudaccess)"
+  type        = bool
+  default     = false
+}
+
 variable "environment" {
   description = "The environment in which the resources are deployed."
   type        = string
