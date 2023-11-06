@@ -12,7 +12,7 @@ resource "azurerm_key_vault" "kv" {
   purge_protection_enabled      = true
   enable_rbac_authorization     = true
   public_network_access_enabled = false
-  
+
   network_acls {
     default_action = "Deny"
     bypass         = "AzureServices"
@@ -22,10 +22,10 @@ resource "azurerm_key_vault" "kv" {
 }
 
 resource "azurerm_role_assignment" "kv" {
-  count               = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
-  scope               = azurerm_key_vault.kv[0].id
+  count                = var.clusterissuer == "keyvault" && var.cert_manager_keyvault_name == null ? 1 : 0
+  scope                = azurerm_key_vault.kv[0].id
   role_definition_name = "Key Vault Administrator"
-  principal_id        = data.azurerm_client_config.current.object_id
+  principal_id         = data.azurerm_client_config.current.object_id
 }
 
 resource "azurerm_private_endpoint" "kv" {
@@ -44,8 +44,8 @@ resource "azurerm_private_endpoint" "kv" {
   }
 
   private_dns_zone_group {
-    name                           = azurerm_key_vault.kv[0].name
-    private_dns_zone_ids            = [replace(var.private_dns_zone_id, "/[^\\/]*$/", "privatelink.vaultcore.azure.net")]
+    name                 = azurerm_key_vault.kv[0].name
+    private_dns_zone_ids = [replace(var.private_dns_zone_id, "/[^\\/]*$/", "privatelink.vaultcore.azure.net")]
   }
 
   tags = var.tags
@@ -85,7 +85,7 @@ resource "azurerm_key_vault_certificate" "root" {
     contents = "${tls_self_signed_cert.root[0].cert_pem}${tls_private_key.root[0].private_key_pem_pkcs8}"
   }
 
-  depends_on = [ azurerm_private_endpoint.kv, azurerm_role_assignment.kv ]
+  depends_on = [azurerm_private_endpoint.kv, azurerm_role_assignment.kv]
 }
 
 resource "tls_private_key" "signing" {
@@ -129,5 +129,5 @@ resource "azurerm_key_vault_certificate" "signing" {
     contents = "${tls_locally_signed_cert.signing[0].cert_pem}${tls_private_key.signing[0].private_key_pem_pkcs8}"
   }
 
-  depends_on = [ azurerm_private_endpoint.kv, azurerm_role_assignment.kv ]
+  depends_on = [azurerm_private_endpoint.kv, azurerm_role_assignment.kv]
 }
