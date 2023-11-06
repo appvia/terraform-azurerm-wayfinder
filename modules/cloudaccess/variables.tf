@@ -53,19 +53,19 @@ variable "region" {
 }
 
 variable "enable_cluster_manager" {
-  default     = true
+  default     = false
   description = "Whether to create the Cluster Manager IAM Role"
   type        = bool
 }
 
 variable "enable_dns_zone_manager" {
-  default     = true
+  default     = false
   description = "Whether to create the DNS Zone Manager IAM Role"
   type        = bool
 }
 
 variable "enable_network_manager" {
-  default     = true
+  default     = false
   description = "Whether to create the Network Manager IAM Role"
   type        = bool
 }
