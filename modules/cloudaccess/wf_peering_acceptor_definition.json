@@ -2,15 +2,9 @@
     "actions": [
         "Microsoft.Authorization/roleAssignments/read",
         "Microsoft.Authorization/roleDefinitions/read",
-        "Microsoft.Authorization/*/read",
-        "Microsoft.Insights/alertRules/*",
-        "Microsoft.Network/*",
-        "Microsoft.ResourceHealth/availabilityStatuses/read",
-        "Microsoft.Resources/deployments/*",
-        "Microsoft.Resources/subscriptions/resourceGroups/read",
-        "Microsoft.Resources/subscriptions/resourceGroups/write",
-        "Microsoft.Resources/subscriptions/resourceGroups/delete",
-        "Microsoft.Support/*",
-        "Microsoft.Resources/subscriptions/providers/read"
+        "Microsoft.Network/virtualNetworks/virtualNetworkPeerings/read",
+        "Microsoft.Network/virtualNetworks/virtualNetworkPeerings/write",
+        "Microsoft.Network/virtualNetworks/virtualNetworkPeerings/delete",
+        "Microsoft.Network/virtualNetworks/peer/action"
     ]
 }
