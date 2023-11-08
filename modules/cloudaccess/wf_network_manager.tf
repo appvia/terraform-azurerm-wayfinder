@@ -49,7 +49,7 @@ resource "azurerm_role_assignment" "networkmanager_federated" {
 
   depends_on = [
     time_sleep.after_azurerm_role_definition_networkmanager[0],
-    azurerm_role_definition.dnszonemanager[0],
+    azurerm_role_definition.networkmanager[0],
     azurerm_user_assigned_identity.federated_identity[0],
   ]
 }
