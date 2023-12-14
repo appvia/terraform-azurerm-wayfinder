@@ -18,6 +18,7 @@
         "Microsoft.ManagedIdentity/userAssignedIdentities/read",
         "Microsoft.ManagedIdentity/userAssignedIdentities/write",
         "Microsoft.ManagedIdentity/userAssignedIdentities/delete",
+        "Microsoft.ManagedIdentity/userAssignedIdentities/assign/action",
         "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/read",
         "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/write",
         "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/delete",
