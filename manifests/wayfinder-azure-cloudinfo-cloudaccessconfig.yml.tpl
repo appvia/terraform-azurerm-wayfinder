@@ -9,7 +9,7 @@ spec:
     subscription: ${subscription_id}
     tenantID: ${tenant_id}
   description: Platform cloud metadata access, created by Wayfinder install
-  type: CostEstimates
+  type: CostsEstimates
   cloudIdentityRef:
     cloud: azure
     name: ${identity}
