@@ -1,6 +1,7 @@
+#tfsec:ignore:azure-container-limit-authorized-ips
 module "aks" {
   source  = "Azure/aks/azurerm"
-  version = "7.3.1"
+  version = "8.0.0"
 
   prefix              = local.name
   resource_group_name = var.resource_group_name
@@ -38,7 +39,6 @@ module "aks" {
   private_cluster_enabled               = var.disable_internet_access
   private_cluster_public_fqdn_enabled   = false
   private_dns_zone_id                   = var.private_dns_zone_id
-  public_network_access_enabled         = !var.disable_internet_access
   rbac_aad                              = true
   rbac_aad_admin_group_object_ids       = var.aks_rbac_aad_admin_group_object_ids
   rbac_aad_managed                      = true

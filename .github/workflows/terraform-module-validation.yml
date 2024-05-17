@@ -8,6 +8,10 @@ on:
     - main
     - vnext
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   root-module-validation:
     uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-module-validation.yml@main
