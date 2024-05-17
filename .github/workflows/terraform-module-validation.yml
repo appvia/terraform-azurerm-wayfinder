@@ -7,6 +7,10 @@ on:
     branches:
     - main
     - vnext
+    
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   root-module-validation:
