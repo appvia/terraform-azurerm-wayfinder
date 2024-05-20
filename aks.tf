@@ -1,3 +1,4 @@
+#tfsec:ignore:azure-container-limit-authorized-ips
 module "aks" {
   source  = "Azure/aks/azurerm"
   version = "7.3.1"

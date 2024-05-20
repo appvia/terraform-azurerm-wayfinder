@@ -27,5 +27,5 @@ module "wayfinder" {
   wayfinder_instance_id               = var.wayfinder_instance_id
   wayfinder_licence_key               = var.wayfinder_licence_key
 
-  depends_on = [azurerm_role_assignment.private_dns, azurerm_user_assigned_identity.aks_identity]
+  depends_on = [azurerm_role_assignment.private_dns]
 }
