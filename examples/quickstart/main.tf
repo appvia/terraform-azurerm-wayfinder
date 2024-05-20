@@ -16,4 +16,6 @@ module "wayfinder" {
   wayfinder_domain_name_ui            = "portal.${var.dns_zone_name}"
   wayfinder_instance_id               = var.wayfinder_instance_id
   wayfinder_licence_key               = var.wayfinder_licence_key
+  user_assigned_identity              = coalesce(var.user_assigned_identity, azurerm_user_assigned_identity.aks_identity[0].id)
+  
 }
