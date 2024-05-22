@@ -56,7 +56,7 @@ resource "helm_release" "cert_manager" {
   count = var.enable_k8s_resources ? 1 : 0
 
   depends_on = [
-    module.aks,
+    kubectl_manifest.certmanager_namespace,
     kubectl_manifest.cert_manager_clusterissuer_keyvault_secret,
     azurerm_role_assignment.cert_manager_keyvault
   ]
@@ -72,8 +72,8 @@ resource "helm_release" "cert_manager" {
 
   values = [templatefile("${path.module}/manifests/cert-manager-values.yml.tpl", {
     clusterissuer = var.clusterissuer
-    issuerkind = var.clusterissuer == "adcs-issuer" ? "ClusterAdcsIssuer" : "ClusterIssuer"
-    issuergroup = var.clusterissuer == "adcs-issuer" ? "adcs.certmanager.csf.nokia.com" : "cert-manager.io"
+    issuerkind    = var.clusterissuer == "adcs-issuer" ? "ClusterAdcsIssuer" : "ClusterIssuer"
+    issuergroup   = var.clusterissuer == "adcs-issuer" ? "adcs.certmanager.csf.nokia.com" : "cert-manager.io"
   }), var.clusterissuer == "keyvault" ? templatefile("${path.module}/manifests/cert-manager-csi-values.yml.tpl", {}) : ""]
 }
 
@@ -81,7 +81,6 @@ resource "kubectl_manifest" "cert_manager_clusterissuer" {
   count = var.enable_k8s_resources && var.clusterissuer == "letsencrypt-prod" ? 1 : 0
 
   depends_on = [
-    module.aks,
     helm_release.cert_manager,
   ]
 
@@ -98,7 +97,6 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_vaas" {
   count = var.enable_k8s_resources && var.clusterissuer == "vaas-issuer" ? 1 : 0
 
   depends_on = [
-    module.aks,
     helm_release.cert_manager,
     kubectl_manifest.cert_manager_clusterissuer_vaas_secret
   ]
@@ -112,7 +110,6 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_vaas_secret" {
   count = var.enable_k8s_resources && var.clusterissuer == "vaas-issuer" ? 1 : 0
 
   depends_on = [
-    module.aks,
     helm_release.cert_manager,
   ]
 
@@ -125,7 +122,6 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_keyvault" {
   count = var.enable_k8s_resources && var.clusterissuer == "keyvault" ? 1 : 0
 
   depends_on = [
-    module.aks,
     helm_release.cert_manager,
     kubectl_manifest.cert_manager_clusterissuer_keyvault_secret
   ]
@@ -137,7 +133,6 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_keyvault_secret" {
   count = var.enable_k8s_resources && var.clusterissuer == "keyvault" ? 1 : 0
 
   depends_on = [
-    module.aks,
     kubectl_manifest.certmanager_namespace
   ]
 
