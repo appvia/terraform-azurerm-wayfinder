@@ -8,7 +8,7 @@ api:
     tlsEnabled: true
     tlsSecret: "wayfinder-ingress-api-tls"
     annotations:
-      cert-manager.io/cluster-issuer: ${clusterissuer}
+      cert-manager.io/issuer: ${clusterissuer}
       cert-manager.io/issuer-kind: ${issuerkind}
       cert-manager.io/issuer-group: ${issuergroup}
       cert-manager.io/common-name: ${api_hostname}
@@ -33,7 +33,7 @@ ui:
     tlsEnabled: true
     tlsSecret: "wayfinder-ingress-ui-tls"
     annotations:
-      cert-manager.io/cluster-issuer: ${clusterissuer}
+      cert-manager.io/issuer: ${clusterissuer}
       cert-manager.io/issuer-kind: ${issuerkind}
       cert-manager.io/issuer-group: ${issuergroup}
       cert-manager.io/common-name: ${ui_hostname}
