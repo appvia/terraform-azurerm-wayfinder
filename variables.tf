@@ -12,6 +12,7 @@ variable "adcs" {
 variable "adcs_password" {
   description = "ADCS password required when using ADCS Issuer with Cert Manager"
   type        = string
+  sensitive   = true
   default     = ""
 }
 
