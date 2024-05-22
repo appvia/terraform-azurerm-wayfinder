@@ -6,5 +6,5 @@ serviceAccount:
     azure.workload.identity/use: "true"
 ingressShim:
   defaultIssuerName: ${clusterissuer}
-  defaultIssuerKind: ClusterIssuer
-  defaultIssuerGroup: cert-manager.io
+  defaultIssuerKind: ${issuerkind}
+  defaultIssuerGroup: ${issuergroup}

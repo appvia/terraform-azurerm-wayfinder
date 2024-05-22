@@ -1,3 +1,20 @@
+variable "adcs" {
+  description = "ADCS variables required when using ADCS Issuer with Cert Manager"
+  type        = object({
+      url                       = string
+      username                  = string
+      ca_bundle                 = string
+      certificate_template_name = string
+  })
+  default = null
+}
+
+variable "adcs_password" {
+  description = "ADCS password required when using ADCS Issuer with Cert Manager"
+  type        = string
+  default     = ""
+}
+
 variable "aks_agents_size" {
   description = "The default size of the agents pool."
   type        = string

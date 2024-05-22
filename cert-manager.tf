@@ -72,6 +72,8 @@ resource "helm_release" "cert_manager" {
 
   values = [templatefile("${path.module}/manifests/cert-manager-values.yml.tpl", {
     clusterissuer = var.clusterissuer
+    issuerkind = var.clusterissuer == "adcs-issuer" ? "ClusterAdcsIssuer" : "ClusterIssuer"
+    issuergroup = var.clusterissuer == "adcs-issuer" ? "adcs.certmanager.csf.nokia.com" : "cert-manager.io"
   }), var.clusterissuer == "keyvault" ? templatefile("${path.module}/manifests/cert-manager-csi-values.yml.tpl", {}) : ""]
 }
 
@@ -145,4 +147,15 @@ resource "kubectl_manifest" "cert_manager_clusterissuer_keyvault_secret" {
     cert_manager_client_id = azurerm_user_assigned_identity.cert_manager.client_id
     tenant_id              = data.azurerm_subscription.current.tenant_id
   })
+}
+
+module "adcs" {
+  count  = var.enable_k8s_resources && var.clusterissuer == "adcs-issuer" ? 1 : 0
+  source = "./modules/adcs"
+
+  adcs_url                  = var.adcs.url
+  username                  = var.adcs.username
+  password                  = var.adcs_password
+  adcs_ca_bundle            = var.adcs.ca_bundle
+  certificate_template_name = var.adcs.certificate_template_name
 }
