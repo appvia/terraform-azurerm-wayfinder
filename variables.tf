@@ -1,3 +1,21 @@
+variable "adcs" {
+  description = "ADCS variables required when using ADCS Issuer with Cert Manager"
+  type = object({
+    url                       = string
+    username                  = string
+    ca_bundle                 = string
+    certificate_template_name = string
+  })
+  default = null
+}
+
+variable "adcs_password" {
+  description = "ADCS password required when using ADCS Issuer with Cert Manager"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
 variable "aks_agents_size" {
   description = "The default size of the agents pool."
   type        = string
@@ -73,8 +91,8 @@ variable "clusterissuer" {
   type        = string
   default     = "letsencrypt-prod"
   validation {
-    condition     = contains(["letsencrypt-prod", "vaas-issuer", "keyvault"], var.clusterissuer)
-    error_message = "clusterissuer must be one of: letsencrypt-prod, vaas-issuer, keyvault"
+    condition     = contains(["letsencrypt-prod", "vaas-issuer", "keyvault", "adcs-issuer"], var.clusterissuer)
+    error_message = "clusterissuer must be one of: letsencrypt-prod, vaas-issuer, keyvault, adcs-issuer"
   }
 }
 

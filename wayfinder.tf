@@ -123,6 +123,8 @@ resource "helm_release" "wayfinder" {
     templatefile("${path.module}/manifests/wayfinder-values.yml.tpl", {
       api_hostname                  = var.wayfinder_domain_name_api
       clusterissuer                 = var.clusterissuer
+      issuerkind                    = var.clusterissuer == "adcs-issuer" ? "ClusterAdcsIssuer" : "ClusterIssuer"
+      issuergroup                   = var.clusterissuer == "adcs-issuer" ? "adcs.certmanager.csf.nokia.com" : "cert-manager.io"
       disable_local_login           = var.wayfinder_idp_details["type"] == "none" ? false : var.disable_local_login
       enable_localadmin_user        = var.create_localadmin_user
       storage_class                 = "managed"
