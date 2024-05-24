@@ -12,6 +12,7 @@ module "wayfinder" {
   enable_k8s_resources                = var.enable_k8s_resources
   environment                         = var.environment
   resource_group_name                 = var.resource_group_name
+  user_assigned_identity              = coalesce(var.user_assigned_identity, azurerm_user_assigned_identity.aks_identity[0].id)
   wayfinder_domain_name_api           = "api.${var.dns_zone_name}"
   wayfinder_domain_name_ui            = "portal.${var.dns_zone_name}"
   wayfinder_instance_id               = var.wayfinder_instance_id
