@@ -1,0 +1,23 @@
+content: |-
+  # Terraform Module: Cloud Access for Wayfinder on Azure
+
+  This Terraform Module can be used to associate Roles to Wayfinder's Azure Identity, for creating resources within an Azure Subscription.
+
+  **Notes:**
+  * You must set `var.wayfinder_identity_azure_principal_id` to the Azure Principal ID of the Wayfinder Identity.
+  * `var.resource_suffix` is an optional suffix to use on created objects. We recommend using workspace key + stage if you wish to have multiple workspaces sharing the same AWS account, allowing independent roles to be provisioned for each.
+
+  ## Deployment
+
+  Please see the [examples](./examples) directory to see how to deploy this module.
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
+
+  ## Updating Docs
+
+  The `terraform-docs` utility is used to generate this README. Follow the below steps to update:
+  1. Make changes to the `.terraform-docs.yml` file
+  2. Fetch the `terraform-docs` binary (https://terraform-docs.io/user-guide/installation/)
+  3. Run `terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .`

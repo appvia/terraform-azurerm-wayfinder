@@ -104,7 +104,7 @@ variable "clusterissuer_email" {
 variable "cluster_version" {
   description = "The Kubernetes version to use for the AKS cluster."
   type        = string
-  default     = "1.28"
+  default     = "1.29"
 }
 
 variable "cluster_nodepool_version" {
@@ -318,5 +318,5 @@ variable "wayfinder_release_channel" {
 variable "wayfinder_version" {
   description = "The version to use for Wayfinder"
   type        = string
-  default     = "v2.6.4"
+  default     = "v2.7.1"
 }

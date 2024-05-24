@@ -22,7 +22,7 @@ resource "helm_release" "ingress" {
   name        = "ingress-nginx"
   repository  = "https://kubernetes.github.io/ingress-nginx"
   chart       = "ingress-nginx"
-  version     = "4.6.0"
+  version     = "4.10.1"
   max_history = 5
 
   values = [

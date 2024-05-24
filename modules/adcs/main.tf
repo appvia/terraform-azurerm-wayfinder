@@ -20,7 +20,7 @@ resource "helm_release" "adcs_issuer" {
 }
 
 resource "kubectl_manifest" "adcs_credentials_secret" {
-  depends_on = [ helm_release.adcs_issuer ]
+  depends_on = [helm_release.adcs_issuer]
 
   yaml_body = <<YAML
 apiVersion: v1
@@ -36,7 +36,7 @@ YAML
 }
 
 resource "kubectl_manifest" "adcs_cluster_issuer" {
-  depends_on = [ kubectl_manifest.adcs_credentials_secret ]
+  depends_on = [kubectl_manifest.adcs_credentials_secret]
 
   yaml_body = <<YAML
 apiVersion: adcs.certmanager.csf.nokia.com/v1

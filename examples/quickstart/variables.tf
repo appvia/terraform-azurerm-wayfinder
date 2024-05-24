@@ -59,6 +59,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "user_assigned_identity" {
+  description = "MSI id for AKS to run as"
+  type        = string
+  default     = null
+}
+
 variable "wayfinder_instance_id" {
   description = "The instance ID to use for Wayfinder."
   type        = string

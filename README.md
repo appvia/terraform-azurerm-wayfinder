@@ -1,12 +1,12 @@
 <!-- BEGIN_TF_DOCS -->
 # Terraform Module: Wayfinder on Azure
 
-The "terraform-azurerm-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/product/) on Azure.
+The "terraform-azurerm-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/wayfinder) on Azure.
 
 ## Requirements
 
 To run this module, you will need the following:
-1. Product Licence Key & Instance ID: Contact sales@appvia.io for more information.
+1. Product Licence Key & Instance ID. Request a free licence key from the [Appvia Portal](https://portal.appvia.io/trial?utm_source=terraform-azurerm-wayfinder).
 2. (Optional) IDP App configuration details: Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID) for setup. This does not need to be defined initially within Terraform, and can also be setup within the product. Wayfinder can provision a `localadmin` user for initial access if no IDP details are provided.
 3. A public Azure DNS Zone: This module will create DNS records for the Wayfinder API and UI endpoints, and performs a DNS01 challenge via the LetsEncrypt Issuer for valid domain certificates.
 4. Existing Virtual Network and Subnet: This module will deploy an AKS Cluster and so requires an existing vnet with outbound internet connectivity.
@@ -31,10 +31,10 @@ The Authorized Redirect URI for the IDP Application should be set to: `https://$
 
 ```hcl
 wayfinder_idp_details = {
-  type         = "generic"
-  clientId     = "IDP-APP-CLIENT-ID"
-  clientSecret = "IDP-APP-CLIENT-SECRET"
-  serverUrl    = "https://example.okta.com" # Or "https://example.auth0.com/"
+    type         = "generic"
+    clientId     = "IDP-APP-CLIENT-ID"
+    clientSecret = "IDP-APP-CLIENT-SECRET"
+    serverUrl    = "https://example.okta.com" # Or "https://example.auth0.com/"
 }
 ```
 
@@ -42,10 +42,10 @@ wayfinder_idp_details = {
 
 ```hcl
 wayfinder_idp_details = {
-  type          = "aad"
-  clientId      = "IDP-APP-CLIENT-ID"
-  clientSecret  = "IDP-APP-CLIENT-SECRET"
-  azureTenantId = "12345678-1234-1234-1234-123456789012"
+    type          = "aad"
+    clientId      = "IDP-APP-CLIENT-ID"
+    clientSecret  = "IDP-APP-CLIENT-SECRET"
+    azureTenantId = "12345678-1234-1234-1234-123456789012"
 }
 ```
 
@@ -60,6 +60,8 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_adcs"></a> [adcs](#input\_adcs) | ADCS variables required when using ADCS Issuer with Cert Manager | <pre>object({<br>    url                       = string<br>    username                  = string<br>    ca_bundle                 = string<br>    certificate_template_name = string<br>  })</pre> | `null` | no |
+| <a name="input_adcs_password"></a> [adcs\_password](#input\_adcs\_password) | ADCS password required when using ADCS Issuer with Cert Manager | `string` | `""` | no |
 | <a name="input_aks_agents_size"></a> [aks\_agents\_size](#input\_aks\_agents\_size) | The default size of the agents pool. | `string` | `"Standard_D2s_v3"` | no |
 | <a name="input_aks_api_server_authorized_ip_ranges"></a> [aks\_api\_server\_authorized\_ip\_ranges](#input\_aks\_api\_server\_authorized\_ip\_ranges) | The list of authorized IP ranges to contact the API server. | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | <a name="input_aks_enable_host_encryption"></a> [aks\_enable\_host\_encryption](#input\_aks\_enable\_host\_encryption) | Whether to enable host encryption. | `bool` | `false` | no |
@@ -70,7 +72,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_cert_manager_keyvault_cert_name"></a> [cert\_manager\_keyvault\_cert\_name](#input\_cert\_manager\_keyvault\_cert\_name) | Keyvault certificate name to use for cert-manager. Required if cluster issuer is keyvault | `string` | `null` | no |
 | <a name="input_cert_manager_keyvault_name"></a> [cert\_manager\_keyvault\_name](#input\_cert\_manager\_keyvault\_name) | Keyvault name to use for cert-manager. Required if cluster issuer is keyvault | `string` | `null` | no |
 | <a name="input_cluster_nodepool_version"></a> [cluster\_nodepool\_version](#input\_cluster\_nodepool\_version) | The Kubernetes version to use for the AKS cluster Nodepools. | `string` | `"1.28"` | no |
-| <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | The Kubernetes version to use for the AKS cluster. | `string` | `"1.28"` | no |
+| <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | The Kubernetes version to use for the AKS cluster. | `string` | `"1.29"` | no |
 | <a name="input_clusterissuer"></a> [clusterissuer](#input\_clusterissuer) | Cluster Issuer name to use for certs | `string` | `"letsencrypt-prod"` | no |
 | <a name="input_clusterissuer_email"></a> [clusterissuer\_email](#input\_clusterissuer\_email) | The email address to use for the cert-manager cluster issuer. | `string` | n/a | yes |
 | <a name="input_create_duration_delay"></a> [create\_duration\_delay](#input\_create\_duration\_delay) | Used to tune terraform apply when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after creation of the specified resource type. | <pre>object({<br>    azurerm_role_definition         = optional(string, "180s")<br>    kubectl_manifest_cloud_identity = optional(string, "30s")<br>  })</pre> | `{}` | no |
@@ -100,7 +102,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_wayfinder_instance_id"></a> [wayfinder\_instance\_id](#input\_wayfinder\_instance\_id) | The instance ID to use for Wayfinder. | `string` | n/a | yes |
 | <a name="input_wayfinder_licence_key"></a> [wayfinder\_licence\_key](#input\_wayfinder\_licence\_key) | The licence key to use for Wayfinder | `string` | n/a | yes |
 | <a name="input_wayfinder_release_channel"></a> [wayfinder\_release\_channel](#input\_wayfinder\_release\_channel) | The release channel to use for Wayfinder | `string` | `"wayfinder-releases"` | no |
-| <a name="input_wayfinder_version"></a> [wayfinder\_version](#input\_wayfinder\_version) | The version to use for Wayfinder | `string` | `"v2.6.4"` | no |
+| <a name="input_wayfinder_version"></a> [wayfinder\_version](#input\_wayfinder\_version) | The version to use for Wayfinder | `string` | `"v2.7.1"` | no |
 
 ## Outputs
 
