@@ -1,5 +1,6 @@
 # Resource suffix is optional, specify this if you need to keep role definitions unique amongst
 # multiple workspaces using the same subscription.
+region                                    = "uksouth"
 resource_suffix                           = "app1-nonprod"
 enable_cluster_manager                    = true
 enable_dns_zone_manager                   = true
