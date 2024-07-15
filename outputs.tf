@@ -22,6 +22,11 @@ output "aks_admin_host" {
   value       = var.disable_internet_access ? "https://${module.aks.cluster_private_fqdn}" : "https://${module.aks.cluster_fqdn}"
 }
 
+output "aks_oidc_issuer_url" {
+  description = "The issuer URL for the Azure Kubernetes Managed Cluster."
+  value       = module.aks.oidc_issuer_url
+}
+
 output "aks_kubeconfig_host" {
   description = "The Kubernetes cluster server host. This is a Private Link address if 'disable_internet_access' is configured."
   sensitive   = true

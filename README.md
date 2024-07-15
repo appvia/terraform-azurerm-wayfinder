@@ -113,6 +113,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="output_aks_client_key"></a> [aks\_client\_key](#output\_aks\_client\_key) | The `client_key` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block. Base64 encoded private key used by clients to authenticate to the Kubernetes cluster. |
 | <a name="output_aks_cluster_ca_certificate"></a> [aks\_cluster\_ca\_certificate](#output\_aks\_cluster\_ca\_certificate) | The `cluster_ca_certificate` in the `azurerm_kubernetes_cluster`'s `kube_admin_config` block. Base64 encoded public CA certificate used as the root of trust for the Kubernetes cluster. |
 | <a name="output_aks_kubeconfig_host"></a> [aks\_kubeconfig\_host](#output\_aks\_kubeconfig\_host) | The Kubernetes cluster server host. This is a Private Link address if 'disable\_internet\_access' is configured. |
+| <a name="output_aks_oidc_issuer_url"></a> [aks\_oidc\_issuer\_url](#output\_aks\_oidc\_issuer\_url) | The issuer URL for the Azure Kubernetes Managed Cluster. |
 | <a name="output_cluster_name"></a> [cluster\_name](#output\_cluster\_name) | The name of the Wayfinder AKS cluster. |
 | <a name="output_wayfinder_admin_password"></a> [wayfinder\_admin\_password](#output\_wayfinder\_admin\_password) | The password for the Wayfinder local admin user. |
 | <a name="output_wayfinder_admin_username"></a> [wayfinder\_admin\_username](#output\_wayfinder\_admin\_username) | The username for the Wayfinder local admin user. |
