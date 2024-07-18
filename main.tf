@@ -13,6 +13,9 @@ locals {
   # If no DNS resource group provided, default to the same resource group as Wayfinder
   dns_resource_group_id   = var.dns_resource_group_id == "" ? local.resource_group_id : var.dns_resource_group_id
   dns_resource_group_name = reverse(split("/", local.dns_resource_group_id))[0]
+
+  # if not provided, use the same resource group as the AKS cluster
+  private_link_resourcegroup = var.private_link_resourcegroup == "" ? var.resource_group_name : var.private_link_resourcegroup
 }
 
 resource "time_sleep" "after_azurerm_role_definition_main" {

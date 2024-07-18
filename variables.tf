@@ -228,6 +228,12 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "private_link_resourcegroup" {
+  description = "The name of the resource group in which to create central private link resources for each AKS cluster."
+  type        = string
+  default     = ""
+}
+
 variable "tags" {
   description = "A mapping of tags to assign to resources."
   type        = map(string)
