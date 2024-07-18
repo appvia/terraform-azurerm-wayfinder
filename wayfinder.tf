@@ -131,6 +131,9 @@ resource "helm_release" "wayfinder" {
       ui_hostname                   = var.wayfinder_domain_name_ui
       wayfinder_client_id           = azurerm_user_assigned_identity.wayfinder_main.client_id
       wayfinder_instance_identifier = var.wayfinder_instance_id
+      aksManagementSubnet           = var.aks_vnet_subnet_id
+      region                        = var.location
+      private_link_resourcegroup    = local.private_link_resourcegroup
     })
   ]
 
