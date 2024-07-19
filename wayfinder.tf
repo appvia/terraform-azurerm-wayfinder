@@ -5,6 +5,29 @@ resource "azurerm_user_assigned_identity" "wayfinder_main" {
   tags                = var.tags
 }
 
+resource "azuread_application" "wayfinder_multi_tenant" {
+  count = var.enable_cross_tenant_access ? 1 : 0
+
+  display_name     = "WayfinderMultitenant-${var.wayfinder_instance_id}"
+  sign_in_audience = "AzureADMultipleOrgs"
+}
+
+resource "azuread_application_federated_identity_credential" "wayfinder_multi_tenant" {
+  count = var.enable_cross_tenant_access ? 1 : 0
+
+  depends_on = [
+    azuread_application.wayfinder_multi_tenant,
+    module.aks,
+  ]
+
+  display_name   = "WayfinderMultitenant-${var.wayfinder_instance_id}"
+  description    = "Wayfinder identity for e2e test cluster"
+  application_id = "/applications/${azuread_application.wayfinder_multi_tenant[0].object_id}"
+  audiences      = ["api://AzureADTokenExchange"]
+  issuer         = module.aks.oidc_issuer_url
+  subject        = "system:serviceaccount:wayfinder:wayfinder-admin"
+}
+
 resource "azurerm_role_definition" "wayfinder_main" {
   name        = "WayfinderMain-${var.wayfinder_instance_id}"
   scope       = data.azurerm_subscription.current.id
