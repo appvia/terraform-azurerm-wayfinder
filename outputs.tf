@@ -63,3 +63,8 @@ output "wayfinder_admin_password" {
   value       = var.create_localadmin_user ? random_password.wayfinder_localadmin[0].result : null
   sensitive   = true
 }
+
+output "wayfinder_cross_tenant_identity_client_id" {
+  description = "The client ID for the cross-tenant identity."
+  value       = var.enable_cross_tenant_access ? azuread_application.wayfinder_multi_tenant[0].client_id : null
+}

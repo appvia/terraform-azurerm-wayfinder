@@ -18,7 +18,7 @@ api:
     className: "nginx"
   wayfinderInstanceIdentifier: "${wayfinder_instance_identifier}"
   azure:
-    managementSubnetID: ${aksManagementSubnet}
+    managementSubnetID: "${aksManagementSubnet}"
     managementVNetLocation: "${region}"
     managementPrivateLinkResGroup: "${private_link_resourcegroup}" 
 disableLocalLogin: ${disable_local_login}
