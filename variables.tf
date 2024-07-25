@@ -104,7 +104,7 @@ variable "clusterissuer_email" {
 variable "cluster_version" {
   description = "The Kubernetes version to use for the AKS cluster."
   type        = string
-  default     = "1.29"
+  default     = "1.30"
 }
 
 variable "cluster_nodepool_version" {
