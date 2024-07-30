@@ -84,6 +84,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_dns_resource_group_id"></a> [dns\_resource\_group\_id](#input\_dns\_resource\_group\_id) | The ID of the resource group where the DNS Zone exists, if different to Wayfinder's resource group. | `string` | `""` | no |
 | <a name="input_dns_zone_id"></a> [dns\_zone\_id](#input\_dns\_zone\_id) | The ID of the Azure DNS Zone to use. | `string` | n/a | yes |
 | <a name="input_dns_zone_name"></a> [dns\_zone\_name](#input\_dns\_zone\_name) | The name of the Azure DNS zone to use. | `string` | n/a | yes |
+| <a name="input_enable_cross_tenant_access"></a> [enable\_cross\_tenant\_access](#input\_enable\_cross\_tenant\_access) | Whether to enable cross-tenant access for Wayfinder. Will create a suitable Enterprise Application with federated credential for Wayfinder to use. | `bool` | `false` | no |
 | <a name="input_enable_k8s_resources"></a> [enable\_k8s\_resources](#input\_enable\_k8s\_resources) | Whether to enable the creation of Kubernetes resources for Wayfinder (helm and kubectl manifest deployments) | `bool` | `true` | no |
 | <a name="input_enable_wf_cloudaccess"></a> [enable\_wf\_cloudaccess](#input\_enable\_wf\_cloudaccess) | Whether to configure CloudIdentity and admin CloudAccessConfig resources in Wayfinder once installed (requires enable\_k8s\_resources) | `bool` | `true` | no |
 | <a name="input_enable_wf_costestimates"></a> [enable\_wf\_costestimates](#input\_enable\_wf\_costestimates) | Whether to configure admin CloudAccessConfig for cost estimates in the account Wayfinder is installed in once installed (requires enable\_k8s\_resources and enable\_wf\_cloudaccess) | `bool` | `true` | no |
@@ -91,6 +92,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment in which the resources are deployed. | `string` | `"production"` | no |
 | <a name="input_location"></a> [location](#input\_location) | The Azure region to use. | `string` | `"uksouth"` | no |
 | <a name="input_private_dns_zone_id"></a> [private\_dns\_zone\_id](#input\_private\_dns\_zone\_id) | Private DNS zone to use for private clusters | `string` | `null` | no |
+| <a name="input_private_link_resourcegroup"></a> [private\_link\_resourcegroup](#input\_private\_link\_resourcegroup) | The name of the resource group in which to create central private link resources for each AKS cluster. | `string` | `""` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which to create the AKS cluster. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to resources. | `map(string)` | `{}` | no |
 | <a name="input_user_assigned_identity"></a> [user\_assigned\_identity](#input\_user\_assigned\_identity) | MSI id for AKS to run as | `string` | n/a | yes |
@@ -118,6 +120,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="output_wayfinder_admin_password"></a> [wayfinder\_admin\_password](#output\_wayfinder\_admin\_password) | The password for the Wayfinder local admin user. |
 | <a name="output_wayfinder_admin_username"></a> [wayfinder\_admin\_username](#output\_wayfinder\_admin\_username) | The username for the Wayfinder local admin user. |
 | <a name="output_wayfinder_api_url"></a> [wayfinder\_api\_url](#output\_wayfinder\_api\_url) | The URL for the Wayfinder API. |
+| <a name="output_wayfinder_cross_tenant_identity_client_id"></a> [wayfinder\_cross\_tenant\_identity\_client\_id](#output\_wayfinder\_cross\_tenant\_identity\_client\_id) | The client ID for the cross-tenant identity. |
 | <a name="output_wayfinder_instance_id"></a> [wayfinder\_instance\_id](#output\_wayfinder\_instance\_id) | The unique identifier for the Wayfinder instance. |
 | <a name="output_wayfinder_ui_url"></a> [wayfinder\_ui\_url](#output\_wayfinder\_ui\_url) | The URL for the Wayfinder UI. |
 <!-- END_TF_DOCS -->
