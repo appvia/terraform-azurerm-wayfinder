@@ -20,7 +20,7 @@ api:
   azure:
     managementSubnetID: "${aksManagementSubnet}"
     managementVNetLocation: "${region}"
-    managementPrivateLinkResGroup: "${private_link_resourcegroup}" 
+    managementPrivateLinkResGroup: "${private_link_resourcegroup}"
 disableLocalLogin: ${disable_local_login}
 enableLocalAdminUser: ${enable_localadmin_user}
 mysql:
