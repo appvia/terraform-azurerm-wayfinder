@@ -17,6 +17,10 @@ api:
     namespace: "ingress-nginx"
     className: "nginx"
   wayfinderInstanceIdentifier: "${wayfinder_instance_identifier}"
+  azure:
+    managementSubnetID: "${aksManagementSubnet}"
+    managementVNetLocation: "${region}"
+    managementPrivateLinkResGroup: "${private_link_resourcegroup}"
 disableLocalLogin: ${disable_local_login}
 enableLocalAdminUser: ${enable_localadmin_user}
 mysql:

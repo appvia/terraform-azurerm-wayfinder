@@ -193,6 +193,12 @@ variable "enable_wf_cloudaccess" {
   default     = true
 }
 
+variable "enable_cross_tenant_access" {
+  description = "Whether to enable cross-tenant access for Wayfinder. Will create a suitable Enterprise Application with federated credential for Wayfinder to use."
+  type        = bool
+  default     = false
+}
+
 variable "enable_wf_costestimates" {
   description = "Whether to configure admin CloudAccessConfig for cost estimates in the account Wayfinder is installed in once installed (requires enable_k8s_resources and enable_wf_cloudaccess)"
   type        = bool
@@ -226,6 +232,12 @@ variable "private_dns_zone_id" {
 variable "resource_group_name" {
   description = "The name of the resource group in which to create the AKS cluster."
   type        = string
+}
+
+variable "private_link_resourcegroup" {
+  description = "The name of the resource group in which to create central private link resources for each AKS cluster."
+  type        = string
+  default     = ""
 }
 
 variable "tags" {
@@ -318,5 +330,5 @@ variable "wayfinder_release_channel" {
 variable "wayfinder_version" {
   description = "The version to use for Wayfinder"
   type        = string
-  default     = "v2.8.1"
+  default     = "v2.8.3"
 }
