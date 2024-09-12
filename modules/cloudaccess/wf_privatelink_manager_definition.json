@@ -1,0 +1,21 @@
+{
+    "actions": [
+        "Microsoft.Authorization/roleAssignments/read",
+        "Microsoft.Authorization/roleDefinitions/read",
+        "Microsoft.Network/privateEndpoints/read",
+        "Microsoft.Network/privateEndpoints/write",
+        "Microsoft.Network/privateEndpoints/delete",
+        "Microsoft.Network/privateDnsZones/read",
+        "Microsoft.Network/privateDnsZones/write",
+        "Microsoft.Network/privateDnsZones/A/read",
+        "Microsoft.Network/privateDnsZones/A/write",
+        "Microsoft.Network/privateDnsZones/A/delete",
+        "Microsoft.Network/privateDnsZones/virtualNetworkLinks/read",
+        "Microsoft.Network/privateDnsZones/virtualNetworkLinks/write",
+        "Microsoft.Network/privateDnsZones/virtualNetworkLinks/delete",
+        "Microsoft.Network/virtualNetworks/join/action",
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+        "Microsoft.Network/networkInterfaces/read",
+        "Microsoft.ContainerService/managedClusters/PrivateEndpointConnectionsApproval/action"
+    ]
+}

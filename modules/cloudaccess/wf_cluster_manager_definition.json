@@ -28,6 +28,7 @@
         "Microsoft.Storage/register/action",
         "Microsoft.Features/register/action",
         "Microsoft.Features/providers/features/register/action",
-        "Microsoft.Network/virtualNetworks/subnets/join/action"
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+        "Microsoft.ContainerService/managedClusters/PrivateEndpointConnectionsApproval/action"
     ]
 }

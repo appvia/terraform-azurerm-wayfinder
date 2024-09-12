@@ -76,6 +76,12 @@ variable "enable_peering_acceptor" {
   type        = bool
 }
 
+variable "enable_private_link_manager" {
+  default     = false
+  description = "Whether to create the Private Link Manager IAM Role"
+  type        = bool
+}
+
 variable "enable_cloud_info" {
   default     = false
   description = "Whether to create the Cloud Info IAM Role"

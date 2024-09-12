@@ -16,6 +16,8 @@ locals {
 
   # if not provided, use the same resource group as the AKS cluster
   private_link_resourcegroup = var.private_link_resourcegroup == "" ? var.resource_group_name : var.private_link_resourcegroup
+
+  cloudidentity_name = "cloudidentity-azure"
 }
 
 resource "time_sleep" "after_azurerm_role_definition_main" {
