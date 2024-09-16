@@ -110,7 +110,7 @@ variable "cluster_version" {
 variable "cluster_nodepool_version" {
   description = "The Kubernetes version to use for the AKS cluster Nodepools."
   type        = string
-  default     = "1.29"
+  default     = "1.30"
 }
 
 variable "create_duration_delay" {
