@@ -1,5 +1,11 @@
 <!-- BEGIN_TF_DOCS -->
-# Terraform Module: Wayfinder on Azure
+<!-- markdownlint-disable -->
+<a href="https://www.appvia.io/"><img src="./appvia_banner.jpg" alt="Appvia Banner"/></a><br/><p align="right"> <a href="https://registry.terraform.io/modules/appvia/wayfinder/azurerm/latest"><img src="https://img.shields.io/static/v1?label=APPVIA&message=Terraform%20Registry&color=191970&style=for-the-badge" alt="Terraform Registry"/></a> <a href="https://github.com/appvia/terraform-azurerm-wayfinder/releases/latest"><img src="https://img.shields.io/github/release/appvia/terraform-azurerm-wayfinder.svg?style=for-the-badge&color=006400" alt="Latest Release"/></a> <a href="https://appvia-community.slack.com/join/shared_invite/zt-1s7i7xy85-T155drryqU56emm09ojMVA#/shared-invite/email"><img src="https://img.shields.io/badge/Slack-Join%20Community-purple?style=for-the-badge&logo=slack" alt="Slack Community"/></a> <a href="https://github.com/appvia/terraform-azurerm-wayfinder/graphs/contributors"><img src="https://img.shields.io/github/contributors/appvia/terraform-azurerm-wayfinder.svg?style=for-the-badge&color=FF8C00" alt="Contributors"/></a> </p>
+<!-- markdownlint-restore -->
+<!--
+  ***** CAUTION: DO NOT EDIT ABOVE THIS LINE ******
+-->
+## Description
 
 The "terraform-azurerm-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/wayfinder) on Azure.
 
@@ -71,7 +77,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_aks_vnet_subnet_id"></a> [aks\_vnet\_subnet\_id](#input\_aks\_vnet\_subnet\_id) | The ID of the subnet in which to deploy the Kubernetes Cluster. | `string` | n/a | yes |
 | <a name="input_cert_manager_keyvault_cert_name"></a> [cert\_manager\_keyvault\_cert\_name](#input\_cert\_manager\_keyvault\_cert\_name) | Keyvault certificate name to use for cert-manager. Required if cluster issuer is keyvault | `string` | `null` | no |
 | <a name="input_cert_manager_keyvault_name"></a> [cert\_manager\_keyvault\_name](#input\_cert\_manager\_keyvault\_name) | Keyvault name to use for cert-manager. Required if cluster issuer is keyvault | `string` | `null` | no |
-| <a name="input_cluster_nodepool_version"></a> [cluster\_nodepool\_version](#input\_cluster\_nodepool\_version) | The Kubernetes version to use for the AKS cluster Nodepools. | `string` | `"1.29"` | no |
+| <a name="input_cluster_nodepool_version"></a> [cluster\_nodepool\_version](#input\_cluster\_nodepool\_version) | The Kubernetes version to use for the AKS cluster Nodepools. | `string` | `"1.30"` | no |
 | <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | The Kubernetes version to use for the AKS cluster. | `string` | `"1.30"` | no |
 | <a name="input_clusterissuer"></a> [clusterissuer](#input\_clusterissuer) | Cluster Issuer name to use for certs | `string` | `"letsencrypt-prod"` | no |
 | <a name="input_clusterissuer_email"></a> [clusterissuer\_email](#input\_clusterissuer\_email) | The email address to use for the cert-manager cluster issuer. | `string` | n/a | yes |
