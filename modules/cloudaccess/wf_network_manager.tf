@@ -30,9 +30,9 @@ resource "time_sleep" "after_azurerm_role_definition_networkmanager" {
 resource "azurerm_role_assignment" "networkmanager" {
   count = var.enable_network_manager && var.from_azure ? 1 : 0
 
-  scope                = data.azurerm_subscription.primary.id
-  role_definition_name = azurerm_role_definition.networkmanager[0].name
-  principal_id         = var.wayfinder_identity_azure_principal_id
+  scope              = data.azurerm_subscription.primary.id
+  role_definition_id = azurerm_role_definition.networkmanager[0].role_definition_resource_id
+  principal_id       = var.wayfinder_identity_azure_principal_id
 
   depends_on = [
     time_sleep.after_azurerm_role_definition_networkmanager[0],
@@ -43,9 +43,9 @@ resource "azurerm_role_assignment" "networkmanager" {
 resource "azurerm_role_assignment" "networkmanager_federated" {
   count = var.enable_network_manager && (var.from_aws || var.from_gcp) ? 1 : 0
 
-  scope                = data.azurerm_subscription.primary.id
-  role_definition_name = azurerm_role_definition.networkmanager[0].name
-  principal_id         = azurerm_user_assigned_identity.federated_identity[0].principal_id
+  scope              = data.azurerm_subscription.primary.id
+  role_definition_id = azurerm_role_definition.networkmanager[0].role_definition_resource_id
+  principal_id       = azurerm_user_assigned_identity.federated_identity[0].principal_id
 
   depends_on = [
     time_sleep.after_azurerm_role_definition_networkmanager[0],

@@ -26,7 +26,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aks_api_server_authorized_ip_ranges"></a> [aks\_api\_server\_authorized\_ip\_ranges](#input\_aks\_api\_server\_authorized\_ip\_ranges) | The list of authorized IP ranges to contact the Wayfinder Management AKS Cluster API server. | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| <a name="input_aks_api_server_authorized_ip_ranges"></a> [aks\_api\_server\_authorized\_ip\_ranges](#input\_aks\_api\_server\_authorized\_ip\_ranges) | The list of authorized IP ranges to contact the Wayfinder Management AKS Cluster API server. | `list(string)` | <pre>[<br/>  "0.0.0.0/0"<br/>]</pre> | no |
 | <a name="input_aks_rbac_aad_admin_groups"></a> [aks\_rbac\_aad\_admin\_groups](#input\_aks\_rbac\_aad\_admin\_groups) | Map of Azure AD Groups and their Object IDs that will be set as cluster admin. | `map(string)` | n/a | yes |
 | <a name="input_clusterissuer_email"></a> [clusterissuer\_email](#input\_clusterissuer\_email) | The email address to use for the cert-manager cluster issuer. | `string` | n/a | yes |
 | <a name="input_disable_internet_access"></a> [disable\_internet\_access](#input\_disable\_internet\_access) | Whether to disable internet access for AKS and the Wayfinder ingress controller. | `bool` | `false` | no |
