@@ -20,7 +20,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aks_api_server_authorized_ip_ranges"></a> [aks\_api\_server\_authorized\_ip\_ranges](#input\_aks\_api\_server\_authorized\_ip\_ranges) | The list of authorized IP ranges to contact the Wayfinder Management AKS Cluster API server. | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| <a name="input_aks_api_server_authorized_ip_ranges"></a> [aks\_api\_server\_authorized\_ip\_ranges](#input\_aks\_api\_server\_authorized\_ip\_ranges) | The list of authorized IP ranges to contact the Wayfinder Management AKS Cluster API server. | `list(string)` | <pre>[<br/>  "0.0.0.0/0"<br/>]</pre> | no |
 | <a name="input_aks_rbac_aad_admin_groups"></a> [aks\_rbac\_aad\_admin\_groups](#input\_aks\_rbac\_aad\_admin\_groups) | Map of Azure AD Groups and their Object IDs that will be set as cluster admin. | `map(string)` | n/a | yes |
 | <a name="input_aks_vnet_subnet_id"></a> [aks\_vnet\_subnet\_id](#input\_aks\_vnet\_subnet\_id) | The ID of the subnet in which to deploy the Kubernetes Cluster. | `string` | `null` | no |
 | <a name="input_ca_org_name"></a> [ca\_org\_name](#input\_ca\_org\_name) | The organisation name to use for the CA. Required if using keyvault cluster issuer. | `string` | `null` | no |
@@ -43,7 +43,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_user_assigned_identity"></a> [user\_assigned\_identity](#input\_user\_assigned\_identity) | MSI id for AKS to run as | `string` | `null` | no |
 | <a name="input_venafi_apikey"></a> [venafi\_apikey](#input\_venafi\_apikey) | Venafi API key - required if using Venafi cluster issuer | `string` | `""` | no |
 | <a name="input_venafi_zone"></a> [venafi\_zone](#input\_venafi\_zone) | Venafi zone - required if using Venafi cluster issuer | `string` | `""` | no |
-| <a name="input_wayfinder_idp_details"></a> [wayfinder\_idp\_details](#input\_wayfinder\_idp\_details) | The IDP details to use for Wayfinder to enable SSO. | <pre>object({<br>    type          = string<br>    clientId      = string<br>    clientSecret  = string<br>    serverUrl     = optional(string)<br>    azureTenantId = optional(string)<br>  })</pre> | n/a | yes |
+| <a name="input_wayfinder_idp_details"></a> [wayfinder\_idp\_details](#input\_wayfinder\_idp\_details) | The IDP details to use for Wayfinder to enable SSO. | <pre>object({<br/>    type          = string<br/>    clientId      = string<br/>    clientSecret  = string<br/>    serverUrl     = optional(string)<br/>    azureTenantId = optional(string)<br/>  })</pre> | n/a | yes |
 | <a name="input_wayfinder_instance_id"></a> [wayfinder\_instance\_id](#input\_wayfinder\_instance\_id) | The instance ID to use for Wayfinder. | `string` | n/a | yes |
 | <a name="input_wayfinder_licence_key"></a> [wayfinder\_licence\_key](#input\_wayfinder\_licence\_key) | The licence key to use for Wayfinder. | `string` | n/a | yes |
 
