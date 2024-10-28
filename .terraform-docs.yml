@@ -1,67 +1,28 @@
-content: |-
-  <!-- markdownlint-disable -->
-  <a href="https://www.appvia.io/"><img src="./appvia_banner.jpg" alt="Appvia Banner"/></a><br/><p align="right"> <a href="https://registry.terraform.io/modules/appvia/wayfinder/azurerm/latest"><img src="https://img.shields.io/static/v1?label=APPVIA&message=Terraform%20Registry&color=191970&style=for-the-badge" alt="Terraform Registry"/></a> <a href="https://github.com/appvia/terraform-azurerm-wayfinder/releases/latest"><img src="https://img.shields.io/github/release/appvia/terraform-azurerm-wayfinder.svg?style=for-the-badge&color=006400" alt="Latest Release"/></a> <a href="https://appvia-community.slack.com/join/shared_invite/zt-1s7i7xy85-T155drryqU56emm09ojMVA#/shared-invite/email"><img src="https://img.shields.io/badge/Slack-Join%20Community-purple?style=for-the-badge&logo=slack" alt="Slack Community"/></a> <a href="https://github.com/appvia/terraform-azurerm-wayfinder/graphs/contributors"><img src="https://img.shields.io/github/contributors/appvia/terraform-azurerm-wayfinder.svg?style=for-the-badge&color=FF8C00" alt="Contributors"/></a> </p>
-  <!-- markdownlint-restore -->
-  <!--
-    ***** CAUTION: DO NOT EDIT ABOVE THIS LINE ******
-  -->
-  ## Description
+#header-from: .header.md
+settings:
+  anchor: true
+  color: true
+  default: true
+  escape: true
+  html: true
+  indent: 2
+  required: true
+  sensitive: true
+  type: true
+  lockfile: false
 
-  The "terraform-azurerm-wayfinder" Terraform Module can be used to provision and manage a licensed edition of [Appvia Wayfinder](https://www.appvia.io/wayfinder) on Azure.
+formatter: "markdown table"
 
-  ## Requirements
+output:
+  file: README.md
+  mode: inject
 
-  To run this module, you will need the following:
-  1. Product Licence Key & Instance ID. Request a free licence key from the [Appvia Portal](https://portal.appvia.io/trial?utm_source=terraform-azurerm-wayfinder).
-  2. (Optional) IDP App configuration details: Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID) for setup. This does not need to be defined initially within Terraform, and can also be setup within the product. Wayfinder can provision a `localadmin` user for initial access if no IDP details are provided.
-  3. A public Azure DNS Zone: This module will create DNS records for the Wayfinder API and UI endpoints, and performs a DNS01 challenge via the LetsEncrypt Issuer for valid domain certificates.
-  4. Existing Virtual Network and Subnet: This module will deploy an AKS Cluster and so requires an existing vnet with outbound internet connectivity.
+sections:
+  show:
+    - providers
+    - inputs
+    - outputs
 
-  ## Deployment
-
-  Please see the [examples](./examples) directory to see how to deploy this module. To get up and running quickly with minimal pre-requisites, use the [quickstart](./examples/quickstart) example.
-
-  ### (Optional) Connecting to an Identity Provider
-
-  Wayfinder integrates with an IDP for managing user access. You will need a valid Client ID, Client Secret and Server URL (or Azure Tenant ID).
-
-  This configuration is optional within Terraform, and can also be setup within the product. Please view the documentation for more information: https://docs.appvia.io/wayfinder/admin/auth
-
-  The Authorized Redirect URI for the IDP Application should be set to: `https://${wayfinder_domain_name_api}/oauth/callback`
-
-  **Note:** If you are using Azure Active Directory, you must:
-  1. Set `azureTenantId` to your Azure Tenant ID (`serverUrl` is not required)
-  2. Set the IDP type to `aad`
-
-  #### Example: Generic IDP Configuration
-
-  ```hcl
-  wayfinder_idp_details = {
-    {{ "  " }}type         = "generic"
-    {{ "  " }}clientId     = "IDP-APP-CLIENT-ID"
-    {{ "  " }}clientSecret = "IDP-APP-CLIENT-SECRET"
-    {{ "  " }}serverUrl    = "https://example.okta.com" # Or "https://example.auth0.com/"
-  }
-  ```
-
-  #### Example: Azure AD IDP Configuration
-
-  ```hcl
-  wayfinder_idp_details = {
-    {{ "  " }}type          = "aad"
-    {{ "  " }}clientId      = "IDP-APP-CLIENT-ID"
-    {{ "  " }}clientSecret  = "IDP-APP-CLIENT-SECRET"
-    {{ "  " }}azureTenantId = "12345678-1234-1234-1234-123456789012"
-  }
-  ```
-
-  ## Updating Docs
-
-  The `terraform-docs` utility is used to generate this README. Follow the below steps to update:
-  1. Make changes to the `.terraform-docs.yml` file
-  2. Fetch the `terraform-docs` binary (https://terraform-docs.io/user-guide/installation/)
-  3. Run `terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .`
-
-  {{ .Inputs }}
-
-  {{ .Outputs }}
+sort:
+  enabled: true
+  by: required
