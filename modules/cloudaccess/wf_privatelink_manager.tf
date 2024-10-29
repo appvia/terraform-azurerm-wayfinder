@@ -30,9 +30,9 @@ resource "time_sleep" "after_azurerm_role_definition_privatelinkmanager" {
 resource "azurerm_role_assignment" "privatelinkmanager" {
   count = var.enable_private_link_manager && var.from_azure ? 1 : 0
 
-  scope                = data.azurerm_subscription.primary.id
-  role_definition_name = azurerm_role_definition.privatelinkmanager[0].name
-  principal_id         = var.wayfinder_identity_azure_principal_id
+  scope              = data.azurerm_subscription.primary.id
+  role_definition_id = azurerm_role_definition.privatelinkmanager[0].role_definition_resource_id
+  principal_id       = var.wayfinder_identity_azure_principal_id
 
   depends_on = [
     time_sleep.after_azurerm_role_definition_privatelinkmanager[0],

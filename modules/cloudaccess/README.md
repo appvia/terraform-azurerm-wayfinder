@@ -1,22 +1,30 @@
-<!-- BEGIN_TF_DOCS -->
 # Terraform Module: Cloud Access for Wayfinder on Azure
 
 This Terraform Module can be used to associate Roles to Wayfinder's Azure Identity, for creating resources within an Azure Subscription.
 
 **Notes:**
-* You must set `var.wayfinder_identity_azure_principal_id` to the Azure Principal ID of the Wayfinder Identity.
-* `var.resource_suffix` is an optional suffix to use on created objects. We recommend using workspace key + stage if you wish to have multiple workspaces sharing the same AWS account, allowing independent roles to be provisioned for each.
+
+- You must set `var.wayfinder_identity_azure_principal_id` to the Azure Principal ID of the Wayfinder Identity.
+- `var.resource_suffix` is an optional suffix to use on created objects. We recommend using workspace key + stage if you wish to have multiple workspaces sharing the same AWS account, allowing independent roles to be provisioned for each.
 
 ## Deployment
 
 Please see the [examples](./examples) directory to see how to deploy this module.
 
+<!-- BEGIN_TF_DOCS -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >=3.74.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | >= 0.9.0 |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_create_duration_delay"></a> [create\_duration\_delay](#input\_create\_duration\_delay) | Used to tune terraform apply when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after creation of the specified resource type. | <pre>object({<br>    azurerm_role_definition = optional(string, "30s")<br>  })</pre> | `{}` | no |
-| <a name="input_destroy_duration_delay"></a> [destroy\_duration\_delay](#input\_destroy\_duration\_delay) | Used to tune terraform destroy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type. | <pre>object({<br>    azurerm_role_definition = optional(string, "0s")<br>  })</pre> | `{}` | no |
+| <a name="input_create_duration_delay"></a> [create\_duration\_delay](#input\_create\_duration\_delay) | Used to tune terraform apply when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after creation of the specified resource type. | <pre>object({<br/>    azurerm_role_definition = optional(string, "30s")<br/>  })</pre> | `{}` | no |
+| <a name="input_destroy_duration_delay"></a> [destroy\_duration\_delay](#input\_destroy\_duration\_delay) | Used to tune terraform destroy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type. | <pre>object({<br/>    azurerm_role_definition = optional(string, "0s")<br/>  })</pre> | `{}` | no |
 | <a name="input_enable_cloud_info"></a> [enable\_cloud\_info](#input\_enable\_cloud\_info) | Whether to create the Cloud Info IAM Role | `bool` | `false` | no |
 | <a name="input_enable_cluster_manager"></a> [enable\_cluster\_manager](#input\_enable\_cluster\_manager) | Whether to create the Cluster Manager IAM Role | `bool` | `false` | no |
 | <a name="input_enable_dns_zone_manager"></a> [enable\_dns\_zone\_manager](#input\_enable\_dns\_zone\_manager) | Whether to create the DNS Zone Manager IAM Role | `bool` | `false` | no |
@@ -39,11 +47,5 @@ Please see the [examples](./examples) directory to see how to deploy this module
 |------|-------------|
 | <a name="output_managed_identity_client_id"></a> [managed\_identity\_client\_id](#output\_managed\_identity\_client\_id) | The client ID of the created managed identity to use as spec.azure.clientID in your cloud access configuration |
 | <a name="output_managed_identity_tenant_id"></a> [managed\_identity\_tenant\_id](#output\_managed\_identity\_tenant\_id) | The tenant ID in which the managed identity exists, to use as spec.azure.tenantID in your cloud access configuration |
-
-## Updating Docs
-
-The `terraform-docs` utility is used to generate this README. Follow the below steps to update:
-1. Make changes to the `.terraform-docs.yml` file
-2. Fetch the `terraform-docs` binary (https://terraform-docs.io/user-guide/installation/)
-3. Run `terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .`
 <!-- END_TF_DOCS -->
+
