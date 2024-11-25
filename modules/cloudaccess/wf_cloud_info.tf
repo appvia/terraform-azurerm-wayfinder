@@ -44,7 +44,7 @@ resource "azurerm_role_assignment" "cloudinfo_federated" {
   count = var.enable_cloud_info && (var.from_aws || var.from_gcp) ? 1 : 0
 
   scope              = data.azurerm_subscription.primary.id
-  role_definition_id = azurerm_role_definition.cloudinfo[0].id
+  role_definition_id = azurerm_role_definition.cloudinfo[0].role_definition_resource_id
   principal_id       = azurerm_user_assigned_identity.federated_identity[0].principal_id
 
   depends_on = [
