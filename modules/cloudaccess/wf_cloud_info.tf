@@ -31,7 +31,7 @@ resource "azurerm_role_assignment" "cloudinfo" {
   count = var.enable_cloud_info && var.from_azure ? 1 : 0
 
   scope              = data.azurerm_subscription.primary.id
-  role_definition_id = azurerm_role_definition.cloudinfo[0].id
+  role_definition_id = azurerm_role_definition.cloudinfo[0].role_definition_resource_id
   principal_id       = var.wayfinder_identity_azure_principal_id
 
   depends_on = [
