@@ -144,19 +144,20 @@ resource "helm_release" "wayfinder" {
 
   values = [
     templatefile("${path.module}/manifests/wayfinder-values.yml.tpl", {
+      aksManagementSubnet           = var.aks_vnet_subnet_id
       api_hostname                  = var.wayfinder_domain_name_api
       clusterissuer                 = var.clusterissuer
-      issuerkind                    = var.clusterissuer == "adcs-issuer" ? "ClusterAdcsIssuer" : "ClusterIssuer"
-      issuergroup                   = var.clusterissuer == "adcs-issuer" ? "adcs.certmanager.csf.nokia.com" : "cert-manager.io"
       disable_local_login           = var.wayfinder_idp_details["type"] == "none" ? false : var.disable_local_login
       enable_localadmin_user        = var.create_localadmin_user
+      issuergroup                   = var.clusterissuer == "adcs-issuer" ? "adcs.certmanager.csf.nokia.com" : "cert-manager.io"
+      issuerkind                    = var.clusterissuer == "adcs-issuer" ? "ClusterAdcsIssuer" : "ClusterIssuer"
+      no_defaults                   = var.wayfinder_no_defaults
+      private_link_resourcegroup    = local.private_link_resourcegroup
+      region                        = var.location
       storage_class                 = "managed"
       ui_hostname                   = var.wayfinder_domain_name_ui
       wayfinder_client_id           = azurerm_user_assigned_identity.wayfinder_main.client_id
       wayfinder_instance_identifier = var.wayfinder_instance_id
-      aksManagementSubnet           = var.aks_vnet_subnet_id
-      region                        = var.location
-      private_link_resourcegroup    = local.private_link_resourcegroup
     })
   ]
 

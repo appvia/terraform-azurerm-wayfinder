@@ -327,6 +327,12 @@ variable "wayfinder_licence_key" {
   sensitive   = true
 }
 
+variable "wayfinder_no_defaults" {
+  description = "Set to true to stop Wayfinder from applying compiled-in defaults (e.g. default roles, cluster plans, etc)."
+  type        = bool
+  default     = true
+}
+
 variable "wayfinder_release_channel" {
   description = "The release channel to use for Wayfinder"
   type        = string
