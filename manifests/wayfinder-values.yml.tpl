@@ -26,6 +26,7 @@ enableLocalAdminUser: ${enable_localadmin_user}
 mysql:
   pvc:
     storageClass: "${storage_class}"
+noDefaults: ${no_defaults}
 ui:
   cloudOrder: "['azure','aws','gcp']"
   enabled: true
