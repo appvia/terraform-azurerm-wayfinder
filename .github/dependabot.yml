@@ -1,0 +1,17 @@
+---
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    commit-message:
+      prefix: "build"
+      include: "scope"
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: terraform
+    commit-message:
+      prefix: "build"
+      include: "scope"
+    directory: /
+    schedule:
+      interval: weekly
