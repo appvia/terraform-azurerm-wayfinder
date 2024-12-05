@@ -8,6 +8,7 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    target-branch: "vnext"
   - package-ecosystem: terraform
     commit-message:
       prefix: "build"
@@ -15,3 +16,4 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    target-branch: "vnext"
