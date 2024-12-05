@@ -1,7 +1,7 @@
 #tfsec:ignore:azure-container-limit-authorized-ips
 module "aks" {
   source  = "Azure/aks/azurerm"
-  version = "9.0.0"
+  version = "9.2.0"
 
   prefix              = local.name
   resource_group_name = var.resource_group_name
