@@ -129,7 +129,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | <a name="input_wayfinder_idp_details"></a> [wayfinder\_idp\_details](#input\_wayfinder\_idp\_details) | The IDP details to use for Wayfinder to enable SSO | <pre>object({<br/>    type          = string<br/>    clientId      = optional(string)<br/>    clientSecret  = optional(string)<br/>    serverUrl     = optional(string)<br/>    azureTenantId = optional(string)<br/>  })</pre> | <pre>{<br/>  "azureTenantId": "",<br/>  "clientId": null,<br/>  "clientSecret": null,<br/>  "serverUrl": "",<br/>  "type": "none"<br/>}</pre> | no |
 | <a name="input_wayfinder_no_defaults"></a> [wayfinder\_no\_defaults](#input\_wayfinder\_no\_defaults) | Set to true to stop Wayfinder from applying compiled-in defaults (e.g. default roles, cluster plans, etc). | `bool` | `true` | no |
 | <a name="input_wayfinder_release_channel"></a> [wayfinder\_release\_channel](#input\_wayfinder\_release\_channel) | The release channel to use for Wayfinder | `string` | `"wayfinder-releases"` | no |
-| <a name="input_wayfinder_version"></a> [wayfinder\_version](#input\_wayfinder\_version) | The version to use for Wayfinder | `string` | `"v2.9.7"` | no |
+| <a name="input_wayfinder_version"></a> [wayfinder\_version](#input\_wayfinder\_version) | The version to use for Wayfinder | `string` | `"v2.9.8"` | no |
 
 ## Outputs
 
