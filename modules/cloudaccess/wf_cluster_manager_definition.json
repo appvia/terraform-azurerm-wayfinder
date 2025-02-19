@@ -29,6 +29,14 @@
         "Microsoft.Features/register/action",
         "Microsoft.Features/providers/features/register/action",
         "Microsoft.Network/virtualNetworks/subnets/join/action",
-        "Microsoft.ContainerService/managedClusters/PrivateEndpointConnectionsApproval/action"
+        "Microsoft.ContainerService/managedClusters/PrivateEndpointConnectionsApproval/action",
+        "Microsoft.ContainerService/managedClusters/listClusterUserCredential/action",
+        "Microsoft.OperationalInsights/workspaces/read",
+        "Microsoft.OperationalInsights/workspaces/write",
+        "Microsoft.OperationalInsights/workspaces/delete",
+        "Microsoft.OperationalInsights/workspaces/sharedkeys/read",
+        "Microsoft.OperationsManagement/solutions/read",
+        "Microsoft.OperationsManagement/solutions/write",
+        "Microsoft.OperationsManagement/solutions/delete"
     ]
 }
