@@ -80,3 +80,9 @@ variable "enable_cloud_info" {
   description = "Whether to create the Cloud Info IAM Role"
   type        = bool
 }
+
+variable "enable_private_link_manager" {
+  default     = false
+  description = "Whether to create the Private Link Manager IAM Role"
+  type        = bool
+}

@@ -9,11 +9,12 @@ module "wayfinder_cloudaccess" {
   wayfinder_identity_aws_subject            = var.wayfinder_identity_aws_subject
   wayfinder_identity_gcp_service_account_id = var.wayfinder_identity_gcp_service_account_id
 
-  enable_cluster_manager  = var.enable_cluster_manager
-  enable_dns_zone_manager = var.enable_dns_zone_manager
-  enable_network_manager  = var.enable_network_manager
-  enable_cloud_info       = var.enable_cloud_info
-  enable_peering_acceptor = var.enable_peering_acceptor
+  enable_cluster_manager      = var.enable_cluster_manager
+  enable_dns_zone_manager     = var.enable_dns_zone_manager
+  enable_network_manager      = var.enable_network_manager
+  enable_cloud_info           = var.enable_cloud_info
+  enable_peering_acceptor     = var.enable_peering_acceptor
+  enable_private_link_manager = var.enable_private_link_manager
 
   from_aws   = var.from_aws
   from_azure = var.from_azure
