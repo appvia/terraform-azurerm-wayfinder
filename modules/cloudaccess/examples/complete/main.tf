@@ -1,5 +1,5 @@
 module "wayfinder_cloudaccess" {
-  source = "github.com/appvia/terraform-azurerm-wayfinder//modules/cloudaccess"
+  source = "github.com/appvia/terraform-azurerm-wayfinder//modules/cloudaccess?ref=v3"
 
   resource_suffix = var.resource_suffix
   region          = var.region
