@@ -7,3 +7,4 @@ enable_dns_zone_manager               = true
 enable_network_manager                = true
 enable_cloud_info                     = false
 wayfinder_identity_azure_principal_id = "87654321-dcba-10fe-abcd-012345678901"
+subscription_id                       = "12345678-abcd-1234-5678-abcdabcdabcd"
