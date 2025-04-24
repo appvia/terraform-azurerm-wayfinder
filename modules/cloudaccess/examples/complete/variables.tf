@@ -51,6 +51,12 @@ variable "region" {
   type        = string
 }
 
+variable "subscription_id" {
+  default     = ""
+  description = "The subscription ID to apply role definitions in"
+  type        = string
+}
+
 variable "enable_cluster_manager" {
   default     = true
   description = "Whether to create the Cluster Manager IAM Role"

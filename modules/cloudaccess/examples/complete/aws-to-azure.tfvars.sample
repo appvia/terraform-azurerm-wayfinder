@@ -10,3 +10,4 @@ from_aws                          = true
 from_azure                        = false
 wayfinder_identity_aws_issuer     = "https://oidc.eks.eu-west-2.amazonaws.com/id/ABCDF8D2EF45CE1A6FD96E2781310123"
 wayfinder_identity_aws_subject    = "system:serviceaccount:wayfinder:wayfinder-admin"
+subscription_id                   = "12345678-abcd-1234-5678-abcdabcdabcd"

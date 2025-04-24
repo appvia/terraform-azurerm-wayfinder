@@ -10,3 +10,4 @@ from_azure                                = false
 from_gcp                                  = true
 wayfinder_identity_gcp_service_account    = "wf-management@wayfinder-host-project.iam.gserviceaccount.com"
 wayfinder_identity_gcp_service_account_id = "123456789"
+subscription_id                           = "12345678-abcd-1234-5678-abcdabcdabcd"
