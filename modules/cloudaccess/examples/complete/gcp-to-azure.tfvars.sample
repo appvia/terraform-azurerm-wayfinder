@@ -2,12 +2,20 @@
 # multiple workspaces using the same subscription.
 region                                    = "uksouth"
 resource_suffix                           = "app1-nonprod"
-enable_cluster_manager                    = true
-enable_dns_zone_manager                   = true
-enable_network_manager                    = true
-enable_cloud_info                         = false
+enable_cluster_manager_permissions        = true
+enable_dns_zone_manager_permissions       = true
+enable_network_manager_permissions        = true
+enable_cloud_info_permissions             = false
 from_azure                                = false
 from_gcp                                  = true
 wayfinder_identity_gcp_service_account    = "wf-management@wayfinder-host-project.iam.gserviceaccount.com"
 wayfinder_identity_gcp_service_account_id = "123456789"
 subscription_id                           = "12345678-abcd-1234-5678-abcdabcdabcd"
+
+# Example of custom role assignments
+custom_roles = [
+  {
+    scope              = "/subscriptions/12345678-abcd-1234-5678-abcdabcdabcd"
+    role_definition_id = "/subscriptions/12345678-abcd-1234-5678-abcdabcdabcd/providers/Microsoft.Authorization/roleDefinitions/12345678-abcd-1234-5678-abcdabcdabcd"
+  }
+]
