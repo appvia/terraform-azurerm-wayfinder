@@ -23,7 +23,7 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.84 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.5 |
-| <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
+| <a name="provider_tls"></a> [tls](#provider\_tls) | ~> 4.0 |
 
 ## Inputs
 

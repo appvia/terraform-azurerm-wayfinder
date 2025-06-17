@@ -3,7 +3,7 @@ locals {
 }
 
 resource "azurerm_role_definition" "dnszonemanager" {
-  count = var.enable_dns_zone_manager ? 1 : 0
+  count = var.enable_dns_zone_manager_permissions ? 1 : 0
 
   name  = "${local.resource_prefix}dnszonemanager${local.resource_suffix}"
   scope = data.azurerm_subscription.primary.id
@@ -14,7 +14,7 @@ resource "azurerm_role_definition" "dnszonemanager" {
 }
 
 resource "time_sleep" "after_azurerm_role_definition_dnszonemanager" {
-  count = var.enable_dns_zone_manager ? 1 : 0
+  count = var.enable_dns_zone_manager_permissions ? 1 : 0
   depends_on = [
     azurerm_role_definition.dnszonemanager[0],
   ]
@@ -28,7 +28,7 @@ resource "time_sleep" "after_azurerm_role_definition_dnszonemanager" {
 }
 
 resource "azurerm_role_assignment" "dnszonemanager" {
-  count = var.enable_dns_zone_manager && var.from_azure ? 1 : 0
+  count = var.enable_dns_zone_manager_permissions && var.from_azure ? 1 : 0
 
   scope              = data.azurerm_subscription.primary.id
   role_definition_id = azurerm_role_definition.dnszonemanager[0].role_definition_resource_id
@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "dnszonemanager" {
 }
 
 resource "azurerm_role_assignment" "dnszonemanager_federated" {
-  count = var.enable_dns_zone_manager && (var.from_aws || var.from_gcp) ? 1 : 0
+  count = var.enable_dns_zone_manager_permissions && (var.from_aws || var.from_gcp) ? 1 : 0
 
   scope              = data.azurerm_subscription.primary.id
   role_definition_id = azurerm_role_definition.dnszonemanager[0].role_definition_resource_id

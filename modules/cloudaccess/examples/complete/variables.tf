@@ -92,3 +92,12 @@ variable "enable_private_link_manager" {
   description = "Whether to create the Private Link Manager IAM Role"
   type        = bool
 }
+
+variable "custom_roles" {
+  type = list(object({
+    scope              = string
+    role_definition_id = string
+  }))
+  description = "List of custom role assignments to create. Each object should contain a scope and role_definition_id."
+  default     = []
+}

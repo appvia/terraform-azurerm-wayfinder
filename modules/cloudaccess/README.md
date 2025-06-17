@@ -24,13 +24,14 @@ Please see the [examples](./examples) directory to see how to deploy this module
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_create_duration_delay"></a> [create\_duration\_delay](#input\_create\_duration\_delay) | Used to tune terraform apply when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after creation of the specified resource type. | <pre>object({<br/>    azurerm_role_definition = optional(string, "30s")<br/>  })</pre> | `{}` | no |
+| <a name="input_custom_roles"></a> [custom\_roles](#input\_custom\_roles) | List of custom role assignments to create. Each object should contain a scope and role\_definition\_id. | <pre>list(object({<br/>    scope              = string<br/>    role_definition_id = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_destroy_duration_delay"></a> [destroy\_duration\_delay](#input\_destroy\_duration\_delay) | Used to tune terraform destroy when faced with errors caused by API caching or eventual consistency. Sets a custom delay period after destruction of the specified resource type. | <pre>object({<br/>    azurerm_role_definition = optional(string, "0s")<br/>  })</pre> | `{}` | no |
-| <a name="input_enable_cloud_info"></a> [enable\_cloud\_info](#input\_enable\_cloud\_info) | Whether to create the Cloud Info IAM Role | `bool` | `false` | no |
-| <a name="input_enable_cluster_manager"></a> [enable\_cluster\_manager](#input\_enable\_cluster\_manager) | Whether to create the Cluster Manager IAM Role | `bool` | `false` | no |
-| <a name="input_enable_dns_zone_manager"></a> [enable\_dns\_zone\_manager](#input\_enable\_dns\_zone\_manager) | Whether to create the DNS Zone Manager IAM Role | `bool` | `false` | no |
-| <a name="input_enable_network_manager"></a> [enable\_network\_manager](#input\_enable\_network\_manager) | Whether to create the Network Manager IAM Role | `bool` | `false` | no |
-| <a name="input_enable_peering_acceptor"></a> [enable\_peering\_acceptor](#input\_enable\_peering\_acceptor) | Whether to create the Peering Acceptor IAM Role | `bool` | `false` | no |
-| <a name="input_enable_private_link_manager"></a> [enable\_private\_link\_manager](#input\_enable\_private\_link\_manager) | Whether to create the Private Link Manager IAM Role | `bool` | `false` | no |
+| <a name="input_enable_cloud_info_permissions"></a> [enable\_cloud\_info\_permissions](#input\_enable\_cloud\_info\_permissions) | Whether to grant the Cloud Info IAM permissions | `bool` | `false` | no |
+| <a name="input_enable_cluster_manager_permissions"></a> [enable\_cluster\_manager\_permissions](#input\_enable\_cluster\_manager\_permissions) | Whether to grant the Cluster Manager IAM permissions | `bool` | `false` | no |
+| <a name="input_enable_dns_zone_manager_permissions"></a> [enable\_dns\_zone\_manager\_permissions](#input\_enable\_dns\_zone\_manager\_permissions) | Whether to grant the DNS Zone Manager IAM permissions | `bool` | `false` | no |
+| <a name="input_enable_network_manager_permissions"></a> [enable\_network\_manager\_permissions](#input\_enable\_network\_manager\_permissions) | Whether to grant the Network Manager IAM permissions | `bool` | `false` | no |
+| <a name="input_enable_peering_acceptor_permissions"></a> [enable\_peering\_acceptor\_permissions](#input\_enable\_peering\_acceptor\_permissions) | Whether to grant the Peering Acceptor IAM permissions | `bool` | `false` | no |
+| <a name="input_enable_private_link_manager_permissions"></a> [enable\_private\_link\_manager\_permissions](#input\_enable\_private\_link\_manager\_permissions) | Whether to grant the Private Link Manager IAM permissions | `bool` | `false` | no |
 | <a name="input_from_aws"></a> [from\_aws](#input\_from\_aws) | Whether Wayfinder is running on AWS. | `bool` | `false` | no |
 | <a name="input_from_azure"></a> [from\_azure](#input\_from\_azure) | Whether Wayfinder is running on Azure. | `bool` | `true` | no |
 | <a name="input_from_gcp"></a> [from\_gcp](#input\_from\_gcp) | Whether Wayfinder is running on GCP. | `bool` | `false` | no |

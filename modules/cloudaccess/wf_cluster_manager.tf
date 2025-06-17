@@ -3,7 +3,7 @@ locals {
 }
 
 resource "azurerm_role_definition" "clustermanager" {
-  count = var.enable_cluster_manager ? 1 : 0
+  count = var.enable_cluster_manager_permissions ? 1 : 0
 
   name  = "${local.resource_prefix}clustermanager${local.resource_suffix}"
   scope = data.azurerm_subscription.primary.id
@@ -14,7 +14,7 @@ resource "azurerm_role_definition" "clustermanager" {
 }
 
 resource "time_sleep" "after_azurerm_role_definition_clustermanager" {
-  count = var.enable_cluster_manager ? 1 : 0
+  count = var.enable_cluster_manager_permissions ? 1 : 0
   depends_on = [
     azurerm_role_definition.clustermanager[0],
   ]
@@ -28,7 +28,7 @@ resource "time_sleep" "after_azurerm_role_definition_clustermanager" {
 }
 
 resource "azurerm_role_assignment" "clustermanager" {
-  count = var.enable_cluster_manager && var.from_azure ? 1 : 0
+  count = var.enable_cluster_manager_permissions && var.from_azure ? 1 : 0
 
   scope              = data.azurerm_subscription.primary.id
   role_definition_id = azurerm_role_definition.clustermanager[0].role_definition_resource_id
@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "clustermanager" {
 }
 
 resource "azurerm_role_assignment" "clustermanager_federated" {
-  count = var.enable_cluster_manager && (var.from_aws || var.from_gcp) ? 1 : 0
+  count = var.enable_cluster_manager_permissions && (var.from_aws || var.from_gcp) ? 1 : 0
 
   scope              = data.azurerm_subscription.primary.id
   role_definition_id = azurerm_role_definition.clustermanager[0].role_definition_resource_id

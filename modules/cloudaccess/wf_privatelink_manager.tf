@@ -3,7 +3,7 @@ locals {
 }
 
 resource "azurerm_role_definition" "privatelinkmanager" {
-  count = var.enable_private_link_manager ? 1 : 0
+  count = var.enable_private_link_manager_permissions ? 1 : 0
 
   name  = "${local.resource_prefix}privatelinkmanager${local.resource_suffix}"
   scope = data.azurerm_subscription.primary.id
@@ -14,7 +14,7 @@ resource "azurerm_role_definition" "privatelinkmanager" {
 }
 
 resource "time_sleep" "after_azurerm_role_definition_privatelinkmanager" {
-  count = var.enable_private_link_manager ? 1 : 0
+  count = var.enable_private_link_manager_permissions ? 1 : 0
   depends_on = [
     azurerm_role_definition.privatelinkmanager[0],
   ]
@@ -28,7 +28,7 @@ resource "time_sleep" "after_azurerm_role_definition_privatelinkmanager" {
 }
 
 resource "azurerm_role_assignment" "privatelinkmanager" {
-  count = var.enable_private_link_manager && var.from_azure ? 1 : 0
+  count = var.enable_private_link_manager_permissions && var.from_azure ? 1 : 0
 
   scope              = data.azurerm_subscription.primary.id
   role_definition_id = azurerm_role_definition.privatelinkmanager[0].role_definition_resource_id

@@ -52,39 +52,39 @@ variable "region" {
   type        = string
 }
 
-variable "enable_cluster_manager" {
+variable "enable_cluster_manager_permissions" {
   default     = false
-  description = "Whether to create the Cluster Manager IAM Role"
+  description = "Whether to grant the Cluster Manager IAM permissions"
   type        = bool
 }
 
-variable "enable_dns_zone_manager" {
+variable "enable_dns_zone_manager_permissions" {
   default     = false
-  description = "Whether to create the DNS Zone Manager IAM Role"
+  description = "Whether to grant the DNS Zone Manager IAM permissions"
   type        = bool
 }
 
-variable "enable_network_manager" {
+variable "enable_network_manager_permissions" {
   default     = false
-  description = "Whether to create the Network Manager IAM Role"
+  description = "Whether to grant the Network Manager IAM permissions"
   type        = bool
 }
 
-variable "enable_peering_acceptor" {
+variable "enable_peering_acceptor_permissions" {
   default     = false
-  description = "Whether to create the Peering Acceptor IAM Role"
+  description = "Whether to grant the Peering Acceptor IAM permissions"
   type        = bool
 }
 
-variable "enable_private_link_manager" {
+variable "enable_private_link_manager_permissions" {
   default     = false
-  description = "Whether to create the Private Link Manager IAM Role"
+  description = "Whether to grant the Private Link Manager IAM permissions"
   type        = bool
 }
 
-variable "enable_cloud_info" {
+variable "enable_cloud_info_permissions" {
   default     = false
-  description = "Whether to create the Cloud Info IAM Role"
+  description = "Whether to grant the Cloud Info IAM permissions"
   type        = bool
 }
 
@@ -112,4 +112,13 @@ variable "destroy_duration_delay" {
     condition     = can([for v in values(var.destroy_duration_delay) : regex("^[0-9]{1,6}(s|m|h)$", v)])
     error_message = "The destroy_duration_delay values must be a string containing the duration in numbers (1-6 digits) followed by the measure of time represented by s (seconds), m (minutes), or h (hours)."
   }
+}
+
+variable "custom_roles" {
+  type = list(object({
+    scope              = string
+    role_definition_id = string
+  }))
+  description = "List of custom role assignments to create. Each object should contain a scope and role_definition_id."
+  default     = []
 }
